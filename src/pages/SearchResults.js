@@ -10,8 +10,10 @@ import axios from "axios";
 const SearchResults = () => {
     const [searchParams] = useSearchParams();
     const [query, setQuery] = useState(searchParams.get("query"));
-    const [searchQuery, setSearchQuery] = useState(searchParams.get("query"));
-    const [solrSearchUrl, setSolrSearchUrl] = useState("http://localhost:8983/solr/test_core/select");
+    // const [searchQuery, setSearchQuery] = useState(searchParams.get("query"));
+    const searchQuery = searchParams.get("query"); 
+    // const [solrSearchUrl, setSolrSearchUrl] = useState("http://localhost:8983/solr/test_core/select");
+    const solrSearchUrl = "http://localhost:8983/solr/test_core/select"; //DECOUPLE THIS MAGIC STRING
     const [searchResults, setSearchResults] = useState([]); 
 
     const navigate = useNavigate();
@@ -40,7 +42,7 @@ const SearchResults = () => {
         }).catch(err => {
             console.log(`The error is ${err}`)
         })
-    }, [searchQuery, searchParams])
+    }, [searchQuery, searchParams, query])
     
     return (
         <>
