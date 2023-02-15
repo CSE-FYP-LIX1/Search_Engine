@@ -1,0 +1,1 @@
+export const solrSearchUrl = "http://localhost:8983/solr/test_core/select"; 

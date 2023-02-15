@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
+import { solrSearchUrl } from '../constants';
 import DisplayResults from "../common/Components/DisplayResults.tsx";
 import axios from "axios";
 
@@ -13,7 +14,7 @@ const SearchResults = () => {
     // const [searchQuery, setSearchQuery] = useState(searchParams.get("query"));
     const searchQuery = searchParams.get("query"); 
     // const [solrSearchUrl, setSolrSearchUrl] = useState("http://localhost:8983/solr/test_core/select");
-    const solrSearchUrl = "http://localhost:8983/solr/test_core/select"; //DECOUPLE THIS MAGIC STRING
+    // const solrSearchUrl = "http://localhost:8983/solr/test_core/select"; //NOW IN src/constants.js
     const [searchResults, setSearchResults] = useState([]); 
 
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ const SearchResults = () => {
         }).catch(err => {
             console.log(`The error is ${err}`)
         })
-    }, [searchQuery, searchParams, query])
+    }, [searchQuery, searchParams. query])
     
     return (
         <>
