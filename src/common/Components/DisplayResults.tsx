@@ -19,7 +19,7 @@ const DisplayResults = ({id, title, source, sourceName, releaseDate, content} : 
                 </div>
                 <a href={source} className="text-blue-800 font-medium text-xl hover:underline">{title}</a>
                 <div className='text-sm'>
-                    Article Release Date : {releaseDate}
+                    {id}
                 </div>
                 <div className='text-ellipsis line-clamp-3'>
                     {content}

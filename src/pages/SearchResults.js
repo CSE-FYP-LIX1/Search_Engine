@@ -3,18 +3,16 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
-import { solrSearchUrl } from '../constants';
 import DisplayResults from "../common/Components/DisplayResults.tsx";
 import axios from "axios";
-
+import Axios from '../axios';
+import UserInput from '../common/Components/userInput';
 
 const SearchResults = () => {
     const [searchParams] = useSearchParams();
     const [query, setQuery] = useState(searchParams.get("query"));
-    // const [searchQuery, setSearchQuery] = useState(searchParams.get("query"));
-    const searchQuery = searchParams.get("query"); 
-    // const [solrSearchUrl, setSolrSearchUrl] = useState("http://localhost:8983/solr/test_core/select");
-    // const solrSearchUrl = "http://localhost:8983/solr/test_core/select"; //NOW IN src/constants.js
+    const [searchQuery, setSearchQuery] = useState(searchParams.get("query"));
+    const [solrSearchUrl, setSolrSearchUrl] = useState("http://localhost:8983/solr/fyp_documents/select");
     const [searchResults, setSearchResults] = useState([]); 
 
     const navigate = useNavigate();
@@ -38,12 +36,27 @@ const SearchResults = () => {
                 "rows": 5
             }
         }).then(res => {
-            console.log(res);
+            console.log(res.data.response.docs);
             setSearchResults(res.data.response.docs); 
         }).catch(err => {
             console.log(`The error is ${err}`)
         })
-    }, [searchQuery, searchParams. query])
+
+        // setSolrLdaUrl("http://localhost:8983/solr/lda_data/select")
+        axios.get("http://localhost:8983/solr/lda_data/select", {
+            params: {
+                "q": "*:*", //Test query: "id:Russia_25/12/2022_30/12/2022"
+                "indent": true,
+                "q.op": "OR"
+                // "rows": 5
+            }
+        })
+            .then(res => {
+                const ldaDataResults = res.data.response.docs;
+                // setLdaData(ldaDataResults);
+                console.log(ldaDataResults);
+            })
+    }, [searchQuery, searchParams])
     
     return (
         <>
@@ -80,6 +93,11 @@ const SearchResults = () => {
                 </div>
             </div>
         </>
+        // <div className='text-center'>
+        //     {/* <h3>What would you like to search?</h3> */}
+        //     {/* <UserInput query={query} setQuery={setQuery} /> */}
+        //     <Axios query={query} />
+        // </div>
     )
 }
 
