@@ -39,7 +39,7 @@ const Axios = (props) => {
                 setLdaData(ldaDataResults);
                 console.log(ldaDataResults);
             })
-    }, [props.fetchFields, props.query, solrSearchUrl])
+    }, [props.fetchFields, props.query, solrSearchUrl, solrLdaUrl])
 
     return (
         <div>
@@ -62,6 +62,9 @@ const Axios = (props) => {
                     )
                 })
                 : "Piss off"}
+                <div>
+                    {ldaData}
+                </div>
         </div>
     )
 }

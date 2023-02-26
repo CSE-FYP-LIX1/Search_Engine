@@ -25,13 +25,13 @@ export const Tabs = ({tabs, curActive, tabsCallback} : TabsProps) : JSX.Element 
                 tabs.map((elem, idx) => {
                     return (
                         curActive === idx ? 
-                            <button className="w-full mx-auto bg-[#900000] text-white px-5 py-5 hover:bg-[#814545] text-2xl font-medium" onClick={() => {
+                            <button className="mx-auto bg-[#D9D9D9] text-black px-5 py-5 hover:bg-[#D9D9D9] text-2xl font-medium" onClick={() => {
                                 tabsCallback(idx); 
                                 navigateToPath(elem.path);
                             }}>
                                 {elem.title}
                             </button> :
-                            <button className="w-full mx-auto bg-[#A80000] text-white px-5 py-5 hover:bg-[#814545] text-2xl font-medium" onClick={() => {
+                            <button className="mx-auto bg-[#E9F4F9] text-black px-5 py-5 hover:bg-[#D9D9D9] text-2xl font-medium" onClick={() => {
                                 tabsCallback(idx); 
                                 navigateToPath(elem.path);
                             }}>

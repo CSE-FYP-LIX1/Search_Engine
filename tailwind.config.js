@@ -1,6 +1,7 @@
 module.exports = {
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/tw-elements/dist/js/**/*.js"
   ],
   theme: {
     fontFamily : {
@@ -9,5 +10,6 @@ module.exports = {
   },
   plugins: [
       require('@tailwindcss/line-clamp'),
+      require("tw-elements/dist/plugin")
   ],
 }

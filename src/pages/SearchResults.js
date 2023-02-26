@@ -5,14 +5,16 @@ import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import DisplayResults from "../common/Components/DisplayResults.tsx";
 import axios from "axios";
-import Axios from '../axios';
-import UserInput from '../common/Components/userInput';
+// import Axios from '../axios';
+// import UserInput from '../common/Components/userInput';
 
 const SearchResults = () => {
     const [searchParams] = useSearchParams();
     const [query, setQuery] = useState(searchParams.get("query"));
-    const [searchQuery, setSearchQuery] = useState(searchParams.get("query"));
-    const [solrSearchUrl, setSolrSearchUrl] = useState("http://localhost:8983/solr/fyp_documents/select");
+    // const [searchQuery, setSearchQuery] = useState(searchParams.get("query"));
+    // const [solrSearchUrl, setSolrSearchUrl] = useState("http://localhost:8983/solr/fyp_documents/select");
+    const searchQuery = searchParams.get("query");
+    const solrSearchUrl = "http://localhost:8983/solr/fyp_documents/select";
     const [searchResults, setSearchResults] = useState([]); 
 
     const navigate = useNavigate();
@@ -30,9 +32,9 @@ const SearchResults = () => {
         axios.get(solrSearchUrl, {
             params : {
                 // "fl": props.fetchFields,
-                "q": query,
-                // "indent": true,
-                // "q.op": "OR",
+                "q": "content: " + query,
+                "indent": true,
+                "q.op": "OR",
                 "rows": 5
             }
         }).then(res => {
@@ -43,20 +45,20 @@ const SearchResults = () => {
         })
 
         // setSolrLdaUrl("http://localhost:8983/solr/lda_data/select")
-        axios.get("http://localhost:8983/solr/lda_data/select", {
-            params: {
-                "q": "*:*", //Test query: "id:Russia_25/12/2022_30/12/2022"
-                "indent": true,
-                "q.op": "OR"
-                // "rows": 5
-            }
-        })
-            .then(res => {
-                const ldaDataResults = res.data.response.docs;
-                // setLdaData(ldaDataResults);
-                console.log(ldaDataResults);
-            })
-    }, [searchQuery, searchParams])
+        // axios.get("http://localhost:8983/solr/lda_data/select", {
+        //     params: {
+        //         "q": "*:*", //Test query: "id:Russia_25/12/2022_30/12/2022"
+        //         "indent": true,
+        //         "q.op": "OR"
+        //         // "rows": 5
+        //     }
+        // })
+        //     .then(res => {
+        //         const ldaDataResults = res.data.response.docs;
+        //         // setLdaData(ldaDataResults);
+        //         console.log(ldaDataResults);
+        //     })
+    }, [searchQuery, searchParams, query, solrSearchUrl])
     
     return (
         <>

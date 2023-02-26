@@ -7,7 +7,8 @@ const SideBar = () => {
 
     const TabProps = [
         {"title" : "Search Engine", "path" : "/search"},
-        {"title" : "Market Trends", "path" : "/search-results"}
+        {"title" : "Market Trends", "path" : "/search-results"},
+        {"title" : "Market Trends Real", "path" : "/market-trends"}
     ]
     
     const setCurrentActiveTab = (curActive) => {
@@ -15,17 +16,16 @@ const SideBar = () => {
     }
 
     return (
-        <div className="w-full flex flex-col flex-wrap h-[100vh] font-source-sans-pro">
-            <div className="w-1/6 bg-[#A80000] h-full">
-                <div className="h-1/6 text-white px-5 py-5 text-2xl text-center font-medium">Market Analysis Data Repository</div>
-                <div className="h-5/6">
+        <div className="w-full h-full flex flex-col font-source-sans-pro">
+            <div className="bg-[#E9F4F9] flex flex-row">
+                <div className="w-1/6 text-black text-2xl text-center font-medium">Market Analysis Data Repository</div>
+                <div className="w-5/6">
                     <Tabs tabs={TabProps} curActive={curActive} tabsCallback={setCurrentActiveTab}/>
                 </div>
             </div>
-            <div className="w-5/6 basis-full h-full">
+            <div className="w-full basis-full h-[100vh]">
                 <Outlet/>
             </div>
-            <div className="absolute bg-black drop-shadow-lg w-[17%] h-3 top-28 left-4"/>
         </div>
     )
 }
