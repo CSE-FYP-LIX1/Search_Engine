@@ -10,9 +10,8 @@ type DisplayResultsProps = {
 }
 
 const DisplayResults = ({id, title, source, sourceName, releaseDate, content} : DisplayResultsProps) : JSX.Element => {
-
     return (
-        <div className='mx-auto w-[85%] text-left font-source-sans-pro'>
+        <div className='mx-auto text-left font-source-sans-pro'>
             <div className='bg-[#f6f6f6]'>
                 <div className='text-green-800'>
                     {source}

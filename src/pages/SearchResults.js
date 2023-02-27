@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react'; 
 import { useSearchParams } from 'react-router-dom';
 import { InputField } from "../common/Components/InputField.tsx";
@@ -27,7 +26,12 @@ const SearchResults = () => {
             }).toString()
         })
     }
-
+    const mockRelevantTopicDateData = [
+        {date : "28 August 2007"},
+        {date : "14 June 2021"},
+        {date : "2 Febuary 2001"},
+        {date : "30 January 2013"}
+    ]
     useEffect(() => {
         axios.get(solrSearchUrl, {
             params : {
@@ -71,27 +75,48 @@ const SearchResults = () => {
                         }} />
                     </div>
                 </div>
-                <div className="flex flex-col gap-8">
-                {
-                    searchResults.length === 0 ? 
-                    <>
-                        <div>No results</div>
-                    </> : 
-                    searchResults.map((record) => {
-                        return (
-                            <div>
-                                <DisplayResults 
-                                    id={record.id}
-                                    title={record.title}
-                                    source={record.source}
-                                    sourceName={record.sourceName}
-                                    releaseDate={record.releaseDate}
-                                    content={record.content}
-                                />
-                            </div>
-                        )
-                    })
-                }
+                <div className='flex flex-row'>
+                    <div className="flex flex-col gap-8 w-10/12">
+                        <div className='text-xl font-semibold text-left'>
+                            Relevant News Articles
+                        </div>
+                        {
+                            searchResults.length === 0 ? 
+                            <>
+                                <div>No results</div>
+                            </> : 
+                            searchResults.map((record) => {
+                                return (
+                                    <DisplayResults 
+                                        id={record.id}
+                                        title={record.title}
+                                        source={record.source}
+                                        sourceName={record.sourceName}
+                                        releaseDate={record.releaseDate}
+                                        content={record.content}
+                                    />
+                                )   
+                            })
+                        }
+                    </div>
+                    <div className='flex flex-col w-2/12 px-3 gap-4'>
+                        <div className='text-xl font-semibold text-left'>
+                            Topic Most Relevant During These Times
+                        </div>
+                        {/* Using mock data right now */}
+                        <div className='flex flex-col gap-4'>
+                            {
+                                mockRelevantTopicDateData.map((elem, idx) => {
+                                    return (
+                                        <div className='text-left text-base flex flex-row'>
+                                            <div className='font-bold'>{idx + 1}.&nbsp;</div>
+                                            {elem.date}
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
