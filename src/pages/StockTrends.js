@@ -1,18 +1,15 @@
 import React, {useState} from "react";
-// import Datepicker from "react-tailwindcss-datepicker";
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { CalendarPicker, StaticDatePicker } from "@mui/x-date-pickers";
-import { LocalizationProvider } from '@mui/x-date-pickers';
+import { StaticDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
 const StockTrends = () => {
     const defaultStartDate = new Date();
     const defaultEndDate = new Date();
-    const [startDate, setStartDate] = React.useState(
+    const [startDate, setStartDate] = useState(
         defaultStartDate.getMonth() + "/" + defaultStartDate.getDate() + "/" + defaultStartDate.getFullYear()
     );
-    const [endDate, setEndDate] = React.useState(
+    const [endDate, setEndDate] = useState(
         defaultEndDate.getMonth() + "/" + defaultEndDate.getDate() + "/" + defaultEndDate.getFullYear()
     );
 
@@ -31,10 +28,7 @@ const StockTrends = () => {
             <div className="flex flex-row justify-center gap-[20vw]">
                 <div className="flex flex-col gap-4">
                     <div className="text-3xl font-bold text-center"> 
-                        From
-                    </div>
-                    <div className="text-xl font-bold text-center">
-                        {startDate}
+                        From: {startDate}
                     </div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <StaticDatePicker
@@ -55,10 +49,7 @@ const StockTrends = () => {
                 </div>
                 <div className="flex flex-col gap-4">
                     <div className="text-3xl font-bold text-center">
-                        To
-                    </div>
-                    <div className="text-xl font-bold text-center">
-                        {endDate}
+                        To: {endDate}
                     </div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <StaticDatePicker
