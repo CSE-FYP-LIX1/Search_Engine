@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { StaticDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { createSearchParams, useNavigate } from "react-router-dom";
+import { Button } from "../common/Components/Button.tsx";
 
 const StockTrends = () => {
     const defaultStartDate = new Date();
@@ -12,6 +14,18 @@ const StockTrends = () => {
     const [endDate, setEndDate] = useState(
         defaultEndDate.getMonth() + "/" + defaultEndDate.getDate() + "/" + defaultEndDate.getFullYear()
     );
+
+    const navigate = useNavigate(); 
+
+    const navigateWithRange = (startDate, endDate) => {
+        navigate({
+            pathname: "/stock-trends-results",
+            search: createSearchParams({
+                startDate: startDate,
+                endDate: endDate
+            }).toString()
+        })
+    }
 
     return (
         <div className="flex flex-col gap-8 my-[5vh]">
@@ -66,6 +80,14 @@ const StockTrends = () => {
                         />
                     </LocalizationProvider>
                 </div>
+            </div>
+            <div>
+                <Button 
+                    buttonCallback={()=>navigateWithRange(startDate, endDate)}
+                    customStyles={["w-[200px]"]}
+                >
+                    Search
+                </Button>
             </div>
         </div>
     )
