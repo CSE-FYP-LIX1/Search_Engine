@@ -2,7 +2,7 @@
 
 Website for querying the SOLR database holding financial news article and visualising insights drawn
 
-Hosted on : https://fyp-search-engine.netlify.app/search
+Hosted on: https://fyp-search-engine.netlify.app
 
 **Steps to run the web app:**
 
