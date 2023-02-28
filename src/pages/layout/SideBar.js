@@ -7,8 +7,8 @@ const SideBar = () => {
 
     const TabProps = [
         {"title" : "Search Engine", "path" : "/search"},
-        {"title" : "Market Trends", "path" : "/search-results"},
-        {"title" : "Market Trends Real", "path" : "/market-trends"}
+        {"title" : "Stock Trends" , "path" : "/stock-trends"},
+        {"title" : "Market Trends", "path" : "/market-trends"},
     ]
     
     const setCurrentActiveTab = (curActive) => {
