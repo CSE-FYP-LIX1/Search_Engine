@@ -10,7 +10,8 @@ module.exports = {
   theme: {
     fontFamily : {
       'source-sans-pro': ['"Source Sans Pro"'],
-      'rubik': ['Rubik']
+      'rubik': ['Rubik'],
+      'sans' : ['Rubik'] // Default font Rubik
 
     },
     fontWeight : {
