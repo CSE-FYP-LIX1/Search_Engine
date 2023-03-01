@@ -4,6 +4,7 @@ import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import DisplayResults from "../common/Components/DisplayResults.tsx";
 import axios from "axios";
+import { solrSearchUrl } from "../constants"; 
 // import Axios from '../axios';
 // import UserInput from '../common/Components/userInput';
 
@@ -13,7 +14,7 @@ const SearchResults = () => {
     // const [searchQuery, setSearchQuery] = useState(searchParams.get("query"));
     // const [solrSearchUrl, setSolrSearchUrl] = useState("http://localhost:8983/solr/fyp_documents/select");
     const searchQuery = searchParams.get("query");
-    const solrSearchUrl = "http://localhost:8983/solr/fyp_documents/select";
+    // const solrSearchUrl = "http://localhost:8983/solr/fyp_documents/select";
     const [searchResults, setSearchResults] = useState([]); 
 
     const navigate = useNavigate();
@@ -62,7 +63,7 @@ const SearchResults = () => {
         //         // setLdaData(ldaDataResults);
         //         console.log(ldaDataResults);
         //     })
-    }, [searchQuery, searchParams, query, solrSearchUrl])
+    }, [searchQuery, searchParams, query])
     
     return (
         <>

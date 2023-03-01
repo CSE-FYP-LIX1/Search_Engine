@@ -9,7 +9,9 @@ module.exports = {
   ],
   theme: {
     fontFamily : {
-      'source-sans-pro': ['"Source Sans Pro"']
+      'source-sans-pro': ['"Source Sans Pro"'],
+      'rubik': ['Rubik']
+
     },
     fontWeight : {
       'extra-bold' : '1000',

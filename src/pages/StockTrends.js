@@ -4,15 +4,14 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { StaticDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "../common/Components/Button.tsx";
-
+import { defaultStartDate } from "../constants"; 
 const StockTrends = () => {
-    const defaultStartDate = new Date();
     const defaultEndDate = new Date();
     const [startDate, setStartDate] = useState(
-        defaultStartDate.getMonth() + "/" + defaultStartDate.getDate() + "/" + defaultStartDate.getFullYear()
+        (defaultStartDate.getMonth() + 1) + "/" + defaultStartDate.getDate() + "/" + defaultStartDate.getFullYear()
     );
     const [endDate, setEndDate] = useState(
-        defaultEndDate.getMonth() + "/" + defaultEndDate.getDate() + "/" + defaultEndDate.getFullYear()
+        (defaultEndDate.getMonth() + 1) + "/" + defaultEndDate.getDate() + "/" + defaultEndDate.getFullYear()
     );
 
     const navigate = useNavigate(); 
@@ -40,9 +39,12 @@ const StockTrends = () => {
                 </div>
             </div>
             <div className="flex flex-row justify-center gap-[20vw]">
-                <div className="flex flex-col gap-4">
-                    <div className="text-3xl font-bold text-center"> 
-                        From: {startDate}
+                <div className="flex flex-col gap-2">
+                    <div className="text-2xl font-bold text-center"> 
+                        From:
+                    </div>
+                    <div className="text-2xl font-medium text-center">
+                        {startDate}
                     </div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <StaticDatePicker
@@ -61,9 +63,12 @@ const StockTrends = () => {
                         />
                     </LocalizationProvider>
                 </div>
-                <div className="flex flex-col gap-4">
-                    <div className="text-3xl font-bold text-center">
-                        To: {endDate}
+                <div className="flex flex-col gap-2">
+                    <div className="text-2xl font-bold text-center">
+                        To:
+                    </div>
+                    <div className="text-2xl font font-medium text-center">
+                        {endDate}
                     </div>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <StaticDatePicker
@@ -81,7 +86,7 @@ const StockTrends = () => {
                     </LocalizationProvider>
                 </div>
             </div>
-            <div>
+            <div className="mx-auto">
                 <Button 
                     buttonCallback={()=>navigateWithRange(startDate, endDate)}
                     customStyles={["w-[200px]"]}

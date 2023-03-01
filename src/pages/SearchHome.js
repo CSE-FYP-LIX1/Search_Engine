@@ -20,7 +20,7 @@ const SearchHome = () => {
     }
     return (
         <>
-            <div className="px-32 py-[52px] z-10 relative overflow-auto h-full font-source-sans-pro flex flex-col gap-[10vh]">
+            <div className="px-32 py-8 z-10 relative overflow-auto h-full font-source-sans-pro flex flex-col gap-4">
                 <div className="flex flex-col gap-3 align-middle">
                     <div className="text-2xl text-center">Financial News Search</div>
                     <div className="mx-auto">
@@ -37,7 +37,7 @@ const SearchHome = () => {
                         </Button>
                     </div>
                 </div>
-                <div className="text-center text-xl font-bold">
+                <div className="mt-4 text-center text-xl font-bold">
                     Suggested Topics
                 </div>
                 <div>

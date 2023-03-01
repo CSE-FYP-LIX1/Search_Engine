@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect } from "react";
 import React from 'react';
 import {
   Chart as ChartJS,
@@ -14,23 +12,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 
-const MarketTrends = () => {
-    useEffect(() => {
-        axios.get("http://localhost:8983/solr/snp500/select", {
-            params : {
-                // "fl": props.fetchFields,
-                "q": "Date:[2013-07-17T00\\:00\\:00Z TO NOW]",
-                "indent": true,
-                "q.op": "OR",
-                "rows" : 200
-            }
-        }).then(res => {
-            console.log(res.data.response.docs);
-        }).catch(err => {
-            console.log(`The error is ${err}`)
-        })
-    }, [])
-
+const StockTrendsChart = ({startDate, endDate, stockData}) => {
     ChartJS.register(
         CategoryScale,
         LinearScale,
@@ -46,13 +28,18 @@ const MarketTrends = () => {
         responsive: true,
         plugins: {
           legend: {
-            position: 'top',
+            position: 'bottom',
           },
           title: {
             display: true,
-            text: 'Chart.js Line Chart',
+            text: `S&P 500 index from ${startDate} to ${endDate}`,
+            font: {
+              size : 20,
+            },
+            color: 'black'
           },
         },
+        aspectRatio : 5,
       };
       
     const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
@@ -73,11 +60,9 @@ const MarketTrends = () => {
       };
 
     return (
-        <div>
-            <Line options={options} data={data} />;
-        </div>
+      <Line options={options} data={data} />
     )
 }
 
-export default MarketTrends; 
+export default StockTrendsChart; 
 
