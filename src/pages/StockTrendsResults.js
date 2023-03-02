@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { snpSearchUrl } from "../constants";
 import axios from "axios";
 import StockTrendsChart from "../common/Components/StockTrendChart";
+import TopicBreakdownPieChart from "../common/Components/TopicBreakdownPieChart";
 
 const StockTrendsResults = () => {
     const [searchParams] = useSearchParams(); 
@@ -63,7 +64,7 @@ const StockTrendsResults = () => {
                     </div>
                 </div>
                 <div>
-                    Pie Chart Goes Here
+                    <TopicBreakdownPieChart />
                 </div>
             </div>
         </div>
