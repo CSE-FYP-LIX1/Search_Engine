@@ -39,7 +39,19 @@ const StockTrendsChart = ({startDate, endDate, stockData}) => {
             color: 'black'
           },
         },
-        aspectRatio : 5,
+        aspectRatio: 5,
+        scales: {
+          x : {
+            grid : {
+              display: false
+            }
+          }, 
+          y : {
+            grid : {
+              display : false
+            }
+          }
+        }
       };
       
     const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];

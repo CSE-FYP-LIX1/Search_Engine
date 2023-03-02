@@ -8,11 +8,10 @@ const SideBar = () => {
     const TabProps = [
         {"title" : "Search Engine", "path" : "/search"},
         {"title" : "Stock Trends" , "path" : "/stock-trends"},
-        {"title" : "Market Trends", "path" : "/market-trends"},
     ]
     
     const setCurrentActiveTab = (curActive) => {
-        setCurActive(curActive); 
+        setCurActive(curActive);  
     }
 
     return (

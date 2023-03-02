@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useSearchParams } from 'react-router-dom';
 import { snpSearchUrl } from "../constants";
 import axios from "axios";
-import StockTrendsChart from "./StockTrendChart";
+import StockTrendsChart from "../common/Components/StockTrendChart";
 
 const StockTrendsResults = () => {
     const [searchParams] = useSearchParams(); 
