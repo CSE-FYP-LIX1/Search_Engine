@@ -26,6 +26,11 @@ const StockTrends = () => {
         })
     }
 
+    const minDate = new Date("2006-11-01"); 
+    const maxDate = new Date("2023-12-31");
+    const [curEndDate, setCurEndDate] = useState(new Date());
+    
+
     return (
         <div className="flex flex-col gap-8 my-[5vh]">
             <div className="flex flex-col text-3xl">
@@ -60,6 +65,8 @@ const StockTrends = () => {
                             }
                             componentsProps={{ actionBar: { actions: [] } }}
                             showToolbar={false}
+                            minDate={new Date(minDate)}
+                            maxDate={curEndDate}
                         />
                     </LocalizationProvider>
                 </div>
@@ -78,10 +85,13 @@ const StockTrends = () => {
                             onChange={(newValue) => {
                                 let tempMonth = newValue.$M + 1;
                                 setEndDate(tempMonth + "/" + newValue.$D + "/" + newValue.$y);
+                                setCurEndDate(new Date(newValue.$y + "-" + tempMonth + "-" + newValue.$D)); 
                             }}
                             renderInput={(params) => <TextField {...params} />}
                             componentsProps={{ actionBar: { actions: [] }}}
                             showToolbar={false}
+                            minDate={new Date(minDate)}
+                            maxDate={new Date(maxDate)}
                         />
                     </LocalizationProvider>
                 </div>
