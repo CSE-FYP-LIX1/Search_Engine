@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import SideBar from "./pages/layout/SideBar";
 import SearchHome from "./pages/SearchHome";
 import SearchResults from "./pages/SearchResults";
-import StockTrendsChart from "./common/Components/StockTrendChart";
 import StockTrends from "./pages/StockTrends";
 import StockTrendsResults from "./pages/StockTrendsResults";
 
