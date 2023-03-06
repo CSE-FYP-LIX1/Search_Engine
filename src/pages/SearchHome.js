@@ -4,6 +4,8 @@ import { Button } from "../common/Components/Button.tsx";
 import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ImageCarousel } from "../common/Components/ImageCarousel.tsx";
+import ImageNavBar from "../common/Components/ImageNavBar.tsx";
+import { StockChartSvg } from "../assets/svgs";
 import * as te from 'tw-elements';
 
 const SearchHome = () => {
@@ -20,11 +22,11 @@ const SearchHome = () => {
     }
     return (
         <>
-            <div className="px-32 py-8 z-10 relative overflow-auto h-full font-source-sans-pro flex flex-col gap-4">
+            <div className="px-32 py-8 z-10 relative overflow-auto h-full font-source-sans-pro flex flex-col gap-4 bg-[#8FD0EC]">
                 <div className="flex flex-col gap-3 align-middle">
                     <div className="text-2xl text-center">Financial News Search</div>
                     <div className="mx-auto">
-                        <InputField customStyles={["py-2", "w-[800px]", "text-xl"]} inputCallback={(query) => setQuery(query)} onKeyDownCallback={() => {
+                        <InputField customStyles={["py-2", "w-[800px]", "text-xl", "bg-white"]} inputCallback={(query) => setQuery(query)} onKeyDownCallback={() => {
                             navigateWithQuery(query);
                         }}/>
                     </div>
@@ -36,7 +38,18 @@ const SearchHome = () => {
                             Search
                         </Button>
                     </div>
+                    <div className="mx-auto">
+                        <ImageNavBar 
+                            ImageNavElements={
+                                [
+                                    {link : "/", svg: <StockChartSvg width={"40px"} height={"40px"}/>, hoverText: "Go to the search engine to search for specific topics"}
+                                ]
+                            }
+                        />
+                    </div>
                 </div>
+            </div>
+            <div>
                 <div className="mt-4 text-center text-xl font-bold">
                     Suggested Topics
                 </div>

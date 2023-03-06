@@ -14,7 +14,12 @@ module.exports = {
       },
       fontWeight : {
         'extra-bold' : '1000',
-      }
+      },
+      transitionProperty: {
+        'width': 'width',
+        'display': 'display'
+      },
+      display: ["group-hover"],
     }
   },
   plugins: [
