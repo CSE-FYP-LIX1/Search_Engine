@@ -5,8 +5,9 @@ import axios from "axios";
 import StockTrendsChart from "../common/Components/StockTrendChart";
 import TopicBreakdownPieChart from "../common/Components/TopicBreakdownPieChart";
 import { LeftArrowSvg } from "../assets/svgs";
-// import Modal from '@mui/material/Modal';
-// import Button from '@mui/material/Button';
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
 
 
 const StockTrendsResults = () => {
@@ -22,9 +23,16 @@ const StockTrendsResults = () => {
 
     const navigateToStockTrendsHome = () => navigate("/stock-trends");
     
-    // const [open, setOpen] = React.useState(false);
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => setOpen(false);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    
+    const [selectedTopic, setSelectedTopic] = useState(); 
+
+    const getSelectedTopicInfo = (selectedTopic) => {
+        //Call selected topic api w/ date and selectedTopic
+        setSelectedTopic(selectedTopic); 
+    }
 
     useEffect(() => {
         axios.get(snpSearchUrl, {
@@ -51,6 +59,18 @@ const StockTrendsResults = () => {
         {topic: "World Cup", weight:"15"}   
     ]
 
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+        width: "80vw",
+    }
+
     return (
         <div className="flex flex-col gap-4">
             <div className='rounded-full bg-white hover:bg-button-hover w-fit p-2 absolute top-1 left-1' onClick={()=>navigateToStockTrendsHome()}>
@@ -65,14 +85,20 @@ const StockTrendsResults = () => {
             </div>
             <div className="flex flex-row justify-center gap-[30vw] font-rubik">
                 <div className="flex flex-col text-2xl gap-4">
-                    <div>
+                    <div className="text-center">
                         <span className="font-bold">Top 5</span> topics during this time
+                        <div className="text-base text-center">
+                            Click on the topics for more details
+                        </div>
                     </div>
                     <div className="font-semibold">
                         {
                             mockTop5Data.map((elem) => {
                                 return (
-                                    <div className="text-center">
+                                    <div className="text-center hover:text-[#474747]" onClick={() => {
+                                        handleOpen();
+                                        getSelectedTopicInfo(elem.topic); 
+                                    }}>
                                         {elem.topic} &#40;{elem.weight}%&#41;	
                                     </div>
                                 )
@@ -83,18 +109,27 @@ const StockTrendsResults = () => {
                 <div>
                     <TopicBreakdownPieChart />
                 </div>
-                {/* <Button onClick={handleOpen}>Open modal</Button>
-
                 <Modal
                     open={open}
                     onClose={handleClose}
-                    aria-labelledby="modal-modal-title"
-                    aria-describedby="modal-modal-description"
+                    closeAfterTransition
                 >
-                    <div>
-                        wow
-                    </div>
-                </Modal> */}
+                    <Box sx={style}>
+                        <Typography id="modal-modal-title" 
+                            variant="h6" component="h2" className="text-center">
+                            This is the selected topic: {selectedTopic}.
+                        </Typography>
+                        <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
+                        <Typography id="modal-modal-description"
+                            sx={{ mt: 2 }}>
+                            <div className="text-center">
+                                {/* Link up to api */}
+                                <span className="text-[#44AD3A]">0.44</span> correlation
+                            </div>
+                        </Typography>
+                    </Box>
+                </Modal>
+                
             </div>
         </div>
     )
