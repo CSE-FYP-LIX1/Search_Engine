@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from "react";
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { snpSearchUrl } from "../constants";
 import axios from "axios";
 import StockTrendsChart from "../common/Components/StockTrendChart";
 import TopicBreakdownPieChart from "../common/Components/TopicBreakdownPieChart";
+import { LeftArrowSvg } from "../assets/svgs";
 
 const StockTrendsResults = () => {
+    const navigate = useNavigate(); 
     const [searchParams] = useSearchParams(); 
     const startDate = new Date(searchParams.get("startDate")); 
     const endDate = new Date(searchParams.get("endDate"));
@@ -14,6 +16,8 @@ const StockTrendsResults = () => {
     const solrEndDate = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate(); 
 
     const [snpData, setSnpData] = useState(); 
+
+    const navigateToStockTrendsHome = () => navigate("/stock-trends"); 
 
     useEffect(() => {
         axios.get(snpSearchUrl, {
@@ -41,7 +45,13 @@ const StockTrendsResults = () => {
     ]
 
     return (
-        <div className="flex flex-col gap-4 mt-2">
+        <div className="flex flex-col gap-4">
+            <div className='rounded-full bg-white hover:bg-button-hover w-fit p-2 absolute top-1 left-1' onClick={()=>navigateToStockTrendsHome()}>
+                <LeftArrowSvg width={"32px"} height={"32px"}/>
+            </div>
+            <div className="text-2xl font-bold text-center py-3 bg-background-blue">
+                {`S&P 500 index from ${solrStartDate} to ${solrEndDate}`}
+            </div>
             <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
             <div className="mx-auto text-2xl">
                 <span className="text-rose-500 font-bold">-5.5%</span> decrease in index

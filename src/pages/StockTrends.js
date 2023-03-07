@@ -8,6 +8,7 @@ import { defaultStartDate } from "../constants";
 import { MagGlassSvg } from "../assets/svgs";
 import ImageNavBar from "../common/Components/ImageNavBar.tsx";
 
+
 const StockTrends = () => {
     const defaultEndDate = new Date();
     const [startDate, setStartDate] = useState(

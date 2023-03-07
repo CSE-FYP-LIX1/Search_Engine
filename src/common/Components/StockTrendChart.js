@@ -30,14 +30,6 @@ const StockTrendsChart = ({startDate, endDate, stockData}) => {
           legend: {
             position: 'bottom',
           },
-          title: {
-            display: true,
-            text: `S&P 500 index from ${startDate} to ${endDate}`,
-            font: {
-              size : 20,
-            },
-            color: 'black'
-          },
         },
         aspectRatio: 5,
         scales: {
