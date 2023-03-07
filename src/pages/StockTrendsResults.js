@@ -5,6 +5,9 @@ import axios from "axios";
 import StockTrendsChart from "../common/Components/StockTrendChart";
 import TopicBreakdownPieChart from "../common/Components/TopicBreakdownPieChart";
 import { LeftArrowSvg } from "../assets/svgs";
+// import Modal from '@mui/material/Modal';
+// import Button from '@mui/material/Button';
+
 
 const StockTrendsResults = () => {
     const navigate = useNavigate(); 
@@ -17,7 +20,11 @@ const StockTrendsResults = () => {
 
     const [snpData, setSnpData] = useState(); 
 
-    const navigateToStockTrendsHome = () => navigate("/stock-trends"); 
+    const navigateToStockTrendsHome = () => navigate("/stock-trends");
+    
+    // const [open, setOpen] = React.useState(false);
+    // const handleOpen = () => setOpen(true);
+    // const handleClose = () => setOpen(false);
 
     useEffect(() => {
         axios.get(snpSearchUrl, {
@@ -76,6 +83,18 @@ const StockTrendsResults = () => {
                 <div>
                     <TopicBreakdownPieChart />
                 </div>
+                {/* <Button onClick={handleOpen}>Open modal</Button>
+
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <div>
+                        wow
+                    </div>
+                </Modal> */}
             </div>
         </div>
     )

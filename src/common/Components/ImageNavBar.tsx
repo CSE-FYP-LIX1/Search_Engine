@@ -19,13 +19,13 @@ const ImageNavBar = ({ImageNavElements} : ImageNavBarProps) => {
             {
                 ImageNavElements.map((elem) => {
                     return (
-                        <div className="flex flex-row overflow-hidden w-12 h-12 px-1 transition-all hover:w-[300px] duration-1000 bg-white rounded-full" onClick={()=>navigate(elem.link)}>
-                            <div className="my-auto">
+                        <div className="flex flex-row overflow-hidden w-12 h-12 transition-all hover:w-[300px] duration-1000 bg-white rounded-full" onClick={()=>navigate(elem.link)}>
+                            <div className="my-auto px-2">
                                 {
                                     elem.svg
                                 }
                             </div>
-                            <div className="my-auto text-center text-base">
+                            <div className="my-auto text-center text-base px-1">
                                 {elem.hoverText}
                             </div>
                         </div>

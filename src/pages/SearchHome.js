@@ -22,7 +22,7 @@ const SearchHome = () => {
     }
 
     const ImageNavElements = [
-        {link : "/stock-trends", svg: <StockChartSvg width={"40px"} height={"40px"}/>, hoverText: "Go to the stock trend page to view the top topics across of time"}
+        {link : "/stock-trends", svg: <StockChartSvg width={"32px"} height={"32px"}/>, hoverText: "Go to the stock trend page to view the top topics across of time"}
     ]
 
     return (

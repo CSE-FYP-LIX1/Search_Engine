@@ -35,7 +35,7 @@ const StockTrends = () => {
     const [curEndDate, setCurEndDate] = useState(new Date());
     
     const ImageNavElements = [
-        {link: "/search", svg: <MagGlassSvg width={"36px"} height={"36px"} />, hoverText: "Go to the search engine to search for specific topics"}
+        {link: "/search", svg: <MagGlassSvg width={"28px"} height={"28px"} />, hoverText: "Go to the search engine to search for specific topics"}
     ]
 
     return (
