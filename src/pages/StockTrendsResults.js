@@ -117,7 +117,7 @@ const StockTrendsResults = () => {
                     <Box sx={style}>
                         <Typography id="modal-modal-title" 
                             variant="h6" component="h2" className="text-center">
-                            This is the selected topic: {selectedTopic}.
+                            This is the selected topic: {selectedTopic}. <br /> {solrStartDate} to {solrEndDate}
                         </Typography>
                         <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
                         <Typography id="modal-modal-description"
