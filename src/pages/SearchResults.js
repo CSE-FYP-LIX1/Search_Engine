@@ -1,20 +1,17 @@
 import { useEffect, useState } from 'react'; 
+import { Button } from "../common/Components/Button.tsx";
 import { useSearchParams } from 'react-router-dom';
 import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import DisplayResults from "../common/Components/DisplayResults.tsx";
 import axios from "axios";
 import { solrSearchUrl } from "../constants"; 
-// import Axios from '../axios';
-// import UserInput from '../common/Components/userInput';
+import { LeftArrowSvg } from '../assets/svgs';
 
 const SearchResults = () => {
     const [searchParams] = useSearchParams();
     const [query, setQuery] = useState(searchParams.get("query"));
-    // const [searchQuery, setSearchQuery] = useState(searchParams.get("query"));
-    // const [solrSearchUrl, setSolrSearchUrl] = useState("http://localhost:8983/solr/fyp_documents/select");
     const searchQuery = searchParams.get("query");
-    // const solrSearchUrl = "http://localhost:8983/solr/fyp_documents/select";
     const [searchResults, setSearchResults] = useState([]); 
 
     const navigate = useNavigate();
@@ -27,12 +24,17 @@ const SearchResults = () => {
             }).toString()
         })
     }
+
+    const navigateToSearchHome = () => navigate("/search");
+
     const mockRelevantTopicDateData = [
         {date : "28 August 2007"},
         {date : "14 June 2021"},
         {date : "2 Febuary 2001"},
         {date : "30 January 2013"}
     ]
+
+    /*eslint-disable */
     useEffect(() => {
         axios.get(solrSearchUrl, {
             params : {
@@ -63,19 +65,33 @@ const SearchResults = () => {
         //         // setLdaData(ldaDataResults);
         //         console.log(ldaDataResults);
         //     })
-    }, [searchQuery, searchParams, query])
+    }, [searchQuery, searchParams])
     
     return (
         <>
-            <div className="px-32 py-[52px] z-10 relative overflow-auto h-full font-source-sans-pro">
+            <div className="px-32 py-[52px] relative overflow-auto h-full bg-[#8FD0EC]">
+                <div className='rounded-full bg-white hover:bg-[#E9F4F9] w-fit p-2' onClick={()=>navigateToSearchHome()}>
+                    <LeftArrowSvg width={"40px"} height={"40px"}/>
+                </div>
                 <div className="flex flex-col gap-4 mb-4">
+                    <div className="text-2xl text-center">Financial News Search</div>
                     <div className="mx-auto">
-                        <InputField customStyles={["py-4", "w-[600px]", "text-2xl"]} query={query} inputCallback={(query) => setQuery(query)} onKeyDownCallback={() => {
+                        <InputField customStyles={["py-4", "w-[600px]", "text-2xl", "bg-white"]} query={query} inputCallback={(query) => setQuery(query)} onKeyDownCallback={() => {
                             console.log("Enter is being clicked")
                             navigateWithQuery(query);
                         }} />
                     </div>
+                    <div className="mx-auto">
+                        <Button 
+                            buttonCallback={()=>navigateWithQuery(query)}
+                            customStyles={["w-[200px]"]}
+                        >
+                            Search
+                        </Button>
+                    </div>
                 </div>
+            </div>
+            <div className='px-32 py-[52px] relative overflow-auto h-full'>
                 <div className='flex flex-row'>
                     <div className="flex flex-col gap-8 w-10/12">
                         <div className='text-xl font-semibold text-left'>

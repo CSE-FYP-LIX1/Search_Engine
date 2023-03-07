@@ -42,7 +42,7 @@ const SearchHome = () => {
                         <ImageNavBar 
                             ImageNavElements={
                                 [
-                                    {link : "/", svg: <StockChartSvg width={"40px"} height={"40px"}/>, hoverText: "Go to the search engine to search for specific topics"}
+                                    {link : "/stock-trends", svg: <StockChartSvg width={"40px"} height={"40px"}/>, hoverText: "Go to the stock trend page to view the top topics across of time"}
                                 ]
                             }
                         />
