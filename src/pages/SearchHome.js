@@ -20,9 +20,14 @@ const SearchHome = () => {
             }).toString()
         })
     }
+
+    const ImageNavElements = [
+        {link : "/stock-trends", svg: <StockChartSvg width={"40px"} height={"40px"}/>, hoverText: "Go to the stock trend page to view the top topics across of time"}
+    ]
+
     return (
         <>
-            <div className="px-32 py-8 z-10 relative overflow-auto h-full font-source-sans-pro flex flex-col gap-4 bg-[#8FD0EC]">
+            <div className="px-32 py-8 z-10 relative overflow-auto h-full font-source-sans-pro flex flex-col gap-4 bg-background-blue">
                 <div className="flex flex-col gap-3 align-middle">
                     <div className="text-2xl text-center">Financial News Search</div>
                     <div className="mx-auto">
@@ -40,11 +45,7 @@ const SearchHome = () => {
                     </div>
                     <div className="mx-auto">
                         <ImageNavBar 
-                            ImageNavElements={
-                                [
-                                    {link : "/stock-trends", svg: <StockChartSvg width={"40px"} height={"40px"}/>, hoverText: "Go to the stock trend page to view the top topics across of time"}
-                                ]
-                            }
+                            ImageNavElements={ImageNavElements}
                         />
                     </div>
                 </div>

@@ -69,8 +69,8 @@ const SearchResults = () => {
     
     return (
         <>
-            <div className="px-32 py-[52px] relative overflow-auto h-full bg-[#8FD0EC]">
-                <div className='rounded-full bg-white hover:bg-[#E9F4F9] w-fit p-2' onClick={()=>navigateToSearchHome()}>
+            <div className="px-32 py-[52px] relative overflow-auto h-full bg-background-blue">
+                <div className='rounded-full bg-white hover:bg-button-hover w-fit p-2' onClick={()=>navigateToSearchHome()}>
                     <LeftArrowSvg width={"40px"} height={"40px"}/>
                 </div>
                 <div className="flex flex-col gap-4 mb-4">

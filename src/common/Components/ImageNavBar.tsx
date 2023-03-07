@@ -25,7 +25,7 @@ const ImageNavBar = ({ImageNavElements} : ImageNavBarProps) => {
                                     elem.svg
                                 }
                             </div>
-                            <div className="my-auto text-center">
+                            <div className="my-auto text-center text-base">
                                 {elem.hoverText}
                             </div>
                         </div>

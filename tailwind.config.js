@@ -20,7 +20,11 @@ module.exports = {
         'display': 'display'
       },
       display: ["group-hover"],
-    }
+      colors: {
+        'background-blue' : "#8FD0EC",
+        'button-hover' : "#E9F4F9",
+      }
+    },
   },
   plugins: [
       require('@tailwindcss/line-clamp'),

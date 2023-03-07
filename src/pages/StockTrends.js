@@ -5,6 +5,9 @@ import { StaticDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "../common/Components/Button.tsx";
 import { defaultStartDate } from "../constants"; 
+import { MagGlassSvg } from "../assets/svgs";
+import ImageNavBar from "../common/Components/ImageNavBar.tsx";
+
 const StockTrends = () => {
     const defaultEndDate = new Date();
     const [startDate, setStartDate] = useState(
@@ -30,10 +33,13 @@ const StockTrends = () => {
     const maxDate = new Date("2023-12-31");
     const [curEndDate, setCurEndDate] = useState(new Date());
     
+    const ImageNavElements = [
+        {link: "/search", svg: <MagGlassSvg width={"36px"} height={"36px"} />, hoverText: "Go to the search engine to search for specific topics"}
+    ]
 
     return (
-        <div className="flex flex-col gap-8 my-[5vh]">
-            <div className="flex flex-col text-3xl">
+        <div className="flex flex-col gap-8">
+            <div className="flex flex-col text-3xl py-[5vh] bg-background-blue">
                 <div className="flex flex-row mx-auto">
                     Select the date range to view the most&nbsp;
                     <div className="font-bold">relevant topics</div>
@@ -41,6 +47,11 @@ const StockTrends = () => {
                 <div className="flex flex-row mx-auto">
                     and their impact on the&nbsp;
                     <div className="font-bold">S&P500 Index</div>
+                </div>
+                <div className="mx-auto mt-4">
+                    <ImageNavBar 
+                        ImageNavElements={ImageNavElements}
+                    />
                 </div>
             </div>
             <div className="flex flex-row justify-center gap-[20vw]">
