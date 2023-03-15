@@ -1,15 +1,24 @@
 /*eslint-disable*/
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../common/Components/Button.tsx";
 import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ImageCarousel } from "../common/Components/ImageCarousel.tsx";
 import ImageNavBar from "../common/Components/ImageNavBar.tsx";
 import { StockChartSvg } from "../assets/svgs";
+import { carouselSearchUrl } from "../constants"; 
+import { solrAxiosQuery } from '../axios';
 import * as te from 'tw-elements';
 
 const SearchHome = () => {
     const [query, setQuery] = useState("")
+    const [carouselData, setCarouselData] = useState(
+        [
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/041.webp", topicTitle: "temp1", topicSummary: "temp1"},
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/042.webp", topicTitle: "temp2", topicSummary: "temp2"},
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/043.webp", topicTitle: "temp3", topicSummary: "temp3"},
+        ]
+    ); 
     const navigate = useNavigate();
 
     const navigateWithQuery = (query) => {
@@ -24,6 +33,13 @@ const SearchHome = () => {
     const ImageNavElements = [
         {link : "/stock-trends", svg: <StockChartSvg width={"32px"} height={"32px"}/>, hoverText: "Go to the stock trend page to view the top topics across of time"},
     ]
+
+    useEffect(() => {
+        let queryString = "*:*"; 
+        solrAxiosQuery(carouselSearchUrl, queryString, setCarouselData, 4);
+    }, [])
+
+
 
     return (
         <>
@@ -51,17 +67,14 @@ const SearchHome = () => {
                 </div>
             </div>
             <div>
-                <div className="mt-4 text-center text-xl font-bold">
+                <div className="my-4 text-center text-xl font-bold">
                     Suggested Topics
                 </div>
                 <div>
                     <ImageCarousel suggestedTopics={
-                        [
-                            {image: "https://mdbcdn.b-cdn.net/img/new/slides/041.webp", topicTitle: "temp1", topicSummary: "temp1"},
-                            {image: "https://mdbcdn.b-cdn.net/img/new/slides/042.webp", topicTitle: "temp2", topicSummary: "temp2"},
-                            {image: "https://mdbcdn.b-cdn.net/img/new/slides/043.webp", topicTitle: "temp3", topicSummary: "temp3"},
-                        ]
+                        carouselData
                     }/>
+
                 </div>
             </div>
         </>

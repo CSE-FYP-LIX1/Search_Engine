@@ -2,8 +2,8 @@ import React from "react";
 
 type suggestedTopic = {
     image : string;
-    topicTitle : string;
-    topicSummary : string;
+    topic : string;
+    topic_summary : string;
 }
 
 type ImageCarouselProps = {
@@ -33,12 +33,12 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                     data-te-carousel-item
                     data-te-carousel-active>
                     <div className="flex flex-col gap-4">
-                        <img src={suggestedTopics[0].image} className="block w-1/2 mx-auto" alt={suggestedTopics[0].topicTitle} />
+                        <img src={suggestedTopics[0].image} className="block mx-auto h-2/12 object-contain" alt={suggestedTopics[0].topic} />
                         <div className="w-1/2 text-center mx-auto font-bold text-xl">
-                            {suggestedTopics[0].topicTitle}
+                            {suggestedTopics[0].topic}
                         </div>
                         <div className="w-1/2 text-center mx-auto text-sm">
-                            {suggestedTopics[0].topicSummary}
+                            {suggestedTopics[0].topic_summary}
                         </div>
                     </div>
                 </div>
@@ -49,12 +49,12 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                                 <div className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
                                     data-te-carousel-item>
                                     <div className="flex flex-col gap-4">
-                                        <img src={elem.image} className="block w-1/2 mx-auto" alt={elem.topicTitle} />
+                                        <img src={elem.image} className="block mx-auto h-2/12 object-contain" alt={elem.topic} />
                                         <div className="w-1/2 text-center mx-auto font-bold text-xl">
-                                            {elem.topicTitle}
+                                            {elem.topic}
                                         </div>
                                         <div className="w-1/2 text-center mx-auto text-sm">
-                                            {elem.topicSummary}
+                                            {elem.topic_summary}
                                         </div>
                                     </div>
                                 </div>
