@@ -14,9 +14,9 @@ const SearchHome = () => {
     const [query, setQuery] = useState("")
     const [carouselData, setCarouselData] = useState(
         [
-            {image: "https://mdbcdn.b-cdn.net/img/new/slides/041.webp", topicTitle: "temp1", topicSummary: "temp1"},
-            {image: "https://mdbcdn.b-cdn.net/img/new/slides/042.webp", topicTitle: "temp2", topicSummary: "temp2"},
-            {image: "https://mdbcdn.b-cdn.net/img/new/slides/043.webp", topicTitle: "temp3", topicSummary: "temp3"},
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/041.webp", topic: "temp1", topic_summary: "temp1"},
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/042.webp", topic: "temp2", topic_summary: "temp2"},
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/043.webp", topic: "temp3", topic_summary: "temp3"},
         ]
     ); 
     const navigate = useNavigate();
