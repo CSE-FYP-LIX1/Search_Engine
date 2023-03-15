@@ -15,18 +15,15 @@ const StockTrendsResults = () => {
     const [searchParams] = useSearchParams(); 
     const startDate = new Date(searchParams.get("startDate")); 
     const endDate = new Date(searchParams.get("endDate"));
-
     const solrStartDate = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate(); 
     const solrEndDate = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate(); 
 
     const [snpData, setSnpData] = useState(); 
 
-    const navigateToStockTrendsHome = () => navigate("/stock-trends");
     
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    
     const [selectedTopic, setSelectedTopic] = useState(); 
 
     const getSelectedTopicInfo = (selectedTopic) => {
@@ -34,6 +31,8 @@ const StockTrendsResults = () => {
         setSelectedTopic(selectedTopic); 
     }
 
+    const navigateToStockTrendsHome = () => navigate("/stock-trends");
+    
     useEffect(() => {
         axios.get(snpSearchUrl, {
             params : {

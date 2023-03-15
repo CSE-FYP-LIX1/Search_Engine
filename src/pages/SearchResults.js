@@ -7,6 +7,7 @@ import DisplayResults from "../common/Components/DisplayResults.tsx";
 import axios from "axios";
 import { solrSearchUrl } from "../constants"; 
 import { LeftArrowSvg } from '../assets/svgs';
+import { axiosContentQuery } from '../axios';
 
 const SearchResults = () => {
     const [searchParams] = useSearchParams();
@@ -36,36 +37,8 @@ const SearchResults = () => {
 
     /*eslint-disable */
     useEffect(() => {
-        axios.get(solrSearchUrl, {
-            params : {
-                // "fl": props.fetchFields,
-                "q": "content: " + query,
-                "indent": true,
-                "q.op": "OR",
-                "rows": 5
-            }
-        }).then(res => {
-            console.log(res.data.response.docs);
-            setSearchResults(res.data.response.docs); 
-        }).catch(err => {
-            console.log(`The error is ${err}`)
-        })
-
-        // setSolrLdaUrl("http://localhost:8983/solr/lda_data/select")
-        // axios.get("http://localhost:8983/solr/lda_data/select", {
-        //     params: {
-        //         "q": "*:*", //Test query: "id:Russia_25/12/2022_30/12/2022"
-        //         "indent": true,
-        //         "q.op": "OR"
-        //         // "rows": 5
-        //     }
-        // })
-        //     .then(res => {
-        //         const ldaDataResults = res.data.response.docs;
-        //         // setLdaData(ldaDataResults);
-        //         console.log(ldaDataResults);
-        //     })
-    }, [searchQuery, searchParams])
+        axiosContentQuery(solrSearchUrl, searchQuery, setSearchResults);
+    }, [])
     
     return (
         <>
@@ -137,11 +110,6 @@ const SearchResults = () => {
                 </div>
             </div>
         </>
-        // <div className='text-center'>
-        //     {/* <h3>What would you like to search?</h3> */}
-        //     {/* <UserInput query={query} setQuery={setQuery} /> */}
-        //     <Axios query={query} />
-        // </div>
     )
 }
 
