@@ -4,16 +4,16 @@ import { useSearchParams } from 'react-router-dom';
 import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import DisplayResults from "../common/Components/DisplayResults.tsx";
-import axios from "axios";
-import { solrSearchUrl } from "../constants"; 
+import { solrSearchUrl, ldaKeywordSearchUrl } from "../constants"; 
 import { LeftArrowSvg } from '../assets/svgs';
-import { axiosContentQuery } from '../axios';
+import { solrAxiosQuery } from '../axios';
 
 const SearchResults = () => {
     const [searchParams] = useSearchParams();
     const [query, setQuery] = useState(searchParams.get("query"));
     const searchQuery = searchParams.get("query");
     const [searchResults, setSearchResults] = useState([]); 
+    const [relevantDates, setRelevantDates] = useState([]); 
 
     const navigate = useNavigate();
 
@@ -28,17 +28,16 @@ const SearchResults = () => {
 
     const navigateToSearchHome = () => navigate("/search");
 
-    const mockRelevantTopicDateData = [
-        {date : "28 August 2007"},
-        {date : "14 June 2021"},
-        {date : "2 Febuary 2001"},
-        {date : "30 January 2013"}
-    ]
-
     /*eslint-disable */
     useEffect(() => {
-        axiosContentQuery(solrSearchUrl, searchQuery, setSearchResults);
-    }, [])
+        let queryString = "content: " + searchQuery; 
+        solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 10);
+    }, [searchQuery])
+
+    useEffect(() => {
+        let queryString = "Keywords: " + searchQuery; 
+        solrAxiosQuery(ldaKeywordSearchUrl, queryString, setRelevantDates, 10);
+    }, [searchQuery])
     
     return (
         <>
@@ -96,11 +95,15 @@ const SearchResults = () => {
                         {/* Using mock data right now */}
                         <div className='flex flex-col gap-4'>
                             {
-                                mockRelevantTopicDateData.map((elem, idx) => {
+                                relevantDates.sort((a, b) => {return b.Frequency_Count[0] - a.Frequency_Count[0]}).map((elem, idx) => {
+                                    let tempDateObj = new Date(elem.Date); 
+                                    var options = { year: 'numeric', month: 'long' };
+                                    // let dateString = tempDateObj.getFullYear() + "-" + (tempDateObj.getMonth() + 1) + "-" + tempDateObj.getDate(); 
+                                    let dateString = tempDateObj.toLocaleDateString("en-US", options)
                                     return (
                                         <div className='text-left text-base flex flex-row'>
                                             <div className='font-bold'>{idx + 1}.&nbsp;</div>
-                                            {elem.date}
+                                            {dateString} FCount: {elem.Frequency_Count}
                                         </div>
                                     )
                                 })
