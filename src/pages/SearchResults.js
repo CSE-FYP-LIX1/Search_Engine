@@ -30,7 +30,7 @@ const SearchResults = () => {
 
     /*eslint-disable */
     useEffect(() => {
-        let queryString = "content: " + searchQuery; 
+        let queryString = "title: " + searchQuery; 
         solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 10);
     }, [searchQuery])
 
@@ -79,10 +79,10 @@ const SearchResults = () => {
                                     <DisplayResults 
                                         id={record.id}
                                         title={record.title}
-                                        source={record.source}
+                                        source={record.url}
                                         sourceName={record.sourceName}
-                                        releaseDate={record.releaseDate}
-                                        content={record.content}
+                                        releaseDate={record.published_at}
+                                        content={record.description}
                                     />
                                 )   
                             })
