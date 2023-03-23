@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import DisplayResults from "../common/Components/DisplayResults.tsx";
-import { solrSearchUrl, ldaKeywordSearchUrl } from "../constants"; 
+import { solrSearchUrl, ldaKeywordSearchUrl, ldaWeightageSearchUrl } from "../constants"; 
 import { LeftArrowSvg } from '../assets/svgs';
 import { solrAxiosQuery } from '../axios';
 
@@ -36,7 +36,7 @@ const SearchResults = () => {
 
     useEffect(() => {
         let queryString = "Keywords: " + searchQuery; 
-        solrAxiosQuery(ldaKeywordSearchUrl, queryString, setRelevantDates, 10);
+        solrAxiosQuery(ldaWeightageSearchUrl, queryString, setRelevantDates, 10);
     }, [searchQuery])
     
     return (
@@ -95,7 +95,7 @@ const SearchResults = () => {
                         {/* Using mock data right now */}
                         <div className='flex flex-col gap-4'>
                             {
-                                relevantDates.sort((a, b) => {return b.Frequency_Count[0] - a.Frequency_Count[0]}).map((elem, idx) => {
+                                relevantDates.sort((a, b) => {return b.Combined_weightage[0] - a.Combined_weightage[0]}).map((elem, idx) => {
                                     let tempDateObj = new Date(elem.Date); 
                                     var options = { year: 'numeric', month: 'long' };
                                     // let dateString = tempDateObj.getFullYear() + "-" + (tempDateObj.getMonth() + 1) + "-" + tempDateObj.getDate(); 
@@ -103,7 +103,7 @@ const SearchResults = () => {
                                     return (
                                         <div className='text-left text-base flex flex-row'>
                                             <div className='font-bold'>{idx + 1}.&nbsp;</div>
-                                            {dateString} FCount: {elem.Frequency_Count}
+                                            {dateString} Weightage: {elem.Combined_weightage}
                                         </div>
                                     )
                                 })
