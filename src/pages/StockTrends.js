@@ -32,7 +32,9 @@ const StockTrends = () => {
 
     const minDate = new Date("2006-11-01"); 
     const maxDate = new Date("2023-12-31");
-    const [curEndDate, setCurEndDate] = useState(new Date());
+
+    const [curStartDate, setCurStartDate] = useState(minDate); 
+    const [curEndDate, setCurEndDate] = useState(maxDate);
     
     const ImageNavElements = [
         {link: "/search", svg: <MagGlassSvg width={"28px"} height={"28px"} />, hoverText: "Go to the search engine to search for specific topics", title: "Search Engine"},
@@ -72,6 +74,7 @@ const StockTrends = () => {
                             onChange={(newValue) => {
                                 let tempMonth = newValue.$M + 1;
                                 setStartDate(tempMonth + "/" + newValue.$D + "/" + newValue.$y);
+                                setCurStartDate(new Date(newValue.$y + "-" + tempMonth + "-" + newValue.$D))
                             }}
                             renderInput={(params) => 
                                 <TextField {...params}/>
@@ -103,7 +106,7 @@ const StockTrends = () => {
                             renderInput={(params) => <TextField {...params} />}
                             componentsProps={{ actionBar: { actions: [] }}}
                             showToolbar={false}
-                            minDate={new Date(minDate)}
+                            minDate={curStartDate}
                             maxDate={new Date(maxDate)}
                         />
                     </LocalizationProvider>
