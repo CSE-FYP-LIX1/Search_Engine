@@ -17,21 +17,25 @@ const StockTrendsResults = () => {
     const endDate = new Date(searchParams.get("endDate"));
     const solrStartDate = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate(); 
     const solrEndDate = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate(); 
-
     const [snpData, setSnpData] = useState(); 
-
+    
     
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [selectedTopic, setSelectedTopic] = useState(); 
-
+    
     const getSelectedTopicInfo = (selectedTopic) => {
         //Call selected topic api w/ date and selectedTopic
         setSelectedTopic(selectedTopic); 
     }
-
     const navigateToStockTrendsHome = () => navigate("/stock-trends");
+
+    const [percentageDiff, setPercentageDiff] = useState(0); 
+
+    function getPercentageIncrease(numA, numB) {
+        return ((numA - numB) / numB) * 100;
+    }
     
     useEffect(() => {
         axios.get(snpSearchUrl, {
@@ -44,7 +48,16 @@ const StockTrendsResults = () => {
             }
         }).then(res => {
             console.log(res.data.response.docs);
-            setSnpData(res.data.response.docs); 
+            //Reshape StockData
+            const data = []; 
+            res.data.response.docs.map((elem) => {
+                let date = new Date(elem.Date[0]).getTime()
+                data.push([date, elem.Consumer_Price_Index[0]])
+            }); 
+            let chartData = data.sort((a, b) => a[0] - b[0]);  // <-- sort x-axis here
+            setSnpData(chartData); 
+            setPercentageDiff(getPercentageIncrease(chartData[chartData.length - 1][1], chartData[0][1]).toFixed(3));
+            console.log(percentageDiff);
         }).catch(err => {
             console.log(`The error is ${err}`)
         })
@@ -79,9 +92,16 @@ const StockTrendsResults = () => {
                 {`S&P 500 index from ${solrStartDate} to ${solrEndDate}`}
             </div>
             <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
-            <div className="mx-auto text-2xl">
-                <span className="text-rose-500 font-bold">-5.5%</span> decrease in index
-            </div>
+            {
+                percentageDiff > 0 ?
+                <div className="mx-auto text-2xl">
+                    <span className="text-[#6DD778] font-bold">{percentageDiff}</span> increase in index
+                </div> :
+                <div className="mx-auto text-2xl">
+                    <span className="text-[#D63D3D] font-bold">{percentageDiff}</span> decrease in index
+                </div>
+                
+            }
             <div className="flex flex-row justify-center gap-[30vw] font-rubik">
                 <div className="flex flex-col text-2xl gap-4">
                     <div className="text-center">

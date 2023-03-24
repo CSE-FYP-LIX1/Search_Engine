@@ -1,71 +1,102 @@
 import React from 'react';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+import ReactHighcharts from 'react-highcharts/ReactHighstock.src'
+import priceData from './btcData.json'
+import moment from 'moment'
 
 const StockTrendsChart = ({startDate, endDate, stockData}) => {
-    ChartJS.register(
-        CategoryScale,
-        LinearScale,
-        PointElement,
-        LineElement,
-        Title,
-        Tooltip,
-        Filler,
-        Legend
-      );
-      
-    const options = {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'bottom',
-          },
-        },
-        aspectRatio: 5,
-        scales: {
-          x : {
-            grid : {
-              display: false
-            }
-          }, 
-          y : {
-            grid : {
-              display : false
-            }
-          }
-        }
-      };
-      
-    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-      
-    const data = {
-        labels,
-        datasets: [
-          {
-            fill: true,
-            label: 'Dataset 2',
-            data: [
-                {x: 10, y: 20}, {x: 15, y: 15}, {x: 20, y: 10}
-            ],
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          },
-        ],
-      };
+  const options = {style: 'currency', currency: 'USD'};
+  const numberFormat = new Intl.NumberFormat('en-US', options);
 
-    return (
-      <Line options={options} data={data} />
-    )
+  const configPrice = {
+    yAxis: [{
+      offset: 20,
+
+      labels: {
+        formatter: function () {
+          return numberFormat.format(this.value) 
+        }
+        ,
+        x: -15,
+        style: {
+          "color": "#000", "position": "absolute"
+
+        },
+        align: 'left'
+      },
+    },
+      
+    ],
+    tooltip: {
+      shared: true,
+      formatter: function () {
+        return numberFormat.format(this.y, 0) +  '</b><br/>' + moment(this.x).format('MMMM YYYY')
+      }
+    },
+    plotOptions: {
+      series: {
+        showInNavigator: true,
+        gapSize: 6,
+
+      }
+    },
+    rangeSelector: {
+      selected: 1
+    },
+    title: {
+      text: `S&P500 Stock Price (Monthly Increments)`
+    },
+    chart: {
+      height: 600,
+    },
+
+    credits: {
+      enabled: false
+    },
+
+    legend: {
+      enabled: true
+    },
+    xAxis: {
+      type: 'datetime',
+    },
+    rangeSelector: {
+      buttons: [{
+        type: 'year',
+        count: 1,
+        text: '1Y'
+      }, {
+        type: 'year',
+        count: 3,
+        text: '3Y'
+      }, {
+        type: 'year',
+        count: 5,
+        text: '5Y'
+      },
+        {
+        type: 'all',
+        text: 'All'
+      }],
+      selected: 4
+    },
+    series: [{
+      name: 'Price',
+      type: 'spline',
+
+      data: stockData,
+      tooltip: {
+        valueDecimals: 2
+      },
+
+    }
+    ]
+  };
+
+  return (
+    <div>
+      <ReactHighcharts config = {configPrice}></ReactHighcharts>
+    </div>
+  )
 }
 
 export default StockTrendsChart; 
