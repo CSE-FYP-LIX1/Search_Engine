@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { snpSearchUrl } from "../constants";
+import { snpSearchUrl, ldaWeightageSearchUrl } from "../constants";
 import axios from "axios";
 import StockTrendsChart from "../common/Components/StockTrendChart";
 import TopicBreakdownPieChart from "../common/Components/TopicBreakdownPieChart";
@@ -38,6 +38,7 @@ const StockTrendsResults = () => {
     }
     
     useEffect(() => {
+        //UNIQUE BEHAVIOR SO KEEP HERE INSTEAD OF USE solrAxiosQuery
         axios.get(snpSearchUrl, {
             params : {
                 // "fl": props.fetchFields,
@@ -62,6 +63,24 @@ const StockTrendsResults = () => {
             console.log(`The error is ${err}`)
         })
     }, [solrStartDate, solrEndDate])
+
+    useEffect(() => {
+        //UNIQUE BEHAVIOR SO KEEP HERE INSTEAD OF USE solrAxiosQuery
+        axios.get(ldaWeightageSearchUrl, {
+            params : {
+                // "fl": props.fetchFields,
+                "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z]`,
+                "indent": true,
+                "q.op": "OR",
+                "rows" : 200
+            }
+        }).then(res => {
+            console.log(res.data.response.docs);
+            //Reshape StockData
+        }).catch(err => {
+            console.log(`The error is ${err}`)
+        })
+    }, [])
 
     const mockTop5Data = [
         {topic: "Russia", weight: "30"},
@@ -95,10 +114,10 @@ const StockTrendsResults = () => {
             {
                 percentageDiff > 0 ?
                 <div className="mx-auto text-2xl">
-                    <span className="text-[#6DD778] font-bold">{percentageDiff}</span> increase in index
+                    <span className="text-[#6DD778] font-bold">{percentageDiff}%</span> increase in index
                 </div> :
                 <div className="mx-auto text-2xl">
-                    <span className="text-[#D63D3D] font-bold">{percentageDiff}</span> decrease in index
+                    <span className="text-[#D63D3D] font-bold">{percentageDiff}%</span> decrease in index
                 </div>
                 
             }
