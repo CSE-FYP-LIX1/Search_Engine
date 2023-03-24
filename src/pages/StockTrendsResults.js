@@ -51,7 +51,7 @@ const StockTrendsResults = () => {
             console.log(res.data.response.docs);
             //Reshape StockData
             const data = []; 
-            res.data.response.docs.map((elem) => {
+            res.data.response.docs.forEach((elem) => {
                 let date = new Date(elem.Date[0]).getTime()
                 data.push([date, elem.Consumer_Price_Index[0]])
             }); 
@@ -62,7 +62,7 @@ const StockTrendsResults = () => {
         }).catch(err => {
             console.log(`The error is ${err}`)
         })
-    }, [solrStartDate, solrEndDate])
+    }, [solrStartDate, solrEndDate, percentageDiff])
 
     useEffect(() => {
         //UNIQUE BEHAVIOR SO KEEP HERE INSTEAD OF USE solrAxiosQuery
@@ -80,7 +80,7 @@ const StockTrendsResults = () => {
         }).catch(err => {
             console.log(`The error is ${err}`)
         })
-    }, [])
+    })
 
     const mockTop5Data = [
         {topic: "Russia", weight: "30"},

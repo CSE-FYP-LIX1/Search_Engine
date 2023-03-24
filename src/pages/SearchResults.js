@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import DisplayResults from "../common/Components/DisplayResults.tsx";
-import { solrSearchUrl, ldaKeywordSearchUrl, ldaWeightageSearchUrl } from "../constants"; 
+import { solrSearchUrl, ldaWeightageSearchUrl } from "../constants"; 
 import { LeftArrowSvg } from '../assets/svgs';
 import { solrAxiosQuery } from '../axios';
 

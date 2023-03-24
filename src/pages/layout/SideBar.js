@@ -1,3 +1,4 @@
+import React from 'react'; 
 import { Outlet } from "react-router-dom";
 // import { Tabs } from "../../common/Components/Tabs.tsx";
 // import { useState } from "react";

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactHighcharts from 'react-highcharts/ReactHighstock.src'
-import priceData from './btcData.json'
 import moment from 'moment'
 
 const StockTrendsChart = ({startDate, endDate, stockData}) => {
@@ -38,9 +37,6 @@ const StockTrendsChart = ({startDate, endDate, stockData}) => {
         gapSize: 6,
 
       }
-    },
-    rangeSelector: {
-      selected: 1
     },
     title: {
       text: `S&P500 Stock Price (Monthly Increments)`

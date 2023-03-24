@@ -20,7 +20,7 @@ export const CoefficientResults = ({titleColor, title, data} : CoefficientResult
                 {
                     data.map((elem, idx) => {
                         return (
-                            <div className="flex flex-row text-xl">
+                            <div className="flex flex-row text-xl" key={"CoefficientResult" + idx}>
                                 <div className="font-bold">
                                     {idx + 1}.
                                 </div>
