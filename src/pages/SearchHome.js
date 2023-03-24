@@ -5,7 +5,7 @@ import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { ImageCarousel } from "../common/Components/ImageCarousel.tsx";
 import ImageNavBar from "../common/Components/ImageNavBar.tsx";
-import { StockChartSvg } from "../assets/svgs";
+import { PlusMinusSvg, StockChartSvg } from "../assets/svgs";
 import { carouselSearchUrl } from "../constants"; 
 import { solrAxiosQuery } from '../axios';
 import * as te from 'tw-elements';
@@ -32,7 +32,7 @@ const SearchHome = () => {
 
     const ImageNavElements = [
         {link : "/stock-trends", svg: <StockChartSvg width={"32px"} height={"32px"}/>, hoverText: "Go to the stock trend page to view the top topics across of time", title: "Stock Market Trends"},
-        {link : "/stock-trends", svg: <StockChartSvg width={"32px"} height={"32px"}/>, hoverText: "Go to the stock trend page to view the top topics across of time", title: "Stock Market Trends"},
+        {link: "/trendiest-topics", svg: <PlusMinusSvg width={"28px"} height={"28px"} />, hoverText: "Go to the ranking of all topics overtime", title: "Trendiest Topics"},
     ]
 
     useEffect(() => {

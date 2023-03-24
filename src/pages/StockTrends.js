@@ -5,7 +5,7 @@ import { StaticDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "../common/Components/Button.tsx";
 import { defaultStartDate } from "../constants"; 
-import { MagGlassSvg } from "../assets/svgs";
+import { MagGlassSvg, PlusMinusSvg } from "../assets/svgs";
 import ImageNavBar from "../common/Components/ImageNavBar.tsx";
 
 
@@ -35,7 +35,8 @@ const StockTrends = () => {
     const [curEndDate, setCurEndDate] = useState(new Date());
     
     const ImageNavElements = [
-        {link: "/search", svg: <MagGlassSvg width={"28px"} height={"28px"} />, hoverText: "Go to the search engine to search for specific topics"}
+        {link: "/search", svg: <MagGlassSvg width={"28px"} height={"28px"} />, hoverText: "Go to the search engine to search for specific topics", title: "Search Engine"},
+        {link: "/trendiest-topics", svg: <PlusMinusSvg width={"28px"} height={"28px"} />, hoverText: "Go to the ranking of all topics overtime", title: "Trendiest Topics"}
     ]
 
     return (
