@@ -20,7 +20,7 @@ const StockTrendsResults = () => {
     const [snpData, setSnpData] = useState(); 
     const [top5Data, setTop5Data] = useState([]); 
     const [top5DataSeries, setTop5DataSeries] = useState([]); 
-
+    
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -86,7 +86,6 @@ const StockTrendsResults = () => {
                         "rows" : 1000,
                     }
                 }).then(res => {
-                    console.log(res.data.response.docs); 
                     setTop5DataSeries(top5DataSeries => [...top5DataSeries, res.data.response.docs]); 
                 }).catch(err => {
                     console.log(`The error is ${err}`); 
@@ -96,15 +95,6 @@ const StockTrendsResults = () => {
             console.log(`The error is ${err}`)
         })
     }, [])
-
-
-    const mockTop5Data = [
-        {topic: "Russia", weight: "30"},
-        {topic: "COVID-19", weight: "20"},
-        {topic: "Ukraine", weight:"20"},
-        {topic: "War", weight:"15"},
-        {topic: "World Cup", weight:"15"}   
-    ]
 
     const style = {
         position: 'absolute',
@@ -117,7 +107,7 @@ const StockTrendsResults = () => {
         p: 4,
         width: "80vw",
     }
-
+    console.log("This is the top5DataSeries", top5DataSeries);
     return (
         <div className="flex flex-col gap-4">
             <div className='rounded-full bg-white hover:bg-button-hover w-fit p-2 absolute top-1 left-1' onClick={()=>navigateToStockTrendsHome()}>
@@ -137,7 +127,7 @@ const StockTrendsResults = () => {
                 </div>
                 
             }
-            <div className="flex flex-row justify-center gap-[30vw] font-rubik">
+            <div className="flex flex-row justify-center font-rubik mt-6">
                 <div className="flex flex-col text-2xl gap-4">
                     <div className="text-center">
                         <span className="font-bold">Top 5</span> topics during this time
@@ -160,31 +150,30 @@ const StockTrendsResults = () => {
                         }
                     </div>
                 </div>
-                <div>
-                    <TopicBreakdownPieChart data={top5DataSeries}/>
-                </div>
-                <Modal
-                    open={open}
-                    onClose={handleClose}
-                    closeAfterTransition
-                >
-                    <Box sx={style}>
-                        <Typography id="modal-modal-title" 
-                            variant="h6" component="h2" className="text-center">
-                            This is the selected topic: {selectedTopic}. <br /> {solrStartDate} to {solrEndDate}
-                        </Typography>
-                        <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
-                        <Typography id="modal-modal-description"
-                            sx={{ mt: 2 }}>
-                            <div className="text-center">
-                                {/* Link up to api */}
-                                <span className="text-[#44AD3A]">0.44</span> correlation
-                            </div>
-                        </Typography>
-                    </Box>
-                </Modal>
-                
             </div>
+            <div className="w-full mt-6">
+                <TopicBreakdownPieChart top5Data={top5DataSeries} startDate={solrStartDate} endDate={solrEndDate}/>
+            </div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" 
+                        variant="h6" component="h2" className="text-center">
+                        This is the selected topic: {selectedTopic}. <br /> {solrStartDate} to {solrEndDate}
+                    </Typography>
+                    <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
+                    <Typography id="modal-modal-description"
+                        sx={{ mt: 2 }}>
+                        <div className="text-center">
+                            {/* Link up to api */}
+                            <span className="text-[#44AD3A]">0.44</span> correlation
+                        </div>
+                    </Typography>
+                </Box>
+            </Modal>
         </div>
     )
 }

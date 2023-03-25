@@ -2,7 +2,7 @@ export default {
     delivery: [
       {
         severity: 0,
-        count: 144
+        count: 0.1
       },
       {
         severity: 1,
@@ -10,7 +10,7 @@ export default {
       },
       {
         severity: 2,
-        count: 9
+        count: 2
       },
       {
         severity: 3,
@@ -132,7 +132,7 @@ export default {
       },
       {
         severity: 1,
-        count: 5062
+        count: 100
       },
       {
         severity: 2,

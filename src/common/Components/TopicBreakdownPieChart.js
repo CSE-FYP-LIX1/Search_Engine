@@ -1,76 +1,106 @@
-import _ from "lodash";
 import React from "react";
 import Highcharts from "highcharts";
 import HighchartsHeatmap from "highcharts/modules/heatmap";
 import HighchartsReact from "highcharts-react-official";
-import rawData, { processedData } from "./data";
-import { severityHexColors, getColor, rgbObjectToHex } from "../../heatmapUtils";
 
-const TopicBreakdownPieChart = (top5Data) => {
-  console.log(top5Data);
+const TopicBreakdownPieChart = ({top5Data, startDate, endDate}) => {
+  function dateRange(startDate, endDate) {
+    var start      = startDate.split('-');
+    var end        = endDate.split('-');
+    var startYear  = parseInt(start[0]);
+    var endYear    = parseInt(end[0]);
+    var dates      = [];
+  
+    for(var i = startYear; i <= endYear; i++) {
+      var endMonth = i != endYear ? 11 : parseInt(end[1]) - 1;
+      var startMon = i === startYear ? parseInt(start[1])-1 : 0;
+      for(var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j+1) {
+        var month = j+1;
+        var displayMonth = month < 10 ? '0'+month : month;
+        dates.push([i, displayMonth, '01'].join('-'));
+      }
+    }
+    return dates;
+  }
+  let xAxis = dateRange(startDate, endDate); 
+  let yAxis = [];
   HighchartsHeatmap(Highcharts);
-  const x = [
-    rawData.action,
-    rawData.cnc,
-    rawData.installation,
-    rawData.delivery,
-    rawData.none
-  ].reverse();
 
-  let reshapeData = [];
+  let reshapeData = {};
 
-  // top5Data.forEach((elem) => {
-  //   reshapeData.push([{weightage: elem.weightage}])
-  // })
+  if (top5Data != undefined) {
+    for (let i = 0; i < top5Data.length; i++) {
+      let keyWord = top5Data[i][0]['Keywords'][0]; 
+      yAxis.push(keyWord); 
+      reshapeData[keyWord] = {}; 
+      for (let j = 0; j < xAxis.length; j++) {
+        reshapeData[keyWord][xAxis[j]] = {"Combined_weightage" : 0}; 
+      }
+    }
 
-  const data = x
-    .map((l, i) =>
-      l.map((c, j) => ({
-        x: j,
-        y: i,
-        value: c.count,
-        name: c.count.toLocaleString(),
-        color:
-          c.count === 0
-            ? "transparent"
-            : rgbObjectToHex(getColor(j + 1, i, 10, 5))
-      }))
-    )
-    .flat();
+    top5Data.forEach((elem) => {
+      elem.forEach((elem2) => {
+        let keyWord = elem2['Keywords'][0]; 
+        let tempDate = new Date(elem2.Date[0]); 
+        let convertDateFormat = tempDate.toISOString().split('T')[0]
+        let combinedWeightageFormat = elem2.Combined_weightage[0] * 100; 
+        reshapeData[keyWord][convertDateFormat] = {"Combined_weightage" : combinedWeightageFormat}; 
+      })
+    });
+  }
 
-  // console.log(JSON.stringify(data));
+  let temp = Object.values(reshapeData); 
+  let finalizedData = []
+  temp.forEach((elem) => {
+    finalizedData.push(Object.values(elem))
+  }); 
+  
+  const data2 = finalizedData.map((l, i) => l.map((c, j) => ([j, i, c.Combined_weightage]))).flat(); 
+
+  console.log(data2); 
 
   const chartOptions = {
     chart: {
       type: "heatmap",
-      marginTop: 20,
+      marginTop: 40,
       marginBottom: 80,
-      plotBorderWidth: 0,
-      borderWidth: 0
+      plotBorderWidth: 1
     },
-    credits: {
-      enabled: false
-    },
+    
     title: {
-      text: undefined
-    },
-
-    xAxis: {
-      categories: _.fill(Array(10), 1).map((e, i) => (i + 1) * 10)
+      text: "Weightage of Top 5 Topics Over Selected Time Period"
     },
 
     yAxis: {
-      categories: ["None", "Delivery", "Installation", "C&C", "Action"],
-      title: null
+      categories: yAxis,
+      title: null,
+      reversed: true
+    },
+
+    xAxis: {
+      categories: xAxis,
+    },
+
+    tooltip: {
+      formatter: function() {
+        return (
+          "On <b>" +
+          this.series.xAxis.categories[this.point.x] +
+          "</b> <br>The weightage for <b>" +
+          this.series.yAxis.categories[this.point.y] + 
+          "</b> was <b>" +
+          this.point.value.toFixed(3) +
+          "</b>%" 
+        );
+      }
     },
 
     colorAxis: {
       min: 0,
-      max: 1,
-      stops: severityHexColors.map((hex, i, arr) => [i / arr.length, hex]),
-      reversed: false
+      minColor: "#FFFFFF",
+      maxColor: Highcharts.getOptions().colors[0]
     },
-
+    
     legend: {
       align: "right",
       layout: "vertical",
@@ -80,43 +110,20 @@ const TopicBreakdownPieChart = (top5Data) => {
       symbolHeight: 280
     },
 
-    plotOptions: {
-      series: {
-        dataLabels: {
-          formatter: function() {
-            if (this.point.value > 0) {
-              return this.point.value;
-            }
-          }
-        }
-      }
-    },
-
-    tooltip: {
-      formatter: function() {
-        return (
-          "<b>" +
-          this.series.xAxis.categories[this.point.x] +
-          "</b> sold <br><b>" +
-          this.point.value +
-          "</b> items on <br><b>" +
-          this.series.yAxis.categories[this.point.y] +
-          "</b>"
-        );
-      }
-    },
-
     series: [
       {
-        name: "Sales per employee",
         borderWidth: 1,
-        data,
+        data: data2,
         dataLabels: {
-          enabled: true,
+          enabled: false,
           color: "#000000"
         }
       }
-    ]
+    ],
+
+    credits: {
+      enabled: false
+    },
   };
     return (
       <div className="App">
