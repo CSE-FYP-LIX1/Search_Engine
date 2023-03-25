@@ -18,8 +18,9 @@ const StockTrendsResults = () => {
     const solrStartDate = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate(); 
     const solrEndDate = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate(); 
     const [snpData, setSnpData] = useState(); 
-    
-    
+    const [top5Data, setTop5Data] = useState([]); 
+    const [top5DataSeries, setTop5DataSeries] = useState([]); 
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -48,7 +49,6 @@ const StockTrendsResults = () => {
                 "rows" : 200
             }
         }).then(res => {
-            console.log(res.data.response.docs);
             //Reshape StockData
             const data = []; 
             res.data.response.docs.forEach((elem) => {
@@ -58,7 +58,6 @@ const StockTrendsResults = () => {
             let chartData = data.sort((a, b) => a[0] - b[0]);  // <-- sort x-axis here
             setSnpData(chartData); 
             setPercentageDiff(getPercentageIncrease(chartData[chartData.length - 1][1], chartData[0][1]).toFixed(3));
-            console.log(percentageDiff);
         }).catch(err => {
             console.log(`The error is ${err}`)
         })
@@ -72,15 +71,32 @@ const StockTrendsResults = () => {
                 "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z]`,
                 "indent": true,
                 "q.op": "OR",
-                "rows" : 200
+                "rows" : 5,
+                "sort" : "Combined_weightage desc"
             }
         }).then(res => {
             console.log(res.data.response.docs);
-            //Reshape StockData
+            setTop5Data(res.data.response.docs); 
+            res.data.response.docs.forEach((elem) => {
+                axios.get(ldaWeightageSearchUrl, {
+                    params: {
+                        "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z] AND Keywords: ${elem.Keywords}`,
+                        "indent": true,
+                        "q.op": "OR",
+                        "rows" : 1000,
+                    }
+                }).then(res => {
+                    console.log(res.data.response.docs); 
+                    setTop5DataSeries(top5DataSeries => [...top5DataSeries, res.data.response.docs]); 
+                }).catch(err => {
+                    console.log(`The error is ${err}`); 
+                })
+            })
         }).catch(err => {
             console.log(`The error is ${err}`)
         })
-    })
+    }, [])
+
 
     const mockTop5Data = [
         {topic: "Russia", weight: "30"},
@@ -131,13 +147,13 @@ const StockTrendsResults = () => {
                     </div>
                     <div className="font-semibold">
                         {
-                            mockTop5Data.map((elem) => {
+                            top5Data.map((elem) => {
                                 return (
                                     <div className="text-center hover:text-[#474747]" onClick={() => {
                                         handleOpen();
                                         getSelectedTopicInfo(elem.topic); 
                                     }}>
-                                        {elem.topic} &#40;{elem.weight}%&#41;	
+                                        {elem.Keywords} &#40;{(elem.Combined_weightage * 100).toFixed(3)}%&#41;	
                                     </div>
                                 )
                             })
@@ -145,7 +161,7 @@ const StockTrendsResults = () => {
                     </div>
                 </div>
                 <div>
-                    <TopicBreakdownPieChart />
+                    <TopicBreakdownPieChart data={top5DataSeries}/>
                 </div>
                 <Modal
                     open={open}
