@@ -57,8 +57,6 @@ const TopicBreakdownPieChart = ({top5Data, startDate, endDate}) => {
   
   const data2 = finalizedData.map((l, i) => l.map((c, j) => ([j, i, c.Combined_weightage]))).flat(); 
 
-  console.log(data2); 
-
   const chartOptions = {
     chart: {
       type: "heatmap",

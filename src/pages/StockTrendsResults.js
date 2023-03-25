@@ -107,7 +107,6 @@ const StockTrendsResults = () => {
         p: 4,
         width: "80vw",
     }
-    console.log("This is the top5DataSeries", top5DataSeries);
     return (
         <div className="flex flex-col gap-4">
             <div className='rounded-full bg-white hover:bg-button-hover w-fit p-2 absolute top-1 left-1' onClick={()=>navigateToStockTrendsHome()}>
