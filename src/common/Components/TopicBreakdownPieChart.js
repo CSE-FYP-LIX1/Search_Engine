@@ -12,7 +12,7 @@ const TopicBreakdownPieChart = ({top5Data, startDate, endDate}) => {
     var dates      = [];
   
     for(var i = startYear; i <= endYear; i++) {
-      var endMonth = i != endYear ? 11 : parseInt(end[1]) - 1;
+      var endMonth = i !== endYear ? 11 : parseInt(end[1]) - 1;
       var startMon = i === startYear ? parseInt(start[1])-1 : 0;
       for(var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j+1) {
         var month = j+1;
@@ -28,7 +28,7 @@ const TopicBreakdownPieChart = ({top5Data, startDate, endDate}) => {
 
   let reshapeData = {};
 
-  if (top5Data != undefined) {
+  if (top5Data !== undefined) {
     for (let i = 0; i < top5Data.length; i++) {
       let keyWord = top5Data[i][0]['Keywords'][0]; 
       yAxis.push(keyWord); 

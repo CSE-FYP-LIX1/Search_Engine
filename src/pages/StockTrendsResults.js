@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, {useEffect, useState} from "react";
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { snpSearchUrl, ldaWeightageSearchUrl } from "../constants";
@@ -34,10 +35,42 @@ const StockTrendsResults = () => {
 
     const [percentageDiff, setPercentageDiff] = useState(0); 
 
+    /**
+     * Funciton to get the percentage increase (positive and negative) 
+     * @param {*} numA 
+     * @param {*} numB 
+     * @returns Percentage increase/decrease
+     */
     function getPercentageIncrease(numA, numB) {
         return ((numA - numB) / numB) * 100;
     }
     
+    /**
+     * Specialized function to get the top 5 unique keyword objects. 
+     * @param {*} arr The respponse from querying the lda weightage file 
+     * @returns The top 5 objects with unique keywords
+     */
+    function findTop5Objects(arr) {
+        let objCount = {};
+
+        for (let i = 0; i < arr.length; i++) {
+            let keyword = arr[i].Keywords; 
+
+            //Write once unreadable code lmao
+            objCount[keyword] = objCount[keyword] ? (objCount[keyword] < arr[i].Combined_weightage ? arr[i] : objCount[keyword]) : arr[i]; 
+        }
+
+        let sortedIds = Object.keys(objCount).sort(function(a,b) {
+            return objCount[b] - objCount[a];
+        });
+
+        let top5Objects = [];
+
+        sortedIds.slice(0,5).forEach((elem) => top5Objects.push(objCount[elem])); 
+
+        return top5Objects; 
+    }
+
     useEffect(() => {
         //UNIQUE BEHAVIOR SO KEEP HERE INSTEAD OF USE solrAxiosQuery
         axios.get(snpSearchUrl, {
@@ -71,13 +104,15 @@ const StockTrendsResults = () => {
                 "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z]`,
                 "indent": true,
                 "q.op": "OR",
-                "rows" : 5,
+                "rows" : 20,
                 "sort" : "Combined_weightage desc"
             }
         }).then(res => {
             console.log(res.data.response.docs);
-            setTop5Data(res.data.response.docs); 
-            res.data.response.docs.forEach((elem) => {
+            let top5UniqueObj = findTop5Objects(res.data.response.docs);
+
+            setTop5Data(top5UniqueObj); 
+            top5UniqueObj.forEach((elem) => {
                 axios.get(ldaWeightageSearchUrl, {
                     params: {
                         "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z] AND Keywords: ${elem.Keywords}`,
