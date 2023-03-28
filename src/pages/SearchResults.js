@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { InputField } from "../common/Components/InputField.tsx";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import DisplayResults from "../common/Components/DisplayResults.tsx";
-import { solrSearchUrl, ldaWeightageSearchUrl } from "../constants"; 
+import { solrSearchUrl, ldaWeightageSearchUrl, corrCoeffSearchUrl } from "../constants"; 
 import { LeftArrowSvg } from '../assets/svgs';
 import { solrAxiosQuery } from '../axios';
 
@@ -14,6 +14,7 @@ const SearchResults = () => {
     const searchQuery = searchParams.get("query");
     const [searchResults, setSearchResults] = useState([]); 
     const [relevantDates, setRelevantDates] = useState([]); 
+    const [corrCoeff, setCorrCoeff] = useState(undefined); 
 
     const navigate = useNavigate();
 
@@ -39,9 +40,14 @@ const SearchResults = () => {
         solrAxiosQuery(ldaWeightageSearchUrl, queryString, setRelevantDates, 10);
     }, [searchQuery])
     
+    useEffect(() => {
+        let queryString = "Keyword: " + searchQuery; 
+        solrAxiosQuery(corrCoeffSearchUrl, queryString, setCorrCoeff, 1); 
+    }, [searchQuery])
+    
     return (
         <>
-            <div className="px-32 py-[52px] relative overflow-auto h-full bg-background-blue">
+            <div className="px-32 py-[52px] relative overflow-auto h-full bg-background-blue font-rubik">
                 <div className='rounded-full bg-white hover:bg-button-hover w-fit p-2 absolute top-1 left-1' onClick={()=>navigateToSearchHome()}>
                     <LeftArrowSvg width={"32px"} height={"32px"}/>
                 </div>
@@ -89,9 +95,15 @@ const SearchResults = () => {
                         }
                     </div>
                     <div className='flex flex-col w-2/12 px-3 gap-4'>
-                        <div className='text-xl font-semibold text-left'>
-                            Topic Most Relevant During These Times
-                        </div>
+                        {
+                            relevantDates.length > 0 ? 
+                            <div className='text-xl font-semibold text-left'> 
+                                Topic Most Relevant During These Times
+                            </div> : 
+                            <div className='text-base font-semibold text-left'>
+                                Query does not match any topic in the database
+                            </div>
+                        }
                         {/* Using mock data right now */}
                         <div className='flex flex-col gap-4'>
                             {
@@ -101,14 +113,34 @@ const SearchResults = () => {
                                     // let dateString = tempDateObj.getFullYear() + "-" + (tempDateObj.getMonth() + 1) + "-" + tempDateObj.getDate(); 
                                     let dateString = tempDateObj.toLocaleDateString("en-US", options)
                                     return (
-                                        <div className='text-left text-base flex flex-row'>
-                                            <div className='font-bold'>{idx + 1}.&nbsp;</div>
-                                            {dateString} Weightage: {elem.Combined_weightage}
+                                        <div className="flex flex-col">
+                                            <div className='font-bold text-left text-base flex flex-row'>
+                                                <div>{idx + 1}.&nbsp;</div>
+                                                {dateString}
+                                            </div>
+                                            <div className='flex flex-row'> 
+                                                <div className='font-bold'> Weightage :&nbsp;</div>
+                                                {elem.Combined_weightage}
+                                            </div>
                                         </div>
                                     )
                                 })
                             }
                         </div>
+                        {
+                            corrCoeff && corrCoeff.length > 0 ? 
+                            <div className="text-lg mt-5">
+                                {corrCoeff[0]['corr_coeff'] > 0 ? <div className='text-[#6DD778] font-bold text-center'>{corrCoeff[0]['corr_coeff']}</div> 
+                                                                            : <div className='text-[#D63D3D] font-bold text-center'>{corrCoeff[0]['corr_coeff']}</div>}
+                                <div className='text-center'>
+                                    correlation coefficient
+                                </div>
+                                <div className='text-center text-xs'>
+                                    This indicates that whenever the topic of “{query}” is trending, the S&P 500 index {corrCoeff[0]['corr_coeff'] > 0 ? "increase" : "decreases"}.
+                                </div>
+                            </div> : 
+                            <div></div>
+                        }
                     </div>
                 </div>
             </div>

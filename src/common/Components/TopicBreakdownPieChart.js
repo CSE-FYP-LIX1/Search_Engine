@@ -3,7 +3,7 @@ import Highcharts from "highcharts";
 import HighchartsHeatmap from "highcharts/modules/heatmap";
 import HighchartsReact from "highcharts-react-official";
 
-const TopicBreakdownPieChart = ({top5Data, startDate, endDate}) => {
+const TopicBreakdownHeatmap = ({top5Data, startDate, endDate}) => {
   function dateRange(startDate, endDate) {
     var start      = startDate.split('-');
     var end        = endDate.split('-');
@@ -130,4 +130,4 @@ const TopicBreakdownPieChart = ({top5Data, startDate, endDate}) => {
     )
 }
 
-export default TopicBreakdownPieChart; 
+export default TopicBreakdownHeatmap; 

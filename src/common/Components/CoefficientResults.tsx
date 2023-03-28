@@ -1,8 +1,8 @@
 import React from "react"
 
 type CoefficientResult = {
-    topic: string,
-    coefficient: number, 
+    Keyword: string,
+    corr_coeff: number, 
 }
 
 type CoefficientResultsProps = {
@@ -24,7 +24,7 @@ export const CoefficientResults = ({titleColor, title, data} : CoefficientResult
                                 <div className="font-bold">
                                     {idx + 1}.
                                 </div>
-                                &nbsp;{elem.topic}&nbsp;~&nbsp;{elem.coefficient}
+                                &nbsp;&nbsp;{elem.Keyword[0]}&nbsp;&nbsp;~&nbsp;&nbsp;{elem.corr_coeff[0].toFixed(3)}
                             </div>
                         )
                     })

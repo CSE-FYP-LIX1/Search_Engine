@@ -4,12 +4,12 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { snpSearchUrl, ldaWeightageSearchUrl } from "../constants";
 import axios from "axios";
 import StockTrendsChart from "../common/Components/StockTrendChart";
-import TopicBreakdownPieChart from "../common/Components/TopicBreakdownPieChart";
+import TopicBreakdownHeatmap from "../common/Components/TopicBreakdownPieChart";
 import { LeftArrowSvg } from "../assets/svgs";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
-
+import { WeightageTrendChart } from "../common/Components/WeightageTrendChart";
 
 const StockTrendsResults = () => {
     const navigate = useNavigate(); 
@@ -175,7 +175,7 @@ const StockTrendsResults = () => {
                                 return (
                                     <div className="text-center hover:text-[#474747]" onClick={() => {
                                         handleOpen();
-                                        getSelectedTopicInfo(elem.topic); 
+                                        getSelectedTopicInfo(elem.Keywords[0]); 
                                     }}>
                                         {elem.Keywords} &#40;{(elem.Combined_weightage * 100).toFixed(3)}%&#41;	
                                     </div>
@@ -186,7 +186,7 @@ const StockTrendsResults = () => {
                 </div>
             </div>
             <div className="w-full mt-6">
-                <TopicBreakdownPieChart top5Data={top5DataSeries} startDate={solrStartDate} endDate={solrEndDate}/>
+                <TopicBreakdownHeatmap top5Data={top5DataSeries} startDate={solrStartDate} endDate={solrEndDate}/>
             </div>
             <Modal
                 open={open}
@@ -198,14 +198,14 @@ const StockTrendsResults = () => {
                         variant="h6" component="h2" className="text-center">
                         This is the selected topic: {selectedTopic}. <br /> {solrStartDate} to {solrEndDate}
                     </Typography>
-                    <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
-                    <Typography id="modal-modal-description"
+                    {/* <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/> */}
+                    <WeightageTrendChart data={top5DataSeries} selectedTopic={selectedTopic} startDate={startDate} endDate={endDate}/>
+                    {/* <Typography id="modal-modal-description"
                         sx={{ mt: 2 }}>
                         <div className="text-center">
-                            {/* Link up to api */}
                             <span className="text-[#44AD3A]">0.44</span> correlation
                         </div>
-                    </Typography>
+                    </Typography> */}
                 </Box>
             </Modal>
         </div>
