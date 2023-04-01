@@ -136,7 +136,7 @@ const SearchResults = () => {
                                     correlation coefficient
                                 </div>
                                 <div className='text-center text-xs'>
-                                    This indicates that whenever the topic of “{query}” is trending, the S&P 500 index {corrCoeff[0]['corr_coeff'] > 0 ? "increase" : "decreases"}.
+                                    This indicates that whenever the topic of “{searchQuery}” is trending, the S&P 500 index {corrCoeff[0]['corr_coeff'] > 0 ? "increase" : "decreases"}.
                                 </div>
                             </div> : 
                             <div></div>

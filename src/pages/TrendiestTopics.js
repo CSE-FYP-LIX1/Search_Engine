@@ -4,6 +4,7 @@ import ImageNavBar from "../common/Components/ImageNavBar.tsx";
 import { CoefficientResults } from "../common/Components/CoefficientResults.tsx";
 import axios from "axios"; 
 import { corrCoeffSearchUrl } from "../constants";
+import { CoefficientResultsBarGraph } from "../common/Components/CoefficientResultsBarGraph";
 
 export const TrendiestTopics = () => {
     const [top10Corr, setTop10Corr] = useState([]);
@@ -59,7 +60,7 @@ export const TrendiestTopics = () => {
                     &nbsp;based on
                 </div>
                 <div className="flex flex-row mx-auto">
-                    their affect on the S&P500 trend
+                    their effect on the S&P500 trend
                 </div>
                 <div className="mx-auto mt-4">
                     <ImageNavBar 
@@ -68,8 +69,11 @@ export const TrendiestTopics = () => {
                 </div>
             </div>
             <div className="flex flex-row justify-center gap-10">
-                <CoefficientResults titleColor="#6DD778" title="Positive" data={top10Corr}/> 
-                <CoefficientResults titleColor="#D63D3D" title="Negative" data={bot10Corr}/> 
+                {/* <CoefficientResults titleColor="#6DD778" title="Positive" data={top10Corr}/> 
+                <CoefficientResults titleColor="#D63D3D" title="Negative" data={bot10Corr}/>  */}
+                {
+                   top10Corr.length > 0 && bot10Corr.length > 0 && <CoefficientResultsBarGraph top10Corr={top10Corr} bot10Corr={bot10Corr}/> 
+                }
             </div>
         </div>
     )
