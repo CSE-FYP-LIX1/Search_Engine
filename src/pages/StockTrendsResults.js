@@ -10,6 +10,8 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import { WeightageTrendChart } from "../common/Components/WeightageTrendChart";
+import { ArrowDownSvg, ArrowUpSvg } from "../assets/svgs";
+
 
 const StockTrendsResults = () => {
     const navigate = useNavigate(); 
@@ -34,6 +36,7 @@ const StockTrendsResults = () => {
     const navigateToStockTrendsHome = () => navigate("/stock-trends");
 
     const [percentageDiff, setPercentageDiff] = useState(0); 
+    const [numericalDiff, setNumericalDiff] = useState(0); 
 
     /**
      * Funciton to get the percentage increase (positive and negative) 
@@ -91,6 +94,7 @@ const StockTrendsResults = () => {
             let chartData = data.sort((a, b) => a[0] - b[0]);  // <-- sort x-axis here
             setSnpData(chartData); 
             setPercentageDiff(getPercentageIncrease(chartData[chartData.length - 1][1], chartData[0][1]).toFixed(3));
+            setNumericalDiff(chartData[chartData.length - 1][1] - chartData[0][1])
         }).catch(err => {
             console.log(`The error is ${err}`)
         })
@@ -150,17 +154,20 @@ const StockTrendsResults = () => {
             <div className="text-2xl font-bold text-center py-3 bg-background-blue">
                 {`S&P 500 index from ${solrStartDate} to ${solrEndDate}`}
             </div>
-            <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
             {
-                percentageDiff > 0 ?
-                <div className="mx-auto text-2xl">
-                    <span className="text-[#6DD778] font-bold">{percentageDiff}%</span> increase in index
-                </div> :
-                <div className="mx-auto text-2xl">
-                    <span className="text-[#D63D3D] font-bold">{percentageDiff}%</span> decrease in index
-                </div>
-                
+                percentageDiff > 0 ? 
+                <div className="flex flex-row ml-4">
+                    <ArrowUpSvg width={"20px"}/>
+                    &nbsp;<div>{numericalDiff.toFixed(3)}</div> 
+                    &nbsp;(<span className="text-[#6DD778] font-bold">+{percentageDiff}%</span>)
+                </div> : 
+                <div className="flex flex-row ml-4">
+                    <ArrowDownSvg width={"20px"}/>
+                    &nbsp;<div>{Math.abs(numericalDiff.toFixed(3))}</div> 
+                    &nbsp;(<span className="text-[#D63D3D] font-bold">{percentageDiff}%</span>)
+                </div> 
             }
+            <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
             <div className="flex flex-row justify-center font-rubik mt-6">
                 <div className="flex flex-col text-2xl gap-4">
                     <div className="text-center">
