@@ -69,10 +69,8 @@ export const TrendiestTopics = () => {
                 </div>
             </div>
             <div className="flex flex-row justify-center gap-10">
-                {/* <CoefficientResults titleColor="#6DD778" title="Positive" data={top10Corr}/> 
-                <CoefficientResults titleColor="#D63D3D" title="Negative" data={bot10Corr}/>  */}
                 {
-                   top10Corr.length > 0 && bot10Corr.length > 0 && <CoefficientResultsBarGraph top10Corr={top10Corr} bot10Corr={bot10Corr}/> 
+                   top10Corr.length > 0 && bot10Corr.length > 0 && <CoefficientResultsBarGraph top10Corr={top10Corr} bot10Corr={bot10Corr} handleBarClick={(e)=>console.log("Clicked!", e)}/> 
                 }
             </div>
         </div>

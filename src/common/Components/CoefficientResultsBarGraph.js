@@ -7,7 +7,7 @@ import HCSolidGauge from 'highcharts/modules/solid-gauge';
 HCMore(Highcharts);
 HCSolidGauge(Highcharts);
 
-export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr}) => {
+export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick}) => {
     let data = []; 
 
     top10Corr && top10Corr.forEach((elem) => {
@@ -71,7 +71,10 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr}) => {
                 },
                 colorByPoint: false,
                 colors: chartData.map(item => item.color),
-                pointWidth: 25
+                pointWidth: 25,
+                events: {
+                  click: handleBarClick,
+                }, 
             },
         },
         series: [{
