@@ -112,7 +112,6 @@ const StockTrendsResults = () => {
                 "sort" : "Combined_weightage desc"
             }
         }).then(res => {
-            console.log(res.data.response.docs);
             let top5UniqueObj = findTop5Objects(res.data.response.docs);
 
             setTop5Data(top5UniqueObj); 
@@ -167,7 +166,7 @@ const StockTrendsResults = () => {
                     &nbsp;(<span className="text-[#D63D3D] font-bold">{percentageDiff}%</span>)
                 </div> 
             }
-            <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
+            <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData} top5DataSeries={top5DataSeries} top5Topics={top5Data}/>
             <div className="flex flex-row justify-center font-rubik mt-6">
                 <div className="flex flex-col text-2xl gap-4">
                     <div className="text-center">
