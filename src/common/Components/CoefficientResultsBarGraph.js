@@ -3,12 +3,19 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import HCMore from 'highcharts/highcharts-more';
 import HCSolidGauge from 'highcharts/modules/solid-gauge';
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
 
 HCMore(Highcharts);
 HCSolidGauge(Highcharts);
 
 export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick}) => {
     let data = []; 
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [selectedTopic, setSelectedTopic] = useState(""); 
 
     top10Corr && top10Corr.forEach((elem) => {
         data.push({name: elem.Keyword[0], value: Number.parseFloat(elem.corr_coeff[0].toFixed(3))})
@@ -19,7 +26,6 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
         data.push({name: elem.Keyword[0], value: Number.parseFloat(elem.corr_coeff[0].toFixed(3))})
     })
 
-    console.log(data); 
     const [chartOptions, setChartOptions] = useState({});
 
     useEffect(() => {
@@ -73,7 +79,10 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
                 colors: chartData.map(item => item.color),
                 pointWidth: 25,
                 events: {
-                  click: handleBarClick,
+                  click: (e) => {
+                    handleOpen(); 
+                    setSelectedTopic(e.point.options.name); 
+                  },
                 }, 
             },
         },
@@ -87,10 +96,33 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
       });
     }, []);
 
+    const style = {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      bgcolor: 'background.paper',
+      border: '2px solid #000',
+      boxShadow: 24,
+      p: 4,
+      width: "80vw",
+  }
     
     return (
         <div>
             <HighchartsReact highcharts={Highcharts} options={chartOptions} />
+            <Modal
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+            >
+                <Box sx={style}>
+                    <Typography id="modal-modal-title" 
+                        variant="h6" component="h2" className="text-center">
+                        This is the selected topic: {selectedTopic}. <br /> 
+                    </Typography>
+                </Box>
+            </Modal>
         </div>
     )
 }
