@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { MagGlassSvg, StockChartSvg } from "../assets/svgs";
 import ImageNavBar from "../common/Components/ImageNavBar.tsx";
-import { CoefficientResults } from "../common/Components/CoefficientResults.tsx";
 import axios from "axios"; 
 import { corrCoeffSearchUrl } from "../constants";
 import { CoefficientResultsBarGraph } from "../common/Components/CoefficientResultsBarGraph";

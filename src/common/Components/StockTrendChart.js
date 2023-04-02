@@ -1,31 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ReactHighcharts from 'react-highcharts/ReactHighstock.src'
-import moment from 'moment'
 
 const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5Topics}) => {
   let chartOptions = {}; 
 
   const options = {style: 'currency', currency: 'USD'};
   const numberFormat = new Intl.NumberFormat('en-US', options);
-
-  function dateRange(startDate, endDate) {
-    var start      = startDate.split('-');
-    var end        = endDate.split('-');
-    var startYear  = parseInt(start[0]);
-    var endYear    = parseInt(end[0]);
-    var dates      = [];
-  
-    for(var i = startYear; i <= endYear; i++) {
-      var endMonth = i !== endYear ? 11 : parseInt(end[1]) - 1;
-      var startMon = i === startYear ? parseInt(start[1])-1 : 0;
-      for(var j = startMon; j <= endMonth; j = j > 12 ? j % 12 || 11 : j+1) {
-        var month = j+1;
-        var displayMonth = month < 10 ? '0'+month : month;
-        dates.push([i, displayMonth, '01'].join('-'));
-      }
-    }
-    return dates;
-  }
 
   chartOptions = {
     yAxis: [{
