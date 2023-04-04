@@ -153,41 +153,45 @@ const StockTrendsResults = () => {
             <div className="text-2xl font-bold text-center py-3 bg-background-blue">
                 {`S&P 500 index from ${solrStartDate} to ${solrEndDate}`}
             </div>
-            {
-                percentageDiff > 0 ? 
-                <div className="flex flex-row ml-4">
-                    <ArrowUpSvg width={"20px"}/>
-                    &nbsp;<div>{numericalDiff.toFixed(3)}</div> 
-                    &nbsp;(<span className="text-[#6DD778] font-bold">+{percentageDiff}%</span>)
-                </div> : 
-                <div className="flex flex-row ml-4">
-                    <ArrowDownSvg width={"20px"}/>
-                    &nbsp;<div>{Math.abs(numericalDiff.toFixed(3))}</div> 
-                    &nbsp;(<span className="text-[#D63D3D] font-bold">{percentageDiff}%</span>)
-                </div> 
-            }
-            <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData} top5DataSeries={top5DataSeries} top5Topics={top5Data}/>
-            <div className="flex flex-row justify-center font-rubik mt-6">
-                <div className="flex flex-col text-2xl gap-4">
-                    <div className="text-center">
-                        <span className="font-bold">Top 5</span> topics during this time
-                        <div className="text-base text-center">
-                            Click on the topics for more details
+            <div className="flex flex-row">
+                <div className="w-2/3">
+                    {
+                        percentageDiff > 0 ? 
+                        <div className="flex flex-row ml-4">
+                            <ArrowUpSvg width={"20px"}/>
+                            &nbsp;<div>{numericalDiff.toFixed(3)}</div> 
+                            &nbsp;(<span className="text-[#6DD778] font-bold">+{percentageDiff}%</span>)
+                        </div> : 
+                        <div className="flex flex-row ml-4">
+                            <ArrowDownSvg width={"20px"}/>
+                            &nbsp;<div>{Math.abs(numericalDiff.toFixed(3))}</div> 
+                            &nbsp;(<span className="text-[#D63D3D] font-bold">{percentageDiff}%</span>)
+                        </div> 
+                    }
+                    <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData} top5DataSeries={top5DataSeries} top5Topics={top5Data}/>
+                </div>
+                <div className="flex flex-row justify-center font-rubik mt-6 w-1/3 items-center">
+                    <div className="flex flex-col text-2xl gap-4">
+                        <div className="text-center">
+                            <span className="font-bold">Top 5</span> topics during this time
+                            <div className="text-base text-center">
+                                Click on the topics for more details
+                            </div>
                         </div>
-                    </div>
-                    <div className="font-semibold">
-                        {
-                            top5Data.map((elem) => {
-                                return (
-                                    <div className="text-center hover:text-[#474747]" onClick={() => {
-                                        handleOpen();
-                                        getSelectedTopicInfo(elem.Keywords[0]); 
-                                    }}>
-                                        {elem.Keywords} &#40;{(elem.Combined_weightage * 100).toFixed(3)}%&#41;	
-                                    </div>
-                                )
-                            })
-                        }
+                        <div className="font-semibold">
+                            {
+                                top5Data.map((elem) => {
+                                    return (
+                                        <div className="text-center hover:text-[#474747]" onClick={() => {
+                                            handleOpen();
+                                            getSelectedTopicInfo(elem.Keywords[0]); 
+                                        }}>
+                                            {elem.Keywords} &#40;{(elem.Combined_weightage * 100).toFixed(3)}%&#41;	
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
