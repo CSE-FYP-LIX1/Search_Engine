@@ -96,8 +96,22 @@ const SearchResults = () => {
                     </div>
                     <div className='flex flex-col w-2/12 px-3 gap-4'>
                         {
+                            corrCoeff && corrCoeff.length > 0 ? 
+                            <div className="text-lg mt-5">
+                                {corrCoeff[0]['corr_coeff'] > 0 ? <div className='text-[#6DD778] font-bold text-center'>{corrCoeff[0]['corr_coeff']}</div> 
+                                                                            : <div className='text-[#D63D3D] font-bold text-center'>{corrCoeff[0]['corr_coeff']}</div>}
+                                <div className='text-center'>
+                                    correlation coefficient
+                                </div>
+                                <div className='text-center text-xs'>
+                                    This indicates that whenever the topic of “{searchQuery}” is trending, the S&P 500 index {corrCoeff[0]['corr_coeff'] > 0 ? "increase" : "decreases"}.
+                                </div>
+                            </div> : 
+                            <div></div>
+                        }
+                        {
                             relevantDates.length > 0 ? 
-                            <div className='text-xl font-semibold text-left'> 
+                            <div className='text-lg font-semibold text-left'> 
                                 Topic Most Relevant During These Times
                             </div> : 
                             <div className='text-base font-semibold text-left'>
@@ -127,20 +141,6 @@ const SearchResults = () => {
                                 })
                             }
                         </div>
-                        {
-                            corrCoeff && corrCoeff.length > 0 ? 
-                            <div className="text-lg mt-5">
-                                {corrCoeff[0]['corr_coeff'] > 0 ? <div className='text-[#6DD778] font-bold text-center'>{corrCoeff[0]['corr_coeff']}</div> 
-                                                                            : <div className='text-[#D63D3D] font-bold text-center'>{corrCoeff[0]['corr_coeff']}</div>}
-                                <div className='text-center'>
-                                    correlation coefficient
-                                </div>
-                                <div className='text-center text-xs'>
-                                    This indicates that whenever the topic of “{searchQuery}” is trending, the S&P 500 index {corrCoeff[0]['corr_coeff'] > 0 ? "increase" : "decreases"}.
-                                </div>
-                            </div> : 
-                            <div></div>
-                        }
                     </div>
                 </div>
             </div>
