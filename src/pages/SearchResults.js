@@ -94,7 +94,7 @@ const SearchResults = () => {
                             })
                         }
                     </div>
-                    <div className='flex flex-col w-2/12 px-3 gap-4'>
+                    <div className='flex flex-col w-1/6 px-3 gap-4'>
                         {
                             corrCoeff && corrCoeff.length > 0 ? 
                             <div className="text-lg mt-5">
@@ -133,7 +133,7 @@ const SearchResults = () => {
                                                 {dateString}
                                             </div>
                                             <div className='flex flex-row'> 
-                                                <div className='font-bold'> Weightage :&nbsp;</div>
+                                                <div className='font-bold'> Weightage:&nbsp;</div>
                                                 {elem.Combined_weightage}
                                             </div>
                                         </div>
