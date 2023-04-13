@@ -21,10 +21,25 @@ Type is keywords from events (such as 'Russia' or 'Covid') to get the relevant f
 
 ## The following are the steps to setup and populate a SOLR core instance (the database)
 1. Go to "localhost:8983/solr" to find the SOLR web server.
-2. Create a SOLR core instance from the web server and assign the "instanceDir" to be the path of the "sample_techproducts_configs" on your local machine.
+2. Create a SOLR core instance from the web server and assign the "instanceDir" to be the path of the "_default" on your local machine (this can be found at server/solr/configsets/_default). To create more than 1 core, need to clone this _default config folder (inside the configsets folder) and use this copied version as the "instanceDir" for the new core. 
 3. Using a HTTP post request, post the documents into this solr core instance. The command for this is as follows: 
     bin/post <core_name> <path_of_files>
 4. Alternatively, files can also be uploaded onto the SOLR core from the web server directly. This can be done through the "Documents" tab, where the "File Upload" option can be selected and files can be uploaded directly from the local machine. 
+
+## The following are the steps to populate the SOLR core with the required data for the search engine
+6 SOLR cores need to be created to store all the financial news articles and all of the results data from the LDA model
+
+The 6 cores are as follows:
+1. carasoul_data
+2. corr_coeff
+3. fyp_documents
+4. lda_data_keywords
+5. lda_data_weightage
+6. snp500
+
+**It is important to note that the names of the COREs need to be exactly the same as listed above**
+
+*Data can be found here: https://docs.google.com/document/d/1TV_IkfVatORLnZhB8-2zMzTM8tAxF6AZxum-XtzzPvQ/edit
 
 ## Fixing the CORS errors
 The CORS error might occur when trying to make call to the solr database using the search engine. 
