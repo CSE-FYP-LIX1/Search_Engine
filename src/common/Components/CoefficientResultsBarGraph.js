@@ -7,6 +7,9 @@ import HCSolidGauge from 'highcharts/modules/solid-gauge';
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
+import { solrAxiosQuery } from '../../axios';
+import { solrSearchUrl } from '../../constants';
+import DisplayResults from './DisplayResults.tsx';
 
 HCMore(Highcharts);
 HCSolidGauge(Highcharts);
@@ -17,6 +20,13 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [selectedTopic, setSelectedTopic] = useState(""); 
+    const [searchResults, setSearchResults] = useState([]); 
+
+    const getAssociatedLinks = (query) => {
+      let queryString = "title: " + query; 
+      solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 10);
+    }
+
 
     top10Corr && top10Corr.forEach((elem) => {
         data.push({name: elem.Keyword[0], value: Number.parseFloat(elem.corr_coeff[0].toFixed(3))})
@@ -83,6 +93,7 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
                   click: (e) => {
                     handleOpen(); 
                     setSelectedTopic(e.point.options.name); 
+                    getAssociatedLinks(e.point.options.name); 
                   },
                 }, 
             },
@@ -107,6 +118,8 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
       boxShadow: 24,
       p: 4,
       width: "80vw",
+      overflow:'scroll',
+      height: "80vh",
   }
     
     return (
@@ -120,7 +133,26 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
                 <Box sx={style}>
                     <Typography id="modal-modal-title" 
                         variant="h6" component="h2" className="text-center">
-                        This is the selected topic: {selectedTopic}. <br /> 
+                          <div className='text-center text-4xl my-4'>
+                            Articles that are associated with {selectedTopic}
+                          </div>
+                          <div className='flex flex-col gap-8'>
+                            {
+                              searchResults.map((record) => {
+                                return (
+                                    <DisplayResults 
+                                        id={record.id}
+                                        title={record.title}
+                                        source={record.url}
+                                        sourceName={record.sourceName}
+                                        releaseDate={record.published_at}
+                                        content={record.description}
+                                    />
+                                  ) 
+                                }
+                              )
+                            }
+                          </div>
                     </Typography>
                 </Box>
             </Modal>
