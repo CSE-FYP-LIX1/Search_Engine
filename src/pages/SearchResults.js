@@ -71,7 +71,7 @@ const SearchResults = () => {
             </div>
             <div className='px-32 py-[52px] relative overflow-auto h-full'>
                 <div className='flex flex-row'>
-                    <div className="flex flex-col gap-8 w-10/12">
+                    <div className="flex flex-col gap-8 w-10/12 float-left">
                         <div className='text-xl font-semibold text-left'>
                             Relevant News Articles
                         </div>
