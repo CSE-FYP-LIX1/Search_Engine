@@ -32,12 +32,12 @@ const SearchResults = () => {
     /*eslint-disable */
     useEffect(() => {
         let queryString = "title: " + searchQuery; 
-        solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 10);
+        solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 24);
     }, [searchQuery])
 
     useEffect(() => {
         let queryString = "Keywords: " + searchQuery; 
-        solrAxiosQuery(ldaWeightageSearchUrl, queryString, setRelevantDates, 10);
+        solrAxiosQuery(ldaWeightageSearchUrl, queryString, setRelevantDates, 24);
     }, [searchQuery])
     
     useEffect(() => {
@@ -75,24 +75,27 @@ const SearchResults = () => {
                         <div className='text-xl font-semibold text-left'>
                             Relevant News Articles
                         </div>
-                        {
-                            searchResults.length === 0 ? 
-                            <>
-                                <div>No results</div>
-                            </> : 
-                            searchResults.map((record) => {
-                                return (
-                                    <DisplayResults 
-                                        id={record.id}
-                                        title={record.title}
-                                        source={record.url}
-                                        sourceName={record.sourceName}
-                                        releaseDate={record.published_at}
-                                        content={record.description}
-                                    />
-                                )   
-                            })
-                        }
+                        <div className='flex flex-row flex-wrap'>
+                            {
+                                searchResults.length === 0 ? 
+                                <>
+                                    <div>No results</div>
+                                </> : 
+                                searchResults.map((record) => {
+                                    return (
+                                        <DisplayResults 
+                                            id={record.id}
+                                            title={record.title}
+                                            source={record.url}
+                                            sourceName={record.sourceName}
+                                            releaseDate={record.published_at}
+                                            content={record.short_description}
+                                            imageLink={record.header_image}
+                                        />
+                                    )   
+                                })
+                            }
+                        </div>
                     </div>
                     <div className='flex flex-col w-1/6 px-3 gap-4'>
                         {

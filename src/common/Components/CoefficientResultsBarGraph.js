@@ -24,7 +24,7 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
 
     const getAssociatedLinks = (query) => {
       let queryString = "title: " + query; 
-      solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 10);
+      solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 24);
     }
 
 
@@ -136,7 +136,7 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
                           <div className='text-center text-4xl my-4'>
                             Articles that are associated with {selectedTopic}
                           </div>
-                          <div className='flex flex-col gap-8'>
+                          <div className='flex flex-row flex-wrap'>
                             {
                               searchResults.map((record) => {
                                 return (
@@ -146,7 +146,8 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
                                         source={record.url}
                                         sourceName={record.sourceName}
                                         releaseDate={record.published_at}
-                                        content={record.description}
+                                        content={record.short_description}
+                                        imageLink={record.header_image}
                                     />
                                   ) 
                                 }
