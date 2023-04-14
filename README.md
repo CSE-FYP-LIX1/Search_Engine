@@ -37,9 +37,11 @@ The 6 cores are as follows:
 5. lda_data_weightage
 6. snp500
 
+After each of the above core has been created, go to "localhost:8983" where the SOLR web server is running and 
+
 **It is important to note that the names of the COREs need to be exactly the same as listed above**
 
-*Data can be found here: https://docs.google.com/document/d/1TV_IkfVatORLnZhB8-2zMzTM8tAxF6AZxum-XtzzPvQ/edit
+*Data to put into the cores be found here: https://docs.google.com/document/d/1TV_IkfVatORLnZhB8-2zMzTM8tAxF6AZxum-XtzzPvQ/edit
 
 ## Fixing the CORS errors
 The CORS error might occur when trying to make call to the solr database using the search engine. 
