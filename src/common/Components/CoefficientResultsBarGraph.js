@@ -136,7 +136,7 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
                           <div className='text-center text-4xl my-4'>
                             Articles that are associated with {selectedTopic}
                           </div>
-                          <div className='flex flex-row'>
+                          <div className='flex flex-row flex-wrap'>
                             {
                               searchResults.map((record) => {
                                 return (
