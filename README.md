@@ -21,7 +21,7 @@ Type is keywords from events (such as 'Russia' or 'Covid') to get the relevant f
 3. Fix the CORS error (see below)
 
 ## Fixing the CORS errors
-The CORS error might occur when trying to view the data on the website. 
+The CORS error might occur when trying to view the data on the website. This is the "Cross-Origin Resource Sharing" error that occurs as SOLR only allows certain authorized endpoints to be able to access the data stored inside SOLR. This can be fixed by letting all sources be able to query the database. 
 In order to fix this error, some added configurations need to be added to the schema files of CORS.
 1. Add the following jar files into the server/solr-webapp/webapp/WEB-INF/lib directory:
     jetty-servlets-8.1.14.v20131031.jar
