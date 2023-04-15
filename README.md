@@ -37,14 +37,16 @@ The 6 cores are as follows:
 5. lda_data_weightage
 6. snp500
 
-After each of the above core has been created, go to "localhost:8983" where the SOLR web server is running and 
+After each of the above core has been created, go to "localhost:8983" where the SOLR web server is running and put in the CSV file data (which can be found in the google doc linked below) into the respective SOLR core. 
+
+After this step, go to https://fyp-search-engine.netlify.app/ in order to see the final website. 
 
 **It is important to note that the names of the COREs need to be exactly the same as listed above**
 
 *Data to put into the cores be found here: https://docs.google.com/document/d/1TV_IkfVatORLnZhB8-2zMzTM8tAxF6AZxum-XtzzPvQ/edit
 
 ## Fixing the CORS errors
-The CORS error might occur when trying to make call to the solr database using the search engine. 
+The CORS error might occur when trying to view the data on the website. 
 In order to fix this error, some added configurations need to be added to the schema files of CORS.
 1. Add the following jar files into the server/solr-webapp/webapp/WEB-INF/lib directory:
     jetty-servlets-8.1.14.v20131031.jar
