@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { Button } from "../common/Components/Button.tsx";
 import { useSearchParams } from 'react-router-dom';
 import { InputField } from "../common/Components/InputField.tsx";
-import { createSearchParams, useNavigate } from "react-router-dom";
+import { createSearchParams, useNavigate, useParams, useLocation } from "react-router-dom";
 import DisplayResults from "../common/Components/DisplayResults.tsx";
 import { solrSearchUrl, ldaWeightageSearchUrl, corrCoeffSearchUrl } from "../constants"; 
 import { LeftArrowSvg } from '../assets/svgs';
 import { solrAxiosQuery } from '../axios';
+import axios from 'axios';
 
 const SearchResults = () => {
     const [searchParams] = useSearchParams();
@@ -14,17 +15,40 @@ const SearchResults = () => {
     const searchQuery = searchParams.get("query");
     const [searchResults, setSearchResults] = useState([]); 
     const [relevantDates, setRelevantDates] = useState([]); 
-    const [corrCoeff, setCorrCoeff] = useState(undefined); 
-
+    const [corrCoeff, setCorrCoeff] = useState(); 
+    const [dateRange, setDateRange] = useState({
+        startDate: searchParams.get("startDate"),
+        endDate: searchParams.get("endDate"),
+    });
     const navigate = useNavigate();
 
+    const location = useLocation();
+    const [renderValue, setRenderCount] = useState(0);
+    const id  = useParams();
+
+    useEffect(() => {
+        console.log("inside here");
+        setRenderCount(renderValue + 1);
+    }, [location.pathname, id]);
+  
     const navigateWithQuery = (query) => {
-        navigate({
-            pathname: "/search-results",
-            search: createSearchParams({
-                query: query
-            }).toString()
-        })
+        if (dateRange.startDate === null) {
+            navigate({
+                pathname: "/search-results",
+                search: createSearchParams({
+                    query: query
+                }).toString()
+            })
+        } else {
+            navigate({
+                pathname: "/search-results", 
+                search: createSearchParams({
+                    query: query,
+                    startDate: dateRange.startDate, 
+                    endDate: dateRange.endDate
+                }).toString()
+            })
+        }
     }
 
     const navigateToSearchHome = () => navigate("/search");
@@ -32,8 +56,25 @@ const SearchResults = () => {
     /*eslint-disable */
     useEffect(() => {
         let queryString = "title: " + searchQuery; 
-        solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 24);
-    }, [searchQuery])
+        if (dateRange.startDate === null) {
+            console.log("Inside of no start date")
+            solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 24);
+        } else {
+            axios.get(solrSearchUrl, {
+                params : {
+                    // "fl": props.fetchFields,
+                    "q": `published_at:[${dateRange.startDate}T00\\:00\\:00Z TO ${dateRange.endDate}T00\\:00\\:00Z] AND ` + queryString,
+                    "indent": true,
+                    "q.op": "OR",
+                    "rows" : 20,
+                }
+            }).then(res => {
+                setSearchResults(res.data.response.docs)
+            }).catch(err => {
+                console.log(`The error is ${err}`)
+            })
+        }
+    }, [searchQuery, id, location.pathname])
 
     useEffect(() => {
         let queryString = "Keywords: " + searchQuery; 
@@ -55,8 +96,7 @@ const SearchResults = () => {
                     <div className="flex flex-col gap-4 mb-4">
                         <div className="text-2xl text-center text-white">Financial News Search</div>
                         <div className="mx-auto w-2/3">
-                            <InputField customStyles={["py-4", "w-full", "text-2xl", "bg-white"]} query={query} inputCallback={(query) => setQuery(query)} onKeyDownCallback={() => {
-                                console.log("Enter is being clicked")
+                            <InputField customStyles={["py-4", "w-full", "text-2xl", "bg-white"]} query={query} startDate={dateRange.startDate} endDate={dateRange.endDate} inputCallback={(query) => setQuery(query)} updateDateRange={setDateRange} onKeyDownCallback={() => {
                                 navigateWithQuery(query);
                             }} />
                         </div>

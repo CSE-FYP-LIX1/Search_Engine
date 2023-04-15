@@ -37,8 +37,8 @@ const StockTrends = () => {
     const [curStartDate, setCurStartDate] = useState(minDate); 
     const [curEndDate, setCurEndDate] = useState(maxDate);
     const [dateRange, setDateRange] = useState({
-        startDate: "2006-11-01",
-        endDate: "2023-12-31"
+        startDate: "",
+        endDate: ""
     });
 
     const ImageNavElements = [

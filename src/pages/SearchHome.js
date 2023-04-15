@@ -12,6 +12,11 @@ import * as te from 'tw-elements';
 
 const SearchHome = () => {
     const [query, setQuery] = useState("")
+    const [dateRange, setDateRange] = useState({
+        startDate: "",
+        endDate: ""
+    })
+
     const [carouselData, setCarouselData] = useState(
         [
             {image: "https://mdbcdn.b-cdn.net/img/new/slides/041.webp", topic: "temp1", topic_summary: "temp1"},
@@ -22,12 +27,23 @@ const SearchHome = () => {
     const navigate = useNavigate();
 
     const navigateWithQuery = (query) => {
-        navigate({
-            pathname: "/search-results",
-            search: createSearchParams({
-                query: query
-            }).toString()
-        })
+        if (dateRange.startDate === "") {
+            navigate({
+                pathname: "/search-results",
+                search: createSearchParams({
+                    query: query
+                }).toString()
+            })
+        } else {
+            navigate({
+                pathname: "/search-results", 
+                search: createSearchParams({
+                    query: query,
+                    startDate: dateRange.startDate, 
+                    endDate: dateRange.endDate
+                }).toString()
+            })
+        }
     }
 
     const ImageNavElements = [
@@ -49,7 +65,7 @@ const SearchHome = () => {
                     <div className="flex flex-col gap-3 align-middle relative">
                         <div className="text-2xl text-center text-white">Financial News Search</div>
                         <div className="mx-auto">
-                            <InputField customStyles={["py-2", "w-[800px]", "text-xl", "bg-white", "relative"]} inputCallback={(query) => setQuery(query)} onKeyDownCallback={() => {
+                            <InputField customStyles={["py-2", "w-[800px]", "text-xl", "bg-white", "relative"]} startDate={dateRange.startDate} endDate={dateRange.endDate} updateDateRange={setDateRange} inputCallback={(query) => setQuery(query)} onKeyDownCallback={() => {
                                 navigateWithQuery(query);
                             }}/>
                         </div>
