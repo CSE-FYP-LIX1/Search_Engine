@@ -153,11 +153,13 @@ const StockTrendsResults = () => {
 
     return (
         <div className="flex flex-col gap-4">
-            <div className='rounded-full bg-white hover:bg-button-hover w-fit p-2 absolute top-1 left-1' onClick={()=>navigateToStockTrendsHome()}>
+            <div className='rounded-full bg-white hover:bg-button-hover w-fit p-2 absolute top-3 left-3' onClick={()=>navigateToStockTrendsHome()}>
                 <LeftArrowSvg width={"32px"} height={"32px"}/>
             </div>
-            <div className="text-2xl font-bold text-center py-3 bg-background-blue">
-                {`S&P 500 index from ${solrStartDate} to ${solrEndDate}`}
+            <div className="text-2xl font-bold text-center py-3 bg-[#283454] text-white h-20 table">
+                <div className="table-cell align-middle">
+                    {`S&P 500 index from ${solrStartDate} to ${solrEndDate}`}
+                </div>
             </div>
             <div className="flex flex-row">
                 <div className="w-2/3">
