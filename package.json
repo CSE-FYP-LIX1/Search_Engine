@@ -10,6 +10,7 @@
     "@mui/material": "^5.11.10",
     "@mui/styled-engine-sc": "^5.11.9",
     "@mui/x-date-pickers": "^5.0.20",
+    "@mui/x-date-pickers-pro": "^6.2.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -27,7 +28,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-solr-connector": "^1.1.1",
-    "react-tailwindcss-datepicker": "^1.4.2",
+    "react-tailwindcss-datepicker": "^1.6.0",
     "styled-components": "^5.3.6",
     "tw-elements": "^1.0.0-beta1",
     "web-vitals": "^2.1.0"
