@@ -52,13 +52,13 @@ export const TrendiestTopics = () => {
 
     return (
         <div className="flex flex-col gap-8">
-            <div className="flex flex-col text-3xl py-[5vh] bg-background-blue">
-                <div className="flex flex-row mx-auto">
+            <div className="flex flex-col text-3xl py-[5vh] bg-[#283454]">
+                <div className="flex flex-row mx-auto text-white">
                     Below is the ranking of all the&nbsp;
                     <div className="font-bold">most dominant topics</div>
                     &nbsp;based on
                 </div>
-                <div className="flex flex-row mx-auto">
+                <div className="flex flex-row mx-auto text-white">
                     their effect on the S&P500 trend
                 </div>
                 <div className="mx-auto mt-4">
