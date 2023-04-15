@@ -7,6 +7,7 @@ import { Button } from "../common/Components/Button.tsx";
 import { defaultStartDate } from "../constants"; 
 import { MagGlassSvg, PlusMinusSvg } from "../assets/svgs";
 import ImageNavBar from "../common/Components/ImageNavBar.tsx";
+import { BasicDateRangePicker } from '../common/Components/BasicDateRangePicker.jsx';
 
 
 const StockTrends = () => {
@@ -35,7 +36,11 @@ const StockTrends = () => {
 
     const [curStartDate, setCurStartDate] = useState(minDate); 
     const [curEndDate, setCurEndDate] = useState(maxDate);
-    
+    const [dateRange, setDateRange] = useState({
+        startDate: "2006-11-01",
+        endDate: "2023-12-31"
+    });
+
     const ImageNavElements = [
         {link: "/search", svg: <MagGlassSvg width={"28px"} height={"28px"} />, hoverText: "Go to the search engine to search for specific topics", title: "Search Engine"},
         {link: "/trendiest-topics", svg: <PlusMinusSvg width={"28px"} height={"28px"} />, hoverText: "Go to the ranking of all topics overtime", title: "Trendiest Topics"}
@@ -58,6 +63,28 @@ const StockTrends = () => {
                     />
                 </div>
             </div>
+            <div className="flex flex-row gap-20 mx-auto">
+                <div className="flex flex-col">
+                    <div className="text-2xl font-bold text-center"> 
+                        From:
+                    </div>
+                    <div className="text-2xl font-medium text-center">
+                        {dateRange.startDate}
+                    </div>
+                </div>
+                <div className="flex flex-col">
+                    <div className="text-2xl font-bold text-center"> 
+                        To:
+                    </div>
+                    <div className="text-2xl font-medium text-center">
+                        {dateRange.endDate}
+                    </div>
+                </div>
+            </div>
+            <div className="mx-auto w-1/6">
+                <BasicDateRangePicker updateDateRange={setDateRange}/>
+            </div>
+
             <div className="flex flex-row justify-center gap-[20vw]">
                 <div className="flex flex-col gap-2">
                     <div className="text-2xl font-bold text-center"> 

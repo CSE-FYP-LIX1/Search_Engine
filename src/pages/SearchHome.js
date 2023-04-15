@@ -43,31 +43,31 @@ const SearchHome = () => {
 
 
     return (
-        <>
-            <div className="px-32 py-8 z-10 relative overflow-auto h-full font-source-sans-pro flex flex-col gap-4 bg-[#283454]">
-                <div className="flex flex-col gap-3 align-middle">
-                    <div className="text-2xl text-center text-white">Financial News Search</div>
-                    <div className="mx-auto">
-                        <InputField customStyles={["py-2", "w-[800px]", "text-xl", "bg-white"]} inputCallback={(query) => setQuery(query)} onKeyDownCallback={() => {
-                            navigateWithQuery(query);
-                        }}/>
-                    </div>
-                    <div className="mx-auto">
-                        <Button 
-                            buttonCallback={()=>navigateWithQuery(query)}
-                            customStyles={["w-[200px]", "text-white"]}
-                        >
-                            Search
-                        </Button>
-                    </div>
-                    <div className="mx-auto">
-                        <ImageNavBar 
-                            ImageNavElements={ImageNavElements}
-                        />
+        <div className="relative">
+            <div className="relative z-20 overflow-hidden h-full font-source-sans-pro flex flex-col gap-4">
+                <div className="bg-[#283454] py-10 px-10">
+                    <div className="flex flex-col gap-3 align-middle relative">
+                        <div className="text-2xl text-center text-white">Financial News Search</div>
+                        <div className="mx-auto">
+                            <InputField customStyles={["py-2", "w-[800px]", "text-xl", "bg-white", "relative"]} inputCallback={(query) => setQuery(query)} onKeyDownCallback={() => {
+                                navigateWithQuery(query);
+                            }}/>
+                        </div>
+                        <div className="mx-auto">
+                            <Button 
+                                buttonCallback={()=>navigateWithQuery(query)}
+                                customStyles={["w-[200px]", "text-white"]}
+                            >
+                                Search
+                            </Button>
+                        </div>
+                        <div className="mx-auto">
+                            <ImageNavBar 
+                                ImageNavElements={ImageNavElements}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div>
                 <div className="my-4 text-center text-xl font-bold">
                     Suggested Topics
                 </div>
@@ -78,7 +78,7 @@ const SearchHome = () => {
 
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
