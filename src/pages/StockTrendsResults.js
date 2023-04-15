@@ -5,9 +5,14 @@ import { snpSearchUrl, ldaWeightageSearchUrl } from "../constants";
 import axios from "axios";
 import StockTrendsChart from "../common/Components/StockTrendChart";
 import TopicBreakdownHeatmap from "../common/Components/TopicBreakdownPieChart";
+import DisplayResults from "../common/Components/DisplayResults.tsx";
 import { LeftArrowSvg } from "../assets/svgs";
 import { ArrowDownSvg, ArrowUpSvg } from "../assets/svgs";
-
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+import { solrAxiosQuery } from "../axios";
+import { solrSearchUrl } from '../constants';
 
 const StockTrendsResults = () => {
     const navigate = useNavigate(); 
@@ -19,23 +24,16 @@ const StockTrendsResults = () => {
     const [snpData, setSnpData] = useState(); 
     const [top5Data, setTop5Data] = useState([]); 
     const [top5DataSeries, setTop5DataSeries] = useState([]); 
-    
-    const navigateWithQuery = (query) => {
-        navigate({
-            pathname: "/search-results",
-            search: createSearchParams({
-                query: query
-            }).toString()
-        })
-        // const url = this.router.serializeUrl(this.router.createUrlTree(['/search-results'], { queryParams: createSearchParams({
-        //     query: query
-        // }).toString()}));
-
-        // console.log(url); 
-
-        // window.open(url, '_blank');
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    const [selectedTopic, setSelectedTopic] = useState(""); 
+    const [searchResults, setSearchResults] = useState([]); 
 
 
+    const queryTopic = (query) => {
+        let queryString = "title: " + query; 
+        solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 24);
     }
     
     const navigateToStockTrendsHome = () => navigate("/stock-trends");
@@ -149,7 +147,10 @@ const StockTrendsResults = () => {
         boxShadow: 24,
         p: 4,
         width: "80vw",
+        overflow:'scroll',
+        height: "80vh",
     }
+
     return (
         <div className="flex flex-col gap-4">
             <div className='rounded-full bg-white hover:bg-button-hover w-fit p-2 absolute top-1 left-1' onClick={()=>navigateToStockTrendsHome()}>
@@ -180,7 +181,7 @@ const StockTrendsResults = () => {
                         <div className="text-center">
                             <span className="font-bold">Top 5</span> Trending* Topics during this time
                             <div className="text-base text-center">
-                                Click on the topics to search for the related financial articles Modify this into the pop up later. 
+                                Click on the topics to search for the related financial articles
                             </div>
                         </div>
                         <div className="font-semibold">
@@ -188,9 +189,9 @@ const StockTrendsResults = () => {
                                 top5Data.map((elem) => {
                                     return (
                                         <div className="text-center hover:text-[#474747]" onClick={() => {
-                                            // handleOpen();
-                                            // getSelectedTopicInfo(elem.Keywords[0]); 
-                                            navigateWithQuery(elem.Keywords[0]);
+                                            setSelectedTopic(elem.Keywords[0]); 
+                                            handleOpen();
+                                            queryTopic(elem.Keywords[0]);
                                         }}>
                                             {elem.Keywords} &#40;{(elem.Combined_weightage * 100).toFixed(3)}%&#41;	
                                         </div>
@@ -207,7 +208,7 @@ const StockTrendsResults = () => {
             <div className="w-full mt-6">
                 <TopicBreakdownHeatmap top5Data={top5DataSeries} startDate={solrStartDate} endDate={solrEndDate}/>
             </div>
-            {/* <Modal
+            <Modal
                 open={open}
                 onClose={handleClose}
                 closeAfterTransition
@@ -215,18 +216,30 @@ const StockTrendsResults = () => {
                 <Box sx={style}>
                     <Typography id="modal-modal-title" 
                         variant="h6" component="h2" className="text-center">
-                        This is the selected topic: {selectedTopic}. <br /> {solrStartDate} to {solrEndDate}
-                    </Typography>
-                    <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData}/>
-                    <WeightageTrendChart data={top5DataSeries} selectedTopic={selectedTopic} startDate={startDate} endDate={endDate}/>
-                    <Typography id="modal-modal-description"
-                        sx={{ mt: 2 }}>
-                        <div className="text-center">
-                            <span className="text-[#44AD3A]">0.44</span> correlation
-                        </div>
+                          <div className='text-center text-4xl my-4'>
+                            Articles that are associated with {selectedTopic}
+                          </div>
+                          <div className='flex flex-row flex-wrap'>
+                            {
+                              searchResults.map((record) => {
+                                return (
+                                    <DisplayResults 
+                                        id={record.id}
+                                        title={record.title}
+                                        source={record.url}
+                                        sourceName={record.sourceName}
+                                        releaseDate={record.published_at}
+                                        content={record.short_description}
+                                        imageLink={record.header_image}
+                                    />
+                                  ) 
+                                }
+                              )
+                            }
+                          </div>
                     </Typography>
                 </Box>
-            </Modal> */}
+            </Modal>
         </div>
     )
 }
