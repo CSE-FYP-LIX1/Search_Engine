@@ -178,9 +178,9 @@ const StockTrendsResults = () => {
                 <div className="flex flex-row justify-center font-rubik mt-6 w-1/3 items-center">
                     <div className="flex flex-col text-2xl gap-4">
                         <div className="text-center">
-                            <span className="font-bold">Top 5</span> topics during this time
+                            <span className="font-bold">Top 5</span> Trending* Topics during this time
                             <div className="text-base text-center">
-                                Click on the topics to search for related financial articles
+                                Click on the topics to search for the related financial articles Modify this into the pop up later. 
                             </div>
                         </div>
                         <div className="font-semibold">
@@ -197,6 +197,9 @@ const StockTrendsResults = () => {
                                     )
                                 })
                             }
+                        </div>
+                        <div className="text-sm text-center ">
+                            *Trendiness of a topic is measured based on its weightage in a month. The Top 5 are determined by taking the topics which the highest weightages in their own months.
                         </div>
                     </div>
                 </div>

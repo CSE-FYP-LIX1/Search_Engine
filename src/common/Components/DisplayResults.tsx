@@ -19,7 +19,7 @@ const DisplayResults = ({id, title, source, sourceName, releaseDate, content, im
                 </div>
                 <div className='flex flex-row'>
                     <div className='flex flex-col w-full'>
-                        <a href={source} className="text-black font-medium mb-3 text-xl hover:underline text-center font-semibold">{title}</a>
+                        <div className="text-black font-medium mb-3 text-xl hover:underline text-center">{title}</div>
                         <div className='text-ellipsis line-clamp-3 text-lg'>
                             {content}
                         </div>

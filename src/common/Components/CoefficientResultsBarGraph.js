@@ -15,7 +15,7 @@ HCMore(Highcharts);
 HCSolidGauge(Highcharts);
 
 export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick}) => {
-    let data = []; 
+    let data = [];
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -136,7 +136,7 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
                           <div className='text-center text-4xl my-4'>
                             Articles that are associated with {selectedTopic}
                           </div>
-                          <div className='flex flex-row flex-wrap'>
+                          <div className='flex flex-row'>
                             {
                               searchResults.map((record) => {
                                 return (

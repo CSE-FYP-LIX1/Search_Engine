@@ -10,7 +10,6 @@ const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5To
   chartOptions = {
     yAxis: [{
       offset: 50,
-      
       labels: {
         formatter: function () {
           return numberFormat.format(this.value) 
@@ -21,10 +20,15 @@ const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5To
           "color": "#000", "position": "absolute"
 
         },
-        title: "Stock Price Per Share (USD)"
+      },
+      title: {
+        text: "Stock Price Per Share (USD)"
       },
     }, {
       opposite: false,
+      title: {
+        text: "Weightage of topic (Out of 1)"
+      }
     }],
     tooltip: {
       shared: false,
@@ -39,7 +43,7 @@ const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5To
       
     },
     title: {
-      text: `S&P500 Stock Price (Monthly Increments) and Correlation of Topic Over Time`
+      text: `S&P500 Stock Price (Monthly Increments) and Weightages of Topics Over Time`
     },
     chart: {
       height: 600,

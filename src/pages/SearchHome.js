@@ -44,9 +44,9 @@ const SearchHome = () => {
 
     return (
         <>
-            <div className="px-32 py-8 z-10 relative overflow-auto h-full font-source-sans-pro flex flex-col gap-4 bg-background-blue">
+            <div className="px-32 py-8 z-10 relative overflow-auto h-full font-source-sans-pro flex flex-col gap-4 bg-[#283454]">
                 <div className="flex flex-col gap-3 align-middle">
-                    <div className="text-2xl text-center">Financial News Search</div>
+                    <div className="text-2xl text-center text-white">Financial News Search</div>
                     <div className="mx-auto">
                         <InputField customStyles={["py-2", "w-[800px]", "text-xl", "bg-white"]} inputCallback={(query) => setQuery(query)} onKeyDownCallback={() => {
                             navigateWithQuery(query);
@@ -55,7 +55,7 @@ const SearchHome = () => {
                     <div className="mx-auto">
                         <Button 
                             buttonCallback={()=>navigateWithQuery(query)}
-                            customStyles={["w-[200px]"]}
+                            customStyles={["w-[200px]", "text-white"]}
                         >
                             Search
                         </Button>

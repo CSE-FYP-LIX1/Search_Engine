@@ -59,11 +59,11 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
 
                         <div className="flex flex-row gap-3 justify-center mt-10">
                             <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6]">
-                                <img src={reshapedSuggestedTopics[0][0].image} className="block mx-auto w- rounded-lg overflow-hidden object-contain mt-3" alt={reshapedSuggestedTopics[0][0].topic} />
+                                <img src={reshapedSuggestedTopics[0][0].image} className="block mx-auto w-full rounded-lg overflow-hidden object-contain mt-3" alt={reshapedSuggestedTopics[0][0].topic} />
                                 <div className="w-1/2 text-center mx-auto font-bold text-xl">
                                     {reshapedSuggestedTopics[0][0].topic}
                                 </div>
-                                <div className="w-1/2 text-center mx-auto text-sm">t
+                                <div className="w-1/2 text-center mx-auto text-sm">
                                     {reshapedSuggestedTopics[0][0].topic_summary}
                                 </div>
                             </div>

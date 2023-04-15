@@ -31,7 +31,7 @@ const ImageNavBar = ({ImageNavElements} : ImageNavBarProps) => {
                                     {elem.hoverText}
                                 </div>
                             </div>
-                            <div className="text-sm text-center">
+                            <div className="text-sm text-center text-white">
                                 {elem.title}
                             </div>
                         </div>
