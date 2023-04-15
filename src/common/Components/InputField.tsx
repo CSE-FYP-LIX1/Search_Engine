@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import { MagGlassSvg } from "../../assets/svgs";
 import { BasicDateRangePicker } from "./BasicDateRangePicker";
 
