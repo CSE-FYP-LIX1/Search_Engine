@@ -15,7 +15,7 @@ const DisplayResults = ({id, title, source, sourceName, releaseDate, content, im
         <div className='w-1/4 mx-auto text-left font-source-sans-pro p-5' onClick={() => {window.open(source)}}>
             <div className='flex flex-col gap-1 hover:bg-[#f6f6f6]'>
                 <div className='w-full align-middle mx-auto h-40 overflow-hidden'>
-                    <img className="rounded-lg" src={imageLink}/>
+                    <img className="rounded-lg" src={imageLink} alt=""/>
                 </div>
                 <div className='flex flex-row'>
                     <div className='flex flex-col w-full'>
