@@ -84,13 +84,13 @@ export const CorrCoeffGaugeChart = ({corr_coeff}) => {
             },
             dial: {
                 radius: '80%',
-                backgroundColor: 'gray',
+                backgroundColor: 'black',
                 baseWidth: 12,
                 baseLength: '0%',
                 rearLength: '0%'
             },
             pivot: {
-                backgroundColor: 'gray',
+                backgroundColor: 'black',
                 radius: 6
             }
     
