@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsMore from 'highcharts/highcharts-more';
 import HighchartsReact from 'highcharts-react-official';
@@ -7,15 +7,9 @@ HighchartsMore(Highcharts);
 
 
 export const CorrCoeffGaugeChart = ({corr_coeff}) => {
-    // useEffect(() => {
-    //     // Update the chart whenever the data prop changes
-    //     chartRef.current.chart.series[0].update({ data: [data] }, true);
-    // }, [data]);
-
     const data = [corr_coeff]
-
-      
     const chartRef = React.useRef();
+
     const options = {
         chart: {
           type: 'gauge',
