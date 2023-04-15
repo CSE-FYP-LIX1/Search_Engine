@@ -3,8 +3,8 @@ import Datepicker from 'react-tailwindcss-datepicker';
 
 export const BasicDateRangePicker = ({updateDateRange}) => {
   const [dateRange, setDateRange] = useState({
-    startDate: "2006-11-01",
-    endDate: "2023-12-31"
+    startDate: "",
+    endDate: ""
   });
 
   const handleDateRangeChange = (newValue) => {
