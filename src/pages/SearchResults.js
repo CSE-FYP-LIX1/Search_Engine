@@ -1,3 +1,5 @@
+/*eslint-disable */
+
 import { useEffect, useState } from 'react'; 
 import { Button } from "../common/Components/Button.tsx";
 import { useSearchParams } from 'react-router-dom';
@@ -53,7 +55,6 @@ const SearchResults = () => {
 
     const navigateToSearchHome = () => navigate("/search");
 
-    /*eslint-disable */
     useEffect(() => {
         let queryString = "title: " + searchQuery; 
         if (dateRange.startDate === null) {
