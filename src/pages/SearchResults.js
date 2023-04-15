@@ -10,6 +10,7 @@ import { solrSearchUrl, ldaWeightageSearchUrl, corrCoeffSearchUrl } from "../con
 import { LeftArrowSvg } from '../assets/svgs';
 import { solrAxiosQuery } from '../axios';
 import axios from 'axios';
+import { CorrCoeffGaugeChart } from '../common/Components/CorrCoeffGaugeChart.jsx';
 
 const SearchResults = () => {
     const [searchParams] = useSearchParams();
@@ -143,23 +144,30 @@ const SearchResults = () => {
                             {
                                 corrCoeff && corrCoeff.length > 0 ? 
                                 <div className="text-lg mt-5">
-                                    {corrCoeff[0]['corr_coeff'] > 0 ? <div className='text-[#6DD778] font-bold text-center'>{corrCoeff[0]['corr_coeff']}</div> 
-                                                                                : <div className='text-[#D63D3D] font-bold text-center'>{corrCoeff[0]['corr_coeff']}</div>}
-                                    <div className='text-center'>
-                                        correlation coefficient
+                                    <div className='text-center text-base'>
+                                        A matching query was found in the database. Below is {searchQuery}'s correlation coefficient with the S&P500 Index.    
                                     </div>
+                                    <CorrCoeffGaugeChart corr_coeff={corrCoeff[0]['corr_coeff']}/>
+                                    {/* {corrCoeff[0]['corr_coeff'] > 0 ? <div className='text-[#6DD778] font-bold text-center'>{corrCoeff[0]['corr_coeff']}</div> 
+                                                                                : <div className='text-[#D63D3D] font-bold text-center'>{corrCoeff[0]['corr_coeff']}</div>}
                                     <div className='text-center text-xs'>
                                         This indicates that whenever the topic of “{searchQuery}” is trending, the S&P 500 index {corrCoeff[0]['corr_coeff'] > 0 ? "increase" : "decreases"}.
+                                    </div> */}
+                                    <div className='text-center text-lg font-bold'>
+                                        Correlation Coefficient
+                                    </div>
+                                    <div className='text-center text-xs'>
+                                        A strong correlation indicates that when the topic is being discussed a lot in the news, it has the tendency to move in either the opposite or same direction as the S&P500 Index. A negative value means it tends to move in the opposite direction, and a positive value means it tends to move in the same direction.
                                     </div>
                                 </div> : 
                                 <div></div>
                             }
                             {
                                 relevantDates.length > 0 ? 
-                                <div className='text-lg font-semibold text-left'> 
-                                    Topic Most Relevant During These Times
+                                <div className='text-lg font-semibold text-left mt-5'> 
+                                    This Topic Was Trending the Most During These Times
                                 </div> : 
-                                <div className='text-base font-semibold text-left'>
+                                <div className='text-base font-semibold text-left mt-5'>
                                     Query does not match any topic in the database
                                 </div>
                             }

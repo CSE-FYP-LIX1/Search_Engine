@@ -48,12 +48,12 @@ const StockTrends = () => {
 
     return (
         <div className="flex flex-col gap-8">
-            <div className="flex flex-col text-3xl py-[5vh] bg-background-blue">
-                <div className="flex flex-row mx-auto">
+            <div className="flex flex-col text-3xl py-[5vh] bg-[#283454]">
+                <div className="flex flex-row mx-auto text-white">
                     Select the date range to view the most&nbsp;
                     <div className="font-bold">relevant topics</div>
                 </div>
-                <div className="flex flex-row mx-auto">
+                <div className="flex flex-row mx-auto text-white">
                     and their impact on the&nbsp;
                     <div className="font-bold">S&P500 Index</div>
                 </div>
@@ -82,7 +82,7 @@ const StockTrends = () => {
                 </div>
             </div>
             <div className="mx-auto w-1/6">
-                <BasicDateRangePicker updateDateRange={setDateRange}/>
+                <BasicDateRangePicker updateDateRange={setDateRange} startDate={dateRange.startDate} endDate={dateRange.endDate} />
             </div>
 
             <div className="flex flex-row justify-center gap-[20vw]">
