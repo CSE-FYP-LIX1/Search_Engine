@@ -62,6 +62,18 @@ const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5To
     },
     rangeSelector: {
       buttons: [{
+        type: 'month',
+        count: 3,
+        text: '3M'
+      }, {
+        type: 'month',
+        count: 6,
+        text: '6M'
+      }, {
+        type: 'month',
+        count: 9,
+        text: '9M'
+      }, {
         type: 'year',
         count: 1,
         text: '1Y'

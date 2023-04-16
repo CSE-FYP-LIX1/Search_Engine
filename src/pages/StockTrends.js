@@ -25,7 +25,6 @@ const StockTrends = () => {
     const navigateWithRange = (startDate, endDate, searchArray) => {
         if (startDate === null || endDate === null || startDate === "" || endDate === "") {
             setErrorMessage("*A date range is required");
-            console.log("Wtf");
             return 
         }
 

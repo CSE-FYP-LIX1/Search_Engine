@@ -31,6 +31,7 @@ const StockTrendsResults = () => {
     const [searchResults, setSearchResults] = useState([]); 
     const [searchTopics, setSearchTopics] = useState(searchParams.get("query") !== null ? searchParams.get("query").split(",") : null)
     const [listOfDisplayedTopics, setListOfDisplayedTopics] = useState([]); 
+    const [listOfNullTopics, setListOfNullTopics] = useState([]); 
 
     const queryTopic = (query) => {
         let queryString = "title: " + query; 
@@ -122,6 +123,8 @@ const StockTrendsResults = () => {
                     if (res.data.response.docs.length > 0) {
                         setDataSeries(dataSeries => [...dataSeries, res.data.response.docs]); 
                         setListOfDisplayedTopics(listOfDisplayedTopics => [...listOfDisplayedTopics, elem]); 
+                    } else {
+                        setListOfNullTopics(listOfNullTopics => [...listOfNullTopics, elem]); 
                     }
                 }).catch(err => {
                     console.log(`The error is ${err}`); 
@@ -248,7 +251,7 @@ const StockTrendsResults = () => {
                             }
                         </div>
                         {
-                            searchTopics === null && 
+                            searchTopics === null ? 
                             <div className="text-sm text-center ">
                                 <div>
                                     *Trendiness of a topic is measured based on its weightage in a month. The Top 5 are determined by taking the topics with the highest weightages in their own months.
@@ -256,7 +259,22 @@ const StockTrendsResults = () => {
                                 <div>
                                     weightage = articles about this topic / total articles
                                 </div>
+                            </div> : 
+                            <div className="text-sm text-center"> 
+                                <div>
+                                    Note: List of Queried Topics With No Returned Data
+                                </div>
+                                {
+                                    listOfNullTopics.map((elem, idx) => {
+                                        return (
+                                            <div className="text-center hover:text-[#474747]" >
+                                                {idx + 1}.&nbsp;{elem} 
+                                            </div>
+                                        )
+                                    })
+                                }
                             </div>
+                            
                         }
                     </div>
                 </div>

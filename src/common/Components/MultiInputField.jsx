@@ -15,14 +15,14 @@ export const MultiInputField = ({onAdd, customStyles, inputCallback}) => {
     }
 
     const handleSubmit = (e) => {
-        selectedInputs.push(currentInput); 
+        selectedInputs.push(currentInput.trim()); 
         setCurrentInput("") 
         inputCallback(selectedInputs); 
     }
 
     return (
         <div>
-            <div className="flex flex-row gap-4 justify-center ">
+            <div className="flex flex-row gap-4 justify-center">
                 <div className={inputBaseClass.join(" ")}>
                     <div className="flex align-middle mt-1">
                         <MagGlassSvg width="30px" height="30px"/>
