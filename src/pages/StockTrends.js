@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, {useState} from "react";
 import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -8,7 +9,7 @@ import { defaultStartDate } from "../constants";
 import { MagGlassSvg, PlusMinusSvg } from "../assets/svgs";
 import ImageNavBar from "../common/Components/ImageNavBar.tsx";
 import { BasicDateRangePicker } from '../common/Components/BasicDateRangePicker.jsx';
-
+import { MultiInputField } from "../common/Components/MultiInputField.jsx";
 
 const StockTrends = () => {
     const defaultEndDate = new Date();
@@ -18,17 +19,36 @@ const StockTrends = () => {
     const [endDate, setEndDate] = useState(
         (defaultEndDate.getMonth() + 1) + "/" + defaultEndDate.getDate() + "/" + defaultEndDate.getFullYear()
     );
-
+    const [errorMessage, setErrorMessage] = useState("")
     const navigate = useNavigate(); 
 
-    const navigateWithRange = (startDate, endDate) => {
-        navigate({
-            pathname: "/stock-trends-results",
-            search: createSearchParams({
-                startDate: startDate,
-                endDate: endDate
-            }).toString()
-        })
+    const navigateWithRange = (startDate, endDate, searchArray) => {
+        if (startDate === null || endDate === null || startDate === "" || endDate === "") {
+            setErrorMessage("*A date range is required");
+            console.log("Wtf");
+            return 
+        }
+
+
+        if (searchArray.length > 0) {
+            navigate({
+                pathname: "/stock-trends-results",
+                search: createSearchParams({
+                    startDate: startDate,
+                    endDate: endDate,
+                    query: searchArray.join(",")
+                }).toString()
+            })
+        } else {
+            navigate({
+                pathname: "/stock-trends-results",
+                search: createSearchParams({
+                    startDate: startDate,
+                    endDate: endDate
+                }).toString()
+            })
+        }
+        console.log(searchArray)
     }
 
     const minDate = new Date("2006-11-01"); 
@@ -46,16 +66,15 @@ const StockTrends = () => {
         {link: "/trendiest-topics", svg: <PlusMinusSvg width={"28px"} height={"28px"} />, hoverText: "Go to the ranking of all topics overtime", title: "Trendiest Topics"}
     ]
 
+    const [searchArray, setSearchArray] = useState([]); 
     return (
         <div className="flex flex-col gap-8">
             <div className="flex flex-col text-3xl py-[5vh] bg-[#283454]">
                 <div className="flex flex-row mx-auto text-white">
-                    Select the date range to view the most&nbsp;
-                    <div className="font-bold">relevant topics</div>
+                    Topic Insight Multi-Search&nbsp;
                 </div>
-                <div className="flex flex-row mx-auto text-white">
-                    and their impact on the&nbsp;
-                    <div className="font-bold">S&P500 Index</div>
+                <div className="flex flex-row mx-auto text-white text-lg">
+                    Leave the Search Empty To Get The Top 5 Topics During the Selected Time Range
                 </div>
                 <div className="mx-auto mt-4">
                     <ImageNavBar 
@@ -84,8 +103,10 @@ const StockTrends = () => {
             <div className="mx-auto w-1/6">
                 <BasicDateRangePicker updateDateRange={setDateRange} startDate={dateRange.startDate} endDate={dateRange.endDate} />
             </div>
-
-            <div className="flex flex-row justify-center gap-[20vw]">
+            <div className="mx-auto w-2/3">
+                <MultiInputField customStyles={[]} inputCallback={setSearchArray}/>
+            </div>
+            {/* <div className="flex flex-row justify-center gap-[20vw]">
                 <div className="flex flex-col gap-2">
                     <div className="text-2xl font-bold text-center"> 
                         From:
@@ -138,10 +159,13 @@ const StockTrends = () => {
                         />
                     </LocalizationProvider>
                 </div>
+            </div> */}
+            <div className="text-base font-bold text-red-500 text-center">
+                {errorMessage}
             </div>
             <div className="mx-auto">
                 <Button 
-                    buttonCallback={()=>navigateWithRange(startDate, endDate)}
+                    buttonCallback={()=>navigateWithRange(dateRange.startDate, dateRange.endDate, searchArray)}
                     customStyles={["w-[200px]"]}
                 >
                     Search

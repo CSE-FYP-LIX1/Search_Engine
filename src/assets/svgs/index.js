@@ -4,6 +4,7 @@ import { ReactComponent as LeftArrowSvg } from './left-arrow.svg';
 import { ReactComponent as PlusMinusSvg } from './plus-minus.svg';
 import { ReactComponent as ArrowUpSvg } from './arrow-up.svg';
 import { ReactComponent as ArrowDownSvg } from './arrow-down.svg';
+import { ReactComponent as XSvg } from './x.svg';
 
 export {
     MagGlassSvg,
@@ -12,4 +13,5 @@ export {
     PlusMinusSvg,
     ArrowUpSvg,
     ArrowDownSvg,
+    XSvg
 }
