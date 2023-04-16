@@ -248,8 +248,14 @@ const StockTrendsResults = () => {
                             }
                         </div>
                         {
-                            searchTopics === null && <div className="text-sm text-center ">
-                                *Trendiness of a topic is measured based on its weightage in a month. The Top 5 are determined by taking the topics which the highest weightages in their own months.
+                            searchTopics === null && 
+                            <div className="text-sm text-center ">
+                                <div>
+                                    *Trendiness of a topic is measured based on its weightage in a month. The Top 5 are determined by taking the topics with the highest weightages in their own months.
+                                </div>
+                                <div>
+                                    weightage = articles about this topic / total articles
+                                </div>
                             </div>
                         }
                     </div>

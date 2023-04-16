@@ -3,8 +3,6 @@ import ReactHighcharts from 'react-highcharts/ReactHighstock.src'
 
 const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5Topics}) => {
   const topicArr = typeof(top5Topics[0]) === "object" ? top5Topics.map((elem) => {return elem['Keywords']}) : top5Topics;
-  console.log(top5Topics);
-  console.log(top5DataSeries)
   let chartOptions = {}; 
 
   const options = {style: 'currency', currency: 'USD'};

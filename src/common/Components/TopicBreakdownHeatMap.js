@@ -29,6 +29,7 @@ const TopicBreakdownHeatmap = ({top5Data, startDate, endDate}) => {
   let reshapeData = {};
 
   if (top5Data !== undefined) {
+    console.log(top5Data);
     for (let i = 0; i < top5Data.length; i++) {
       let keyWord = top5Data[i][0]['Keywords'][0]; 
       yAxis.push(keyWord); 
