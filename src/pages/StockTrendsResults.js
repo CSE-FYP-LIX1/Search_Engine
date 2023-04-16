@@ -4,7 +4,7 @@ import { createSearchParams, useSearchParams, useNavigate } from 'react-router-d
 import { snpSearchUrl, ldaWeightageSearchUrl } from "../constants";
 import axios from "axios";
 import StockTrendsChart from "../common/Components/StockTrendChart";
-import TopicBreakdownHeatmap from "../common/Components/TopicBreakdownPieChart";
+import TopicBreakdownHeatmap from "../common/Components/TopicBreakdownHeatMap";
 import DisplayResults from "../common/Components/DisplayResults.tsx";
 import { LeftArrowSvg } from "../assets/svgs";
 import { ArrowDownSvg, ArrowUpSvg } from "../assets/svgs";
@@ -22,14 +22,15 @@ const StockTrendsResults = () => {
     const solrStartDate = startDate.getFullYear() + "-" + (startDate.getMonth() + 1) + "-" + startDate.getDate(); 
     const solrEndDate = endDate.getFullYear() + "-" + (endDate.getMonth() + 1) + "-" + endDate.getDate(); 
     const [snpData, setSnpData] = useState(); 
-    const [top5Data, setTop5Data] = useState([]); 
-    const [top5DataSeries, setTop5DataSeries] = useState([]); 
+    const [topicData, setTopicData] = useState([]); 
+    const [dataSeries, setDataSeries] = useState([]); 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [selectedTopic, setSelectedTopic] = useState(""); 
     const [searchResults, setSearchResults] = useState([]); 
-
+    const [searchTopics, setSearchTopics] = useState(searchParams.get("query") !== null ? searchParams.get("query").split(",") : null)
+    const [listOfDisplayedTopics, setListOfDisplayedTopics] = useState([]); 
 
     const queryTopic = (query) => {
         let queryString = "title: " + query; 
@@ -105,36 +106,60 @@ const StockTrendsResults = () => {
 
     useEffect(() => {
         //UNIQUE BEHAVIOR SO KEEP HERE INSTEAD OF USE solrAxiosQuery
-        axios.get(ldaWeightageSearchUrl, {
-            params : {
-                // "fl": props.fetchFields,
-                "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z]`,
-                "indent": true,
-                "q.op": "OR",
-                "rows" : 20,
-                "sort" : "Combined_weightage desc"
-            }
-        }).then(res => {
-            let top5UniqueObj = findTop5Objects(res.data.response.docs);
+        if (searchTopics !== null) {
+            //The case where topics are specified.
+            setTopicData(searchTopics); 
 
-            setTop5Data(top5UniqueObj); 
-            top5UniqueObj.forEach((elem) => {
+            searchTopics.forEach((elem) => {
                 axios.get(ldaWeightageSearchUrl, {
                     params: {
-                        "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z] AND Keywords: ${elem.Keywords}`,
+                        "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z] AND Keywords: ${elem}`,
                         "indent": true,
                         "q.op": "OR",
                         "rows" : 1000,
                     }
                 }).then(res => {
-                    setTop5DataSeries(top5DataSeries => [...top5DataSeries, res.data.response.docs]); 
+                    if (res.data.response.docs.length > 0) {
+                        setDataSeries(dataSeries => [...dataSeries, res.data.response.docs]); 
+                        setListOfDisplayedTopics(listOfDisplayedTopics => [...listOfDisplayedTopics, elem]); 
+                    }
                 }).catch(err => {
                     console.log(`The error is ${err}`); 
                 })
             })
-        }).catch(err => {
-            console.log(`The error is ${err}`)
-        })
+        } else {
+            //The case where no search is specified
+            axios.get(ldaWeightageSearchUrl, {
+                params : {
+                    // "fl": props.fetchFields,
+                    "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z]`,
+                    "indent": true,
+                    "q.op": "OR",
+                    "rows" : 20,
+                    "sort" : "Combined_weightage desc"
+                }
+            }).then(res => {
+                let top5UniqueObj = findTop5Objects(res.data.response.docs);
+
+                setTopicData(top5UniqueObj); 
+                top5UniqueObj.forEach((elem) => {
+                    axios.get(ldaWeightageSearchUrl, {
+                        params: {
+                            "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z] AND Keywords: ${elem.Keywords}`,
+                            "indent": true,
+                            "q.op": "OR",
+                            "rows" : 1000,
+                        }
+                    }).then(res => {
+                        setDataSeries(dataSeries => [...dataSeries, res.data.response.docs]); 
+                    }).catch(err => {
+                        console.log(`The error is ${err}`); 
+                    })
+                })
+            }).catch(err => {
+                console.log(`The error is ${err}`)
+            })
+        }
     }, [])
 
     const style = {
@@ -176,19 +201,29 @@ const StockTrendsResults = () => {
                             &nbsp;(<span className="text-[#D63D3D] font-bold">{percentageDiff}%</span>)
                         </div> 
                     }
-                    <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData} top5DataSeries={top5DataSeries} top5Topics={top5Data}/>
+                    <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData} top5DataSeries={dataSeries} top5Topics={listOfDisplayedTopics}/>
                 </div>
                 <div className="flex flex-row justify-center font-rubik mt-6 w-1/3 items-center">
                     <div className="flex flex-col text-2xl gap-4">
-                        <div className="text-center">
-                            <span className="font-bold">Top 5</span> Trending* Topics during this time
-                            <div className="text-base text-center">
-                                Click on the topics to search for the related financial articles
+                        {
+                            searchTopics === null ?
+                            <div className="text-center">
+                                <span className="font-bold">Top 5</span> Trending* Topics during this time
+                                <div className="text-base text-center">
+                                    Click on the topics to search for the related financial articles
+                                </div>
+                            </div> :
+                            <div className="text-center">
+                                <span className="font-bold">Selected Topics</span>
+                                <div className="text-base text-center">
+                                    Click on the topics to search for the related financial articles
+                                </div>
                             </div>
-                        </div>
+                        }
                         <div className="font-semibold">
                             {
-                                top5Data.map((elem) => {
+                                searchTopics === null ? 
+                                topicData.map((elem) => {
                                     return (
                                         <div className="text-center hover:text-[#474747]" onClick={() => {
                                             setSelectedTopic(elem.Keywords[0]); 
@@ -198,17 +233,30 @@ const StockTrendsResults = () => {
                                             {elem.Keywords} &#40;{(elem.Combined_weightage * 100).toFixed(3)}%&#41;	
                                         </div>
                                     )
+                                }) :
+                                listOfDisplayedTopics.map((elem, idx) => {
+                                    return (
+                                        <div className="text-center hover:text-[#474747]" onClick={() => {
+                                            setSelectedTopic(elem); 
+                                            handleOpen();
+                                            queryTopic(elem);
+                                        }}>
+                                            {idx + 1}.&nbsp;{elem} 	
+                                        </div>
+                                    )
                                 })
                             }
                         </div>
-                        <div className="text-sm text-center ">
-                            *Trendiness of a topic is measured based on its weightage in a month. The Top 5 are determined by taking the topics which the highest weightages in their own months.
-                        </div>
+                        {
+                            searchTopics === null && <div className="text-sm text-center ">
+                                *Trendiness of a topic is measured based on its weightage in a month. The Top 5 are determined by taking the topics which the highest weightages in their own months.
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
             <div className="w-full mt-6">
-                <TopicBreakdownHeatmap top5Data={top5DataSeries} startDate={solrStartDate} endDate={solrEndDate}/>
+                <TopicBreakdownHeatmap top5Data={dataSeries} startDate={solrStartDate} endDate={solrEndDate}/>
             </div>
             <Modal
                 open={open}

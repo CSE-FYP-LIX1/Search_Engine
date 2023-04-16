@@ -66,7 +66,7 @@ const TopicBreakdownHeatmap = ({top5Data, startDate, endDate}) => {
     },
     
     title: {
-      text: "Weightage of Top 5 Topics Over Selected Time Period"
+      text: "Weightage of Topics Over Selected Time Period"
     },
 
     yAxis: {

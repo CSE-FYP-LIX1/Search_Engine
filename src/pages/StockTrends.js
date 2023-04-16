@@ -31,12 +31,14 @@ const StockTrends = () => {
 
 
         if (searchArray.length > 0) {
+            const uniqueArray = searchArray.filter((item, index) => searchArray.indexOf(item) === index);
+
             navigate({
                 pathname: "/stock-trends-results",
                 search: createSearchParams({
                     startDate: startDate,
                     endDate: endDate,
-                    query: searchArray.join(",")
+                    query: uniqueArray.join(",")
                 }).toString()
             })
         } else {

@@ -2,6 +2,9 @@ import React from 'react';
 import ReactHighcharts from 'react-highcharts/ReactHighstock.src'
 
 const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5Topics}) => {
+  const topicArr = typeof(top5Topics[0]) === "object" ? top5Topics.map((elem) => {return elem['Keywords']}) : top5Topics;
+  console.log(top5Topics);
+  console.log(top5DataSeries)
   let chartOptions = {}; 
 
   const options = {style: 'currency', currency: 'USD'};
@@ -92,7 +95,7 @@ const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5To
   }; 
 
   let reshapedSeries = []
-  if (top5DataSeries.length > 4) {
+  if (top5DataSeries.length > 0 && stockData !== undefined) {
     top5DataSeries.forEach((arr) => {
       let reshapedArr = []
       arr.forEach((record) => {
@@ -115,7 +118,7 @@ const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5To
       
       const updatedChartOptions = { ...chartOptions };
       let series = {
-        name: top5Topics[idx]['Keywords'],
+        name: topicArr[idx],
         type: 'line', 
         data: finalData,
         yAxis: 1,
