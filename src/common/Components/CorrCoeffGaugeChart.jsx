@@ -75,7 +75,7 @@ export const CorrCoeffGaugeChart = ({corr_coeff}) => {
                 style: {
                     fontSize: '16px',
                 },
-                y: 10
+                y: -150
             },
             dial: {
                 radius: '80%',
