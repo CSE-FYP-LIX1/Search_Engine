@@ -8,6 +8,8 @@ import StockTrendsResults from "./pages/StockTrendsResults";
 import { TrendiestTopics } from "./pages/TrendiestTopics";
 
 const App = () => {
+  document.body.style.background = '#F9FBFD';
+  
   return (
     <BrowserRouter>
       <Routes>

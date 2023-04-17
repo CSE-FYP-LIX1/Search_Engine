@@ -13,7 +13,7 @@ type InputFieldProps = {
 }
 
 export const InputField = ({customStyles, inputCallback, onKeyDownCallback, query, updateDateRange, endDate, startDate} : InputFieldProps) : JSX.Element => {
-    const baseClass = ["flex", "flex-row", "shadow", "appearance-none", "rounded-full", "px-3", "text-gray-700", "mb-3", "leading-tight", "focus:outline-none", "focus:shadow-outline", "shadow-lg", "border-[1px]", "border-black"]
+    const baseClass = ["bg-[#F9FBFD]", "flex", "flex-row", "shadow", "appearance-none", "rounded-full", "px-3", "text-gray-700", "mb-3", "leading-tight", "focus:outline-none", "focus:shadow-outline", "shadow-lg", "border-[1px]", "border-black"]
     const finalClass = baseClass.concat(customStyles); 
 
     const handleKeyDown = (event : any) => {

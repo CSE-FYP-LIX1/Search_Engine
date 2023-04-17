@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 const SideBar = () => {
     return (
         <div className="w-full h-full flex flex-col font-source-sans-pr">
-            <div className="w-full basis-full h-[100vh]">
+            <div className="w-full basis-full h-[100vh] bg-[#f9fbfd]">
                 <Outlet/>
             </div>
         </div>

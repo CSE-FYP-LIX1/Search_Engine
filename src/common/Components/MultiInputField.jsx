@@ -27,7 +27,7 @@ export const MultiInputField = ({onAdd, customStyles, inputCallback}) => {
                     <div className="flex align-middle mt-1">
                         <MagGlassSvg width="30px" height="30px"/>
                     </div>
-                    <input className="focus:outline-0 ml-2" type="text" value={currentInput} onChange={(e) => setCurrentInput(e.target.value)} onKeyDown={handleKeyDown}/>
+                    <input className="focus:outline-0 ml-2 bg-[#F9FBFD]" type="text" value={currentInput} onChange={(e) => setCurrentInput(e.target.value)} onKeyDown={handleKeyDown}/>
                 </div>
                 <button className={buttonBaseClass.join(" ")} onClick={() => handleSubmit()}>
                     Add
@@ -37,8 +37,10 @@ export const MultiInputField = ({onAdd, customStyles, inputCallback}) => {
                 {
                     selectedInputs.map((elem) => {
                         return (
-                            <div className="flex flex-row justify-between h-8">
-                                <div>{elem}</div>
+                            <div className="flex flex-row justify-between h-8 rounded-md bg-[#f2f0f1]">
+                                <div className="table">
+                                    <div className="pl-4 table-cell align-middle">{elem}</div>
+                                </div>
                                 <div className="table ml-4">
                                     <div className="table-cell align-middle hover:cursor-pointer">
                                         <XSvg width={"16px"} height={"16px"} onClick={() => {

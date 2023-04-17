@@ -13,6 +13,7 @@ import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
 import { solrAxiosQuery } from "../axios";
 import { solrSearchUrl } from '../constants';
+import "./StockTrendsResults.css"; 
 
 const StockTrendsResults = () => {
     const navigate = useNavigate(); 
@@ -180,7 +181,7 @@ const StockTrendsResults = () => {
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 overflow-x-hidden">
             <div className='rounded-full bg-white hover:bg-button-hover w-fit p-2 absolute top-3 left-3' onClick={()=>navigateToStockTrendsHome()}>
                 <LeftArrowSvg width={"32px"} height={"32px"}/>
             </div>
@@ -190,7 +191,7 @@ const StockTrendsResults = () => {
                 </div>
             </div>
             <div className="flex flex-row">
-                <div className="w-2/3">
+                <div className="w-2/3 bg-white rounded-lg shadow-md p-5 ml-5">
                     {
                         percentageDiff > 0 ? 
                         <div className="flex flex-row ml-4">
@@ -206,8 +207,8 @@ const StockTrendsResults = () => {
                     }
                     <StockTrendsChart startDate={solrStartDate} endDate={solrEndDate} stockData={snpData} top5DataSeries={dataSeries} top5Topics={listOfDisplayedTopics}/>
                 </div>
-                <div className="flex flex-row justify-center font-rubik mt-6 w-1/3 items-center">
-                    <div className="flex flex-col text-2xl gap-4">
+                <div className="flex flex-row justify-center font-rubik mt-6 w-[29vw] items-center ">
+                    <div className="flex flex-col text-2xl gap-4 bg-white rounded-lg shadow-md ml-5 p-10 overflow-y-scroll h-[50vh] no-scrollbar">
                         {
                             searchTopics === null ?
                             <div className="text-center">
@@ -279,8 +280,10 @@ const StockTrendsResults = () => {
                     </div>
                 </div>
             </div>
-            <div className="w-full mt-6">
-                <TopicBreakdownHeatmap top5Data={dataSeries} startDate={solrStartDate} endDate={solrEndDate}/>
+            <div className="mx-auto bg-white rounded-lg shadow-md mb-5">
+                <div className="w-[90vw] my-6 ml-5">
+                    <TopicBreakdownHeatmap top5Data={dataSeries} startDate={solrStartDate} endDate={solrEndDate}/>
+                </div>
             </div>
             <Modal
                 open={open}

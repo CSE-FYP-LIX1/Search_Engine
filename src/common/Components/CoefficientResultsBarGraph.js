@@ -134,7 +134,7 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
                     <Typography id="modal-modal-title" 
                         variant="h6" component="h2" className="text-center">
                           <div className='text-center text-4xl my-4'>
-                            Articles that are associated with {selectedTopic}
+                            Articles that are associated with "{selectedTopic}"
                           </div>
                           <div className='flex flex-row flex-wrap'>
                             {

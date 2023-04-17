@@ -83,7 +83,7 @@ const StockTrends = () => {
                     />
                 </div>
             </div>
-            <div className="flex flex-row gap-20 mx-auto">
+            <div className="flex flex-row gap-40 mx-auto">
                 <div className="flex flex-col">
                     <div className="text-2xl font-bold text-center"> 
                         From:
@@ -101,7 +101,7 @@ const StockTrends = () => {
                     </div>
                 </div>
             </div>
-            <div className="mx-auto w-1/6">
+            <div className="mx-auto w-1/6 mb-5">
                 <BasicDateRangePicker updateDateRange={setDateRange} startDate={dateRange.startDate} endDate={dateRange.endDate} />
             </div>
             <div className="mx-auto w-2/3">

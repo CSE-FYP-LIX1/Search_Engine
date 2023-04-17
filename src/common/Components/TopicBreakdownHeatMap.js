@@ -63,9 +63,8 @@ const TopicBreakdownHeatmap = ({top5Data, startDate, endDate}) => {
       type: "heatmap",
       marginTop: 40,
       marginBottom: 80,
-      plotBorderWidth: 1
+      plotBorderWidth: 1,
     },
-    
     title: {
       text: "Weightage of Topics Over Selected Time Period"
     },
@@ -111,6 +110,7 @@ const TopicBreakdownHeatmap = ({top5Data, startDate, endDate}) => {
 
     series: [
       {
+        turboThreshold: 0,
         borderWidth: 1,
         data: data2,
         dataLabels: {
@@ -125,9 +125,7 @@ const TopicBreakdownHeatmap = ({top5Data, startDate, endDate}) => {
     },
   };
     return (
-      <div className="App">
         <HighchartsReact highcharts={Highcharts} options={chartOptions} />
-      </div>
     )
 }
 
