@@ -58,14 +58,21 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
           width: 1000
         },
         title: {
-          text: null,
+          text: "Top Ranking Correlation Coefficients of November 2006 to March 2023",
+        },
+        subtitle: {
+          text: 'The correlation indicates the effect this topic has on the stock market. A negative value means the stock goes down, and a positive value means it tends to move upwards when this topic is trending.',
+          widthAdjust: -300
         },
         xAxis: {
           categories: chartData.map(item => item.name),
+          title: {
+            text: "Topic"
+          }
         },
         yAxis: {
           title: {
-            text: null,
+            text: "Correlation Coefficient",
           },
           labels: {
             formatter: function() {

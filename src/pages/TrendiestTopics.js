@@ -55,11 +55,11 @@ export const TrendiestTopics = () => {
             <div className="flex flex-col text-3xl py-[5vh] bg-[#283454]">
                 <div className="flex flex-row mx-auto text-white">
                     Below is the ranking of all the&nbsp;
-                    <div className="font-bold">most dominant topics</div>
-                    &nbsp;based on
+                    <div className="font-bold">most correlated </div>
+                    &nbsp;topics
                 </div>
-                <div className="flex flex-row mx-auto text-white">
-                    their effect on the S&P500 trend
+                <div className="flex flex-row mx-auto text-white text-lg">
+                    Click on each bar to see articles related to each topic
                 </div>
                 <div className="mx-auto mt-4">
                     <ImageNavBar 
@@ -67,7 +67,7 @@ export const TrendiestTopics = () => {
                     />
                 </div>
             </div>
-            <div className="flex flex-row justify-center gap-10">
+            <div className="flex flex-row justify-center gap-10 rounded-lg shadow-lg bg-white w-8/12 mx-auto mb-5">
                 {
                    top10Corr.length > 0 && bot10Corr.length > 0 && <CoefficientResultsBarGraph top10Corr={top10Corr} bot10Corr={bot10Corr} handleBarClick={(e)=>console.log("Clicked!", e)}/> 
                 }

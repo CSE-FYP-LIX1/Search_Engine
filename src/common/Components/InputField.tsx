@@ -27,7 +27,7 @@ export const InputField = ({customStyles, inputCallback, onKeyDownCallback, quer
             <div className="flex align-middle mt-1">
                 <MagGlassSvg width="30px" height="30px"/>
             </div>
-            <input className="focus:outline-0 w-full ml-2" value={query} type="text" onChange={(e) => inputCallback(e.target.value)} onKeyDown={handleKeyDown}/>
+            <input className="focus:outline-0 w-full ml-2 bg-[#F9FBFD]" value={query} type="text" onChange={(e) => inputCallback(e.target.value)} onKeyDown={handleKeyDown}/>
             <div className="w-1/2">
                 <BasicDateRangePicker updateDateRange={updateDateRange} startDate={startDate} endDate={endDate}/>
             </div>

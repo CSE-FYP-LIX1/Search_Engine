@@ -59,7 +59,6 @@ const SearchResults = () => {
     useEffect(() => {
         let queryString = "title: " + searchQuery; 
         if (dateRange.startDate === null) {
-            console.log("Inside of no start date")
             solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 24);
         } else {
             axios.get(solrSearchUrl, {
@@ -80,7 +79,7 @@ const SearchResults = () => {
 
     useEffect(() => {
         let queryString = "Keywords: " + searchQuery; 
-        solrAxiosQuery(ldaWeightageSearchUrl, queryString, setRelevantDates, 24);
+        solrAxiosQuery(ldaWeightageSearchUrl, queryString, setRelevantDates, 10);
     }, [searchQuery])
     
     useEffect(() => {
@@ -164,8 +163,13 @@ const SearchResults = () => {
                             <div className='flex flex-col gap-4 rounded-lg bg-white shadow-md pb-5 px-2'>
                                 {
                                     relevantDates.length > 0 ? 
-                                    <div className='text-lg font-semibold text-left mt-5'> 
-                                        This Topic Was Trending the Most During These Times
+                                    <div className='text-left mt-5'> 
+                                        <div className='text-lg font-semibold'>
+                                            This Topic Had The Highest Weightages* During These Months
+                                        </div>
+                                        <div className='text-sm mt-3'>
+                                            *Weightage = articles about this topic / total articles
+                                        </div>
                                     </div> : 
                                     <div className='text-base font-semibold text-left mt-5'>
                                         Query does not match any topic in the database
