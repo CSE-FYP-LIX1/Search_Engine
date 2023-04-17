@@ -17,7 +17,7 @@ Type is keywords from events (such as 'Russia' or 'Covid') to get the relevant f
 ## The following are the steps to setup SOLR
 0. Need java version 8 or greator to run SOLR, hence ensure that is in install in your local machine (run command <b>java -version</b>)
 1. Go to https://solr.apache.org/downloads.html to download SOLR.
-2. After downloading and unzipping SOLR, go to the SOLR folder directory, run the command "start -p 8983" to start the SOLR server. 
+2. After downloading and unzipping SOLR, go to the SOLR folder directory, run the command "start -p 8983" (for mac) or "bin\solr.cmd start" (for windows) to start the SOLR server. 
 3. Fix the CORS error (see below)
 
 ## Fixing the CORS errors
