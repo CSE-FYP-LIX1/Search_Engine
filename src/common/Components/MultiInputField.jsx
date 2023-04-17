@@ -9,7 +9,7 @@ export const MultiInputField = ({onAdd, customStyles, inputCallback}) => {
 
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-            if (currentInput !== "" && currentInput.trim() !== "" && currentInput.replaceAll("\"", "").replaceAll("\'").replaceAll("\`") !== "")
+            if (currentInput !== "" && currentInput.trim() !== "" && currentInput.replaceAll("\"", "").replaceAll("'").replaceAll("`") !== "")
                 handleSubmit(event)
         }
     }
