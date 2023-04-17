@@ -140,10 +140,10 @@ const SearchResults = () => {
                                 }
                             </div>
                         </div>
-                        <div className='flex flex-col w-1/6 px-3 gap-4'>
+                        <div className='flex flex-col w-1/6 px-3 gap-4 ml-1'>
                             {
                                 corrCoeff && corrCoeff.length > 0 ? 
-                                <div className="text-lg mt-5">
+                                <div className="text-lg mt-5 rounded-lg bg-white shadow-lg py-4 px-1 ">
                                     <div className='text-center text-base'>
                                         A matching query was found in the database. Below is {searchQuery}'s correlation coefficient with the S&P500 Index.    
                                     </div>
@@ -157,22 +157,20 @@ const SearchResults = () => {
                                         Correlation Coefficient
                                     </div>
                                     <div className='text-center text-xs'>
-                                        A strong correlation indicates that when the topic is being discussed a lot in the news, it has the tendency to move in either the opposite or same direction as the S&P500 Index. A negative value means it tends to move in the opposite direction, and a positive value means it tends to move in the same direction.
-                                    </div>
+                                    The correlation indicates the effect this topic has on the stock market. A negative value means the stock goes down, and a positive value means it tends to move upwards when this topic is trending.                                    </div>
                                 </div> : 
                                 <div></div>
                             }
-                            {
-                                relevantDates.length > 0 ? 
-                                <div className='text-lg font-semibold text-left mt-5'> 
-                                    This Topic Was Trending the Most During These Times
-                                </div> : 
-                                <div className='text-base font-semibold text-left mt-5'>
-                                    Query does not match any topic in the database
-                                </div>
-                            }
-                            {/* Using mock data right now */}
-                            <div className='flex flex-col gap-4'>
+                            <div className='flex flex-col gap-4 rounded-lg bg-white shadow-md pb-5 px-2'>
+                                {
+                                    relevantDates.length > 0 ? 
+                                    <div className='text-lg font-semibold text-left mt-5'> 
+                                        This Topic Was Trending the Most During These Times
+                                    </div> : 
+                                    <div className='text-base font-semibold text-left mt-5'>
+                                        Query does not match any topic in the database
+                                    </div>
+                                }
                                 {
                                     relevantDates.sort((a, b) => {return b.Combined_weightage[0] - a.Combined_weightage[0]}).map((elem, idx) => {
                                         let tempDateObj = new Date(elem.Date); 

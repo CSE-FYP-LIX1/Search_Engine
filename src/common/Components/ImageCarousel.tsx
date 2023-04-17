@@ -36,13 +36,13 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
     return (
         <div id="carousel" className="relative" data-te-carousel-init data-te-carousel-slide>
             <div className="absolute right-0 bottom-0 left-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0" data-te-carousel-indicators>
-                <button type="button" data-te-target="#carousel" data-te-slide-to="0" data-te-carousel-active className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-white bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
+                <button type="button" data-te-target="#carousel" data-te-slide-to="0" data-te-carousel-active className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-black bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
                         aria-current="true" aria-label="Slide 1" />
                 {
                     suggestedTopics.map((_elem, idx) => {
                         if (idx > 0)
                             return (
-                                <button type="button" data-te-target="#carousel" data-te-slide-to={idx} className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-white bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
+                                <button type="button" data-te-target="#carousel" data-te-slide-to={idx} className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-black bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
                                     aria-label={`Slide ${idx + 1}`} />
                             )
                         else 
@@ -57,8 +57,8 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                     {
                         reshapedSuggestedTopics.length > 0 && 
 
-                        <div className="flex flex-row gap-3 justify-center mt-10">
-                            <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6]">
+                        <div className="flex flex-row gap-3 justify-center mt-10 mb-2">
+                            <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
                                 <div className="h-2/3 overflow-hidden flex  flex-col align-middle">
                                     <img src={reshapedSuggestedTopics[0][0].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={reshapedSuggestedTopics[0][0].topic} />
                                 </div>
@@ -69,7 +69,7 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                                     {reshapedSuggestedTopics[0][0].topic_summary}
                                 </div>
                             </div>
-                            <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6]">
+                            <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
                                 <div className="h-2/3 overflow-hidden">
                                     <img src={reshapedSuggestedTopics[0][1].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={reshapedSuggestedTopics[0][1].topic} />
                                 </div>
@@ -80,7 +80,7 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                                     {reshapedSuggestedTopics[0][1].topic_summary}
                                 </div>
                             </div>
-                            <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6]">
+                            <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
                                 <div className="h-2/3 overflow-hidden">
                                     <img src={reshapedSuggestedTopics[0][2].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={reshapedSuggestedTopics[0][2].topic} />
                                 </div>
@@ -100,8 +100,8 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                             return (
                                 <div className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
                                     data-te-carousel-item>
-                                    <div className="flex flex-row gap-3 justify-center mt-10">
-                                        <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6]">
+                                    <div className="flex flex-row gap-3 justify-center mt-10 mb-2">
+                                        <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
                                             <div className="h-2/3 overflow-hidden">
                                                 <img src={elem[0].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={elem[0].topic} />
                                             </div>
@@ -112,7 +112,7 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                                                 {elem[0].topic_summary}
                                             </div>
                                         </div>
-                                        <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6]">
+                                        <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
                                             <div className="h-2/3 overflow-hidden">
                                                 <img src={elem[1].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={elem[1].topic} />
                                             </div>
@@ -123,7 +123,7 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                                                 {elem[1].topic_summary}
                                             </div>
                                         </div>
-                                        <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6]">
+                                        <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
                                             <div className="h-2/3 overflow-hidden">
                                                 <img src={elem[2].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={elem[2].topic} />
                                             </div>

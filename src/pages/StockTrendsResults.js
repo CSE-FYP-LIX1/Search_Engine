@@ -111,7 +111,6 @@ const StockTrendsResults = () => {
         if (searchTopics !== null) {
             //The case where topics are specified.
             setTopicData(searchTopics); 
-
             searchTopics.forEach((elem) => {
                 axios.get(ldaWeightageSearchUrl, {
                     params: {
@@ -144,10 +143,12 @@ const StockTrendsResults = () => {
             }).then(res => {
                 let top5UniqueObj = findTop5Objects(res.data.response.docs);
                 
-                let sortedArr = top5UniqueObj.sort((a, b) => a - b);
+                let sortedArr = top5UniqueObj.sort((a, b) => b['Combined_weightage'][0] - a['Combined_weightage'][0]);
+
+                setListOfDisplayedTopics(top5UniqueObj); 
+                console.log("Look over here bro", sortedArr)
 
                 setTopicData(sortedArr);
-
                 top5UniqueObj.forEach((elem) => {
                     axios.get(ldaWeightageSearchUrl, {
                         params: {
@@ -156,7 +157,7 @@ const StockTrendsResults = () => {
                             "q.op": "OR",
                             "rows" : 1000,
                         }
-                    }).then(res => {
+                    }).then(res => {[]
                         setDataSeries(dataSeries => [...dataSeries, res.data.response.docs]); 
                     }).catch(err => {
                         console.log(`The error is ${err}`); 
