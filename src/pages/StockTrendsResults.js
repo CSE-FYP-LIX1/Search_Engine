@@ -135,7 +135,6 @@ const StockTrendsResults = () => {
             //The case where no search is specified
             axios.get(ldaWeightageSearchUrl, {
                 params : {
-                    // "fl": props.fetchFields,
                     "q": `Date:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z]`,
                     "indent": true,
                     "q.op": "OR",
@@ -144,8 +143,11 @@ const StockTrendsResults = () => {
                 }
             }).then(res => {
                 let top5UniqueObj = findTop5Objects(res.data.response.docs);
+                
+                let sortedArr = top5UniqueObj.sort((a, b) => a - b);
 
-                setTopicData(top5UniqueObj); 
+                setTopicData(sortedArr);
+
                 top5UniqueObj.forEach((elem) => {
                     axios.get(ldaWeightageSearchUrl, {
                         params: {
