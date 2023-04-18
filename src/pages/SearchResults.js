@@ -30,7 +30,6 @@ const SearchResults = () => {
     const id  = useParams();
 
     useEffect(() => {
-        console.log("inside here");
         setRenderCount(renderValue + 1);
     }, [location.pathname, id]);
   
@@ -86,7 +85,7 @@ const SearchResults = () => {
         let queryString = "Keyword: " + searchQuery; 
         solrAxiosQuery(corrCoeffSearchUrl, queryString, setCorrCoeff, 1); 
     }, [searchQuery])
-    
+
     return (
         <div className='h-full'>
             <div className="relative overflow-auto h-full font-rubik">

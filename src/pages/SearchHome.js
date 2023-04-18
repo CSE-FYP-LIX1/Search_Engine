@@ -9,6 +9,8 @@ import { PlusMinusSvg, StockChartSvg } from "../assets/svgs";
 import { carouselSearchUrl } from "../constants"; 
 import { solrAxiosQuery } from '../axios';
 import * as te from 'tw-elements';
+import axios from 'axios';
+
 
 const SearchHome = () => {
     const [query, setQuery] = useState("")
@@ -16,14 +18,25 @@ const SearchHome = () => {
         startDate: "",
         endDate: ""
     })
+    
+    function getRandomNumber(min, max) {
+        return Math.random() * (max - min) + min;
+    }
 
     const [carouselData, setCarouselData] = useState(
         [
             {image: "https://mdbcdn.b-cdn.net/img/new/slides/041.webp", topic: "temp1", topic_summary: "temp1"},
             {image: "https://mdbcdn.b-cdn.net/img/new/slides/042.webp", topic: "temp2", topic_summary: "temp2"},
             {image: "https://mdbcdn.b-cdn.net/img/new/slides/043.webp", topic: "temp3", topic_summary: "temp3"},
-        ]
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/041.webp", topic: "temp1", topic_summary: "temp1"},
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/042.webp", topic: "temp2", topic_summary: "temp2"},
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/043.webp", topic: "temp3", topic_summary: "temp3"},
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/041.webp", topic: "temp1", topic_summary: "temp1"},
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/042.webp", topic: "temp2", topic_summary: "temp2"},
+            {image: "https://mdbcdn.b-cdn.net/img/new/slides/043.webp", topic: "temp3", topic_summary: "temp3"},
+        ],
     ); 
+
     const navigate = useNavigate();
 
     const navigateWithQuery = (query) => {
@@ -52,11 +65,24 @@ const SearchHome = () => {
     ]
 
     useEffect(() => {
+        let randomSeed = getRandomNumber(0, 100);
         let queryString = "*:*"; 
-        solrAxiosQuery(carouselSearchUrl, queryString, setCarouselData, 4);
+        axios.get(carouselSearchUrl, {
+            params : {
+                // "fl": props.fetchFields,
+                "q": queryString,
+                "indent": true,
+                "q.op": "OR",
+                "rows" : 9,
+                "sort" : `random_${randomSeed} DESC`
+
+            }
+        }).then(res => {
+            setCarouselData(res.data.response.docs)
+        }).catch(err => {
+            console.log(`The error is ${err}`)
+        })
     }, [])
-
-
 
     return (
         <div className="relative">

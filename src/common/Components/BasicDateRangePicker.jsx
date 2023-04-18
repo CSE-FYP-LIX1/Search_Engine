@@ -20,7 +20,6 @@ export const BasicDateRangePicker = ({updateDateRange, startDate, endDate}) => {
     }
     updateDateRange(newValue); 
   } 
-  console.log(dateRange);
   return (
     <div>
       <Datepicker

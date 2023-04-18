@@ -90,7 +90,7 @@ const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5To
         type: 'all',
         text: 'All'
       }],
-      selected: 4
+      selected: 7
     },
     series: [{
       type: 'spline',

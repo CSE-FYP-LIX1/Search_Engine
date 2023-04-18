@@ -1,4 +1,5 @@
 import React from "react";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 type suggestedTopic = {
     image : string;
@@ -11,35 +12,32 @@ type ImageCarouselProps = {
 }
 
 export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Element => {
-
+    const navigate = useNavigate();
     let reshapedSuggestedTopics : suggestedTopic[][] = []
-
-    const duplicateArr = (arr : suggestedTopic[], times : number) : suggestedTopic[]=>
-    Array(times)
-        .fill([...arr])
-        .reduce((a, b) => a.concat(b));
-
-    
-    //Temporarily duplicate the 3 results into 9 MAKE API CALL 9 IN THE FUTURE
-
-    let tempSuggestedTopics = duplicateArr(suggestedTopics, 3); 
-
 
     for (let i = 0; i < 9; i+=3) {
         let tempArr : suggestedTopic[]= [];
-        tempArr.push(tempSuggestedTopics[i]); 
-        tempArr.push(tempSuggestedTopics[i + 1]); 
-        tempArr.push(tempSuggestedTopics[i + 2]); 
+        tempArr.push(suggestedTopics[i]); 
+        tempArr.push(suggestedTopics[i + 1]); 
+        tempArr.push(suggestedTopics[i + 2]); 
         reshapedSuggestedTopics.push(tempArr); 
     }
 
+    const navigateWithQuery = (query) => {
+        navigate({
+            pathname: "/search-results", 
+            search: createSearchParams({
+                query: query,
+            }).toString()
+        })
+    }
     return (
         <div id="carousel" className="relative" data-te-carousel-init data-te-carousel-slide>
             <div className="absolute right-0 bottom-0 left-0 z-[2] mx-[15%] mb-4 flex list-none justify-center p-0" data-te-carousel-indicators>
                 <button type="button" data-te-target="#carousel" data-te-slide-to="0" data-te-carousel-active className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-black bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
                         aria-current="true" aria-label="Slide 1" />
                 {
-                    suggestedTopics.map((_elem, idx) => {
+                    reshapedSuggestedTopics.map((_elem, idx) => {
                         if (idx > 0)
                             return (
                                 <button type="button" data-te-target="#carousel" data-te-slide-to={idx} className="mx-[3px] box-content h-[3px] w-[30px] flex-initial cursor-pointer border-0 border-y-[10px] border-solid border-transparent bg-black bg-clip-padding p-0 -indent-[999px] opacity-50 transition-opacity duration-[600ms] ease-[cubic-bezier(0.25,0.1,0.25,1.0)] motion-reduce:transition-none"
@@ -58,7 +56,7 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                         reshapedSuggestedTopics.length > 0 && 
 
                         <div className="flex flex-row gap-3 justify-center mt-10 mb-2">
-                            <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
+                            <div className="flex flex-col gap-5 w-1/4 bg-white shadow-lg rounded-lg hover:bg-[#f6f6f6]" onClick={()=>{navigateWithQuery(reshapedSuggestedTopics[0][0].topic)}}>
                                 <div className="h-2/3 overflow-hidden flex  flex-col align-middle">
                                     <img src={reshapedSuggestedTopics[0][0].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={reshapedSuggestedTopics[0][0].topic} />
                                 </div>
@@ -69,7 +67,7 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                                     {reshapedSuggestedTopics[0][0].topic_summary}
                                 </div>
                             </div>
-                            <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
+                            <div className="flex flex-col gap-5 w-1/4 bg-white shadow-lg rounded-lg hover:bg-[#f6f6f6]" onClick={()=>{navigateWithQuery(reshapedSuggestedTopics[0][1].topic)}}>
                                 <div className="h-2/3 overflow-hidden">
                                     <img src={reshapedSuggestedTopics[0][1].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={reshapedSuggestedTopics[0][1].topic} />
                                 </div>
@@ -80,7 +78,7 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                                     {reshapedSuggestedTopics[0][1].topic_summary}
                                 </div>
                             </div>
-                            <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
+                            <div className="flex flex-col gap-5 w-1/4 bg-white shadow-lg rounded-lg hover:bg-[#f6f6f6]" onClick={()=>{navigateWithQuery(reshapedSuggestedTopics[0][2].topic)}}>
                                 <div className="h-2/3 overflow-hidden">
                                     <img src={reshapedSuggestedTopics[0][2].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={reshapedSuggestedTopics[0][2].topic} />
                                 </div>
@@ -101,7 +99,7 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                                 <div className="relative float-left -mr-[100%] hidden w-full transition-transform duration-[600ms] ease-in-out motion-reduce:transition-none"
                                     data-te-carousel-item>
                                     <div className="flex flex-row gap-3 justify-center mt-10 mb-2">
-                                        <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
+                                        <div className="flex flex-col gap-5 w-1/4 bg-white shadow-lg rounded-lg hover:bg-[#f6f6f6]" onClick={()=>{navigateWithQuery(elem[0].topic)}}>
                                             <div className="h-2/3 overflow-hidden">
                                                 <img src={elem[0].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={elem[0].topic} />
                                             </div>
@@ -112,7 +110,7 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                                                 {elem[0].topic_summary}
                                             </div>
                                         </div>
-                                        <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
+                                        <div className="flex flex-col gap-5 w-1/4 bg-white shadow-lg rounded-lg hover:bg-[#f6f6f6]" onClick={()=>{navigateWithQuery(elem[1].topic)}}>
                                             <div className="h-2/3 overflow-hidden">
                                                 <img src={elem[1].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={elem[1].topic} />
                                             </div>
@@ -123,7 +121,7 @@ export const ImageCarousel = ({suggestedTopics} : ImageCarouselProps) : JSX.Elem
                                                 {elem[1].topic_summary}
                                             </div>
                                         </div>
-                                        <div className="flex flex-col gap-5 w-1/4 bg-[#F6F6F6] shadow-lg rounded-lg">
+                                        <div className="flex flex-col gap-5 w-1/4 bg-white shadow-lg rounded-lg hover:bg-[#f6f6f6]" onClick={()=>{navigateWithQuery(elem[2].topic)}}>
                                             <div className="h-2/3 overflow-hidden">
                                                 <img src={elem[2].image} className="block mx-auto w-full rounded-lg object-contain mt-3" alt={elem[2].topic} />
                                             </div>
