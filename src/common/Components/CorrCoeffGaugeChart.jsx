@@ -50,18 +50,18 @@ export const CorrCoeffGaugeChart = ({corr_coeff}) => {
           plotBands: [
             {
                 from: -1,
-                to: -0.6,
+                to: -0.4,
                 color: '#D63D3D', // red
             },
             {
-                from: -0.6,
-                to: 0.6,
-                color: '#55BF3B', // green
+                from: -0.4,
+                to: 0.4,
+                color: '#6DD778', // green
             },
             {
-                from: 0.6,
+                from: 0.4,
                 to: 1,
-                color: '#6DD778', // yellow
+                color: '#55BF3B', // yellow
             },
           ],
         },
