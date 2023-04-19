@@ -56,7 +56,7 @@ const SearchResults = () => {
     const navigateToSearchHome = () => navigate("/search");
 
     useEffect(() => {
-        let queryString = "title: " + searchQuery; 
+        let queryString = "short_description: " + searchQuery; 
         if (dateRange.startDate === null) {
             solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 24);
         } else {
