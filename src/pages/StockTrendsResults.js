@@ -95,7 +95,7 @@ const StockTrendsResults = () => {
             const data = []; 
             res.data.response.docs.forEach((elem) => {
                 let date = new Date(elem.Date[0]).getTime()
-                data.push([date, elem.Consumer_Price_Index[0]])
+                data.push([date, elem.Price[0]])
             }); 
             let chartData = data.sort((a, b) => a[0] - b[0]);  // <-- sort x-axis here
             setSnpData(chartData); 

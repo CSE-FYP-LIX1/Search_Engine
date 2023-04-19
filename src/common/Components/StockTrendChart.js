@@ -129,7 +129,7 @@ const StockTrendsChart = ({startDate, endDate, stockData, top5DataSeries, top5To
       const updatedChartOptions = { ...chartOptions };
       let series = {
         name: topicArr[idx],
-        type: 'line', 
+        type: 'spline', 
         data: finalData,
         yAxis: 1,
       }
