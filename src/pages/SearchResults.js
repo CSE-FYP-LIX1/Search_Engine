@@ -188,14 +188,14 @@ const SearchResults = () => {
                                                 </div>
                                                 <div className='flex flex-row'> 
                                                     <div className='font-bold'> Weightage:&nbsp;</div>
-                                                    {parseFloat(elem.Combined_weightage).toFixed(5)}
+                                                    {parseFloat(elem.Combined_weightage * 100).toFixed(3)}%
                                                 </div>
                                             </div>
                                         )
                                     })
                                 }
                             </div>
-                        </div>
+                        </div>)
                     </div>
                 </div>
             </div>
