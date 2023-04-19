@@ -35,7 +35,7 @@ const StockTrendsResults = () => {
     const [listOfNullTopics, setListOfNullTopics] = useState([]); 
 
     const queryTopic = (query) => {
-        let queryString = "title: " + query; 
+        let queryString = "short_description: " + query; 
         solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 24);
     }
     

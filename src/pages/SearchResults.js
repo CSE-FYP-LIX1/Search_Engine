@@ -78,7 +78,20 @@ const SearchResults = () => {
 
     useEffect(() => {
         let queryString = "Keywords: " + searchQuery; 
-        solrAxiosQuery(ldaWeightageSearchUrl, queryString, setRelevantDates, 10);
+        axios.get(ldaWeightageSearchUrl, {
+            params : {
+                "q": queryString,
+                "indent": true,
+                "q.op": "OR",
+                "rows" : 10,
+                "sort" : "Combined_weightage desc"
+            }
+        }).then(res => {
+            setRelevantDates(res.data.response.docs)
+        }).catch(err => {
+            console.log(`The error is ${err}`)
+        })
+
     }, [searchQuery])
     
     useEffect(() => {

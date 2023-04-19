@@ -23,7 +23,7 @@ export const CoefficientResultsBarGraph = ({top10Corr, bot10Corr, handleBarClick
     const [searchResults, setSearchResults] = useState([]); 
 
     const getAssociatedLinks = (query) => {
-      let queryString = "title: " + query; 
+      let queryString = "short_description: " + query; 
       solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 24);
     }
 
