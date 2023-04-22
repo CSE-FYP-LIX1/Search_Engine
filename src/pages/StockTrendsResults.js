@@ -36,7 +36,35 @@ const StockTrendsResults = () => {
 
     const queryTopic = (query) => {
         let queryString = "short_description: " + query; 
-        solrAxiosQuery(solrSearchUrl, queryString, setSearchResults, 24);
+        if (searchTopics !== null) {
+            axios.get(solrSearchUrl, {
+                params : {
+                    // "fl": props.fetchFields,
+                    "q": queryString + " AND " + `published_at:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z]`,
+                    "indent": true,
+                    "q.op": "OR",
+                    "rows": 24
+                }
+            }).then(res => {
+                setSearchResults(res.data.response.docs);
+            }).catch(err => {
+                console.log(`The error is ${err}`)
+            })
+        } else {
+            axios.get(solrSearchUrl, {
+                params : {
+                    // "fl": props.fetchFields,
+                    "q": queryString + " AND " + `published_at:[${solrStartDate}T00\\:00\\:00Z TO ${solrEndDate}T00\\:00\\:00Z]`,
+                    "indent": true,
+                    "q.op": "OR",
+                    "rows": 24
+                }
+            }).then(res => {
+                setSearchResults(res.data.response.docs);
+            }).catch(err => {
+                console.log(`The error is ${err}`)
+            })
+        }
     }
     
     const navigateToStockTrendsHome = () => navigate("/stock-trends");
