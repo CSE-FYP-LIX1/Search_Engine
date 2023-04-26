@@ -26,8 +26,7 @@ In order to fix this error, some added configurations need to be added to the sc
 1. Add the following jar files into the server/solr-webapp/webapp/WEB-INF/lib directory:
     jetty-servlets-8.1.14.v20131031.jar
     jetty-util-8.1.14.v20131031.jar
-2. Edit the server/solr-webapp/webapp/WEB-INF/web.xml file to include the following code: **take code from source** 
-**The code allows the CORS server to queried from all origins**
+2. Edit the server/solr-webapp/webapp/WEB-INF/web.xml file to include the following code: **take code from source**. This code allows the SOLR cores to be queried from the website.  
 3. Restart the SOLR core using the commmand bin/solr restart.
 
 *Source: https://opensourceconnections.com/blog/2015/03/26/going-cross-origin-with-solr/* 
