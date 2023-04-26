@@ -27,6 +27,10 @@ In order to fix this error, some added configurations need to be added to the sc
     jetty-servlets-8.1.14.v20131031.jar
     jetty-util-8.1.14.v20131031.jar
 2. Edit the server/solr-webapp/webapp/WEB-INF/web.xml file to include the following code: **take code from source** 
+**The code allows the CORS server to queried from all origins**
+3. Restart the SOLR core using the commmand bin/solr restart.
+
+*Source: https://opensourceconnections.com/blog/2015/03/26/going-cross-origin-with-solr/* 
 
 ## The following are the steps to setup and populate a SOLR core instance (the database)
 1. Go to "localhost:8983/solr" to find the SOLR web server.
@@ -53,8 +57,3 @@ After this step, go to https://fyp-search-engine.netlify.app/ in order to see th
 **It is important to note that the names of the COREs need to be exactly the same as listed above**
 
 *Data to put into the cores be found here: https://docs.google.com/document/d/1TV_IkfVatORLnZhB8-2zMzTM8tAxF6AZxum-XtzzPvQ/edit
-
-**The code allows the CORS server to queried from all origins**
-3. Restart the SOLR core using the commmand bin/solr restart.
-
-*Source: https://opensourceconnections.com/blog/2015/03/26/going-cross-origin-with-solr/* 
