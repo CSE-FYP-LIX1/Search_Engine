@@ -31,14 +31,14 @@ In order to fix this error, some added configurations need to be added to the sc
 
 *Source: https://opensourceconnections.com/blog/2015/03/26/going-cross-origin-with-solr/* 
 
-## The following are the steps to setup and populate a SOLR core instance (the database)
+## The following are the steps to setup and populate AN EXAMPLE SOLR core instance (the database)
 1. Go to "localhost:8983/solr" to find the SOLR web server.
 2. Create a SOLR core instance from the web server and assign the "instanceDir" to be the path of the "_default" on your local machine (this can be found at server/solr/configsets/_default). To create more than 1 core, need to clone this _default config folder (inside the configsets folder) and use this copied version as the "instanceDir" for the new core. 
 3. Using a HTTP post request, post the documents into this solr core instance. The command for this is as follows: 
     bin/post <core_name> <path_of_files>
 4. Alternatively, files can also be uploaded onto the SOLR core from the web server directly. This can be done through the "Documents" tab, where the "File Upload" option can be selected and files can be uploaded directly from the local machine. 
 
-## The following are the steps to populate the SOLR core with the required data for the search engine
+## The following are the steps to populate the SOLR core with the REQUIRED DATA for the search engine
 6 SOLR cores need to be created to store all the financial news articles and all of the results data from the LDA model
 
 The 6 cores are as follows:
